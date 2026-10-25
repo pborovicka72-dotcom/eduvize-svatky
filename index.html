@@ -201,6 +201,24 @@ body.strip .footer{display:none!important}
  body .upcoming-grid{gap:clamp(6px,1.8vh,22px)!important}
  body .upcoming-day{background:#fff!important;border:1px solid #dce6ed!important;box-shadow:0 6px 18px #143b5518!important;border-radius:clamp(8px,2vh,20px)!important;padding:clamp(7px,1.8vh,18px)!important}
 }
+
+/* NSP panoramic presentation: calendar + 6 equal white cards.
+   Explicitly scoped to the panoramic viewport; other segments are untouched. */
+@media (min-aspect-ratio:27/10){
+ body .shell{grid-template-columns:minmax(0,31fr) minmax(0,69fr)!important;gap:clamp(5px,1.4vh,16px)!important;padding:clamp(5px,1.4vh,16px)!important}
+ body .hero{border-radius:clamp(13px,4vh,32px)!important;gap:clamp(6px,2vh,22px)!important;padding:clamp(7px,2.3vh,22px)!important}
+ body .hero-art.calendar-art{flex:0 0 clamp(36px,16vh,140px)!important;width:clamp(36px,16vh,140px)!important;height:clamp(36px,16vh,140px)!important}
+ body .hero-art.calendar-art svg{width:80%!important;height:80%!important}
+ body .calendar-weekday{font-size:clamp(16px,10vh,90px)!important;line-height:1.05!important}
+ body .calendar-date{font-size:clamp(25px,22vh,200px)!important;line-height:1.02!important;letter-spacing:-.055em!important}
+ body .calendar-year{font-size:clamp(16px,11vh,100px)!important;line-height:1.04!important}
+ body .upcoming-grid{gap:clamp(5px,1.3vh,14px)!important}
+ body .upcoming-day{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;background:#fff!important;border:1px solid #e2eaf0!important;box-shadow:0 5px 18px #143b5514!important;border-radius:clamp(12px,3.5vh,28px)!important;padding:clamp(7px,2vh,20px)!important}
+ body .upcoming-date{font-size:clamp(13px,5.5vh,42px)!important;line-height:1.1!important;font-weight:750!important;color:#087c91!important}
+ body .upcoming-name{font-size:clamp(17px,9vh,70px)!important;line-height:1.1!important;font-weight:780!important;margin-top:clamp(6px,3vh,25px)!important}
+ body .upcoming-event{font-size:clamp(13px,5.2vh,39px)!important;line-height:1.12!important;margin-top:clamp(6px,2vh,20px)!important;padding:clamp(5px,1.6vh,16px)!important}
+ body .upcoming-day.is-public-holiday .upcoming-event{background:#e0f5ed!important;color:#00796f!important;border-left:clamp(3px,1vh,8px) solid #00a58f!important;border-radius:clamp(6px,2vh,15px)!important}
+}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví jmeniny</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><footer class="footer"><span id="footer">Eduvize • Svátky a jmeniny</span></footer></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
@@ -248,7 +266,7 @@ async function renderUpcoming(today){
  const events=(data?.holidays||[]).filter(eventFilter);if(events.length){card.classList.add(events.some(e=>e.type!=="significant")?"is-public-holiday":"is-significant-day");const note=document.createElement("div");note.className="upcoming-event"+(!names.textContent?" primary-event":"");note.textContent=events.map(e=>e.name).join(" • ");card.append(note)}
  grid.append(card);
  });
- requestAnimationFrame(fitUpcomingText);
+ requestAnimationFrame(()=>requestAnimationFrame(fitUpcomingText));
 }
 
 
@@ -264,7 +282,7 @@ function fitUpcomingText(){
   const cs=getComputedStyle(el);
   ctx.font=[cs.fontStyle,cs.fontWeight,base+"px",cs.fontFamily].join(" ");
   const available=el.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-parseFloat(cs.borderLeftWidth)-parseFloat(cs.borderRightWidth);
-  const words=el.textContent.trim().split(/\\s+/);
+  const words=el.textContent.trim().split(/\s+/);
   const longest=Math.max(0,...words.map(w=>ctx.measureText(w).width));
   if(available>0&&longest>available){
    const target=Math.max(min,Math.floor(base*available/longest*0.96));
