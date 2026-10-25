@@ -300,6 +300,23 @@ body.strip .footer{display:none!important}
  body .hero-art.calendar-art svg{width:96%!important;height:96%!important}
  body .calendar-date{font-size:clamp(160px,360vh,1900px)!important;line-height:.94!important}
 }
+
+/* Today's name belongs inside the BLUE box of the panoramic strip ONLY. */
+.hero-today{display:none!important}
+@media(min-aspect-ratio:27/10){
+ body .shell{grid-template-columns:minmax(0,40fr) minmax(0,60fr)!important}
+ body .hero{display:grid!important;grid-template-columns:clamp(38px,38vh,180px) minmax(0,1fr)!important;gap:clamp(5px,1.5vh,15px)!important;align-items:center!important;padding:clamp(4px,1.5vh,14px)!important}
+ body .hero-art.calendar-art{grid-column:1!important;grid-row:1!important;order:0!important;position:static!important;flex:none!important;width:100%!important;height:auto!important;aspect-ratio:1!important}
+ body .hero-art.calendar-art svg{width:100%!important;height:100%!important}
+ body .hero>div:first-child{grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;gap:0!important;min-width:0!important}
+ body .calendar-weekday{font-size:clamp(12px,11vh,44px)!important;line-height:1!important}
+ body .calendar-date{font-size:clamp(45px,53vh,230px)!important;line-height:.93!important;letter-spacing:-.065em!important;white-space:nowrap!important;font-weight:850!important}
+ body .calendar-year{font-size:clamp(12px,11vh,44px)!important;line-height:1!important}
+ body .hero-today{display:flex!important;flex-direction:column!important;margin-top:clamp(2px,1vh,10px)!important;gap:0!important}
+ body .hero-today.hidden{display:none!important}
+ body .hero-today-name{font-size:clamp(13px,10vh,40px)!important;line-height:1.1!important}
+ body .hero-today-holiday{font-size:clamp(11px,7vh,30px)!important;line-height:1.1!important}
+}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div><div class="hero-today" id="hero-today"><div class="hero-today-name" id="hero-nameday"></div><div class="hero-today-holiday" id="hero-holiday"></div></div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví jmeniny</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><footer class="footer"><span id="footer">Eduvize • Svátky a jmeniny</span></footer></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
@@ -329,7 +346,7 @@ function localDate(){return new Date(new Date().toLocaleString("en-US",{timeZone
 function iso(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
 function setText(id,value){$(id).textContent=value}
 async function update(){const now=localDate(),day=iso(now),next=new Date(now);next.setDate(next.getDate()+1);
-setText("weekday",new Intl.DateTimeFormat(locale(),{weekday:"long"}).format(now));setText("date",cfg.monthFormat==="number"?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"2-digit"}).format(now):new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now));setText("year",String(now.getFullYear()));
+setText("weekday",new Intl.DateTimeFormat(locale(),{weekday:"long"}).format(now));setText("date",cfg.monthFormat==="number"?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"2-digit"}).format(now):new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now));setText("year",String(now.getFullYear()));if(document.body.classList.contains("strip"))setText("date",new Intl.DateTimeFormat(locale(),{day:"numeric",month:"numeric"}).format(now));
 $("holiday-card").classList.add("hidden");$("tomorrow").classList.toggle("hidden",!cfg.tomorrow);
 try{const u="/holidays/api/day?country="+cfg.country+"&date="+day;const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const data=await r.json();setText("names",data.nameday_status==="unavailable"?(cfg.country==="sk"?"Kalendár sa pripravuje":"Kalendář se připravuje"):(data.nameday||"—"));const events=data.holidays.filter(x=>x.type==="significant"?cfg.significant:cfg.holidays);setText("hero-nameday",data.nameday||"");setText("hero-holiday",events.map(x=>x.name).join(" • "));$("hero-today").classList.toggle("hidden",!(data.nameday||events.length));$("hero-holiday").classList.toggle("hidden",!events.length);$("holiday-card").classList.toggle("hidden",events.length===0);setText("holiday",events.map(x=>x.name).join(" • "));setText("holiday-note",events.length?events.map(x=>x.type==="significant"?(cfg.country==="sk"?"Pamätný deň":"Významný den"):x.day_off?(cfg.country==="sk"?"Deň pracovného pokoja":"Den pracovního klidu"):(cfg.country==="sk"?"Sviatok – pracovný deň":"Svátek – pracovní den")).filter((x,i,a)=>a.indexOf(x)===i).join(" • "):"");$("names").classList.toggle("long",(data.nameday||"").length>19);if(cfg.tomorrow){const q=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(next),{cache:"no-store"});if(q.ok){const t=await q.json();setText("tomorrow",t.nameday_status==="unavailable"?"":(cfg.country==="sk"?"Zajtra: ":"Zítra: ")+(t.nameday||"—"))}}await renderUpcoming(now);setText("footer","Eduvize • Svátky a jmeniny • "+(data.source||"Kalendářní data"))}catch(e){setText("names","Údaje nejsou dostupné");setText("hero-nameday","");setText("hero-holiday","");$("holiday-card").classList.add("hidden");setText("tomorrow","");$("upcoming").classList.add("hidden");setText("footer","Eduvize • Nepodařilo se načíst kalendářní údaje")}}
 
@@ -376,24 +393,6 @@ function fitUpcomingText(){
 
 function fitPanoramicText(){
  if(innerWidth/Math.max(1,innerHeight)<2.7)return;
- const hero=document.querySelector(".hero");
- if(hero){
-  const label=hero.querySelector(".calendar-weekday"),date=hero.querySelector(".calendar-date"),year=hero.querySelector(".calendar-year");
-  const elements=[label,date,year,...hero.querySelectorAll(".hero-today-name,.hero-today-holiday")].filter(Boolean);
-  const available=hero.clientWidth-parseFloat(getComputedStyle(hero).paddingLeft)-parseFloat(getComputedStyle(hero).paddingRight)-
-   (getComputedStyle(hero.querySelector(".hero-art")).position==="absolute"?0:(hero.querySelector(".hero-art")?.getBoundingClientRect().width||0));
-  for(const el of elements){el.style.removeProperty("font-size");const style=getComputedStyle(el),size=parseFloat(style.fontSize);
-   const canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");ctx.font=style.fontWeight+" "+size+"px "+style.fontFamily;
-   const width=ctx.measureText(el.textContent).width;
-   if(width>available&&available>0)el.style.setProperty("font-size",Math.max(12,Math.floor(size*available/width*.96))+"px","important");
-  }
-  const content=hero.querySelector("div:first-child");
-  const maxHeight=hero.clientHeight-parseFloat(getComputedStyle(hero).paddingTop)-parseFloat(getComputedStyle(hero).paddingBottom);
-  if(content&&content.scrollHeight>maxHeight&&maxHeight>0){
-   const factor=maxHeight/content.scrollHeight*.96;
-   for(const el of elements){const size=parseFloat(getComputedStyle(el).fontSize);el.style.setProperty("font-size",Math.max(12,Math.floor(size*factor))+"px","important")}
-  }
- }
  document.querySelectorAll(".upcoming-day").forEach(card=>{
   const elements=[...card.querySelectorAll(".upcoming-date,.upcoming-name,.upcoming-event")];
   const available=card.clientHeight-parseFloat(getComputedStyle(card).paddingTop)-parseFloat(getComputedStyle(card).paddingBottom);
