@@ -1,28 +1,17 @@
-name: Publish Svátky preview
+name: Validate Svátky preview
 on:
   push:
     branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Check static preview files
+        run: |
+          test -s index.html
+          test -s config.html
+          python -c 'import json; d=json.load(open("calendar.json")); assert len(d["cz"]) > 365 and len(d["sk"]) > 365'
