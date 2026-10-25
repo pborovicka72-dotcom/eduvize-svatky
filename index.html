@@ -99,9 +99,9 @@ return {ok:!!record,status:record?200:404,json:async()=>record};
 };
 </script>
 <script>
-const $=id=>document.getElementById(id);const params=new URLSearchParams(location.search);const defaults={country:"cz",tomorrow:true,holidays:true,significant:true,monthFormat:"text",nextSix:false};let cfg=defaults;
+const $=id=>document.getElementById(id);const params=new URLSearchParams(location.search);const defaults={country:"cz",tomorrow:true,holidays:true,significant:true,monthFormat:"text",days:0};let cfg=defaults;
 try{cfg={...defaults,...JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}}catch{}
-if(["cz","sk"].includes(params.get("country")))cfg.country=params.get("country");
+function readConfig(){let saved={};try{saved=JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}catch{}const x={...defaults,...saved};if(x.days===undefined)x.days=x.nextSix?6:0;for(const k of ["country","monthFormat","days","tomorrow","holidays","significant"]){if(params.has(k)){const v=params.get(k);x[k]=k==="days"?Number(v):["tomorrow","holidays","significant"].includes(k)?v==="1":v}}x.days=Math.max(0,Math.min(6,Number(x.days)||0));return x}cfg=readConfig();
 const locale=()=>cfg.country==="sk"?"sk-SK":"cs-CZ";
 function layout(){const w=innerWidth,h=innerHeight;document.body.classList.toggle("strip",w/h>2.7);document.body.classList.toggle("narrow",w/h<.85)}
 addEventListener("resize",layout);layout();
@@ -115,9 +115,9 @@ try{const u="/holidays/api/day?country="+cfg.country+"&date="+day;const r=await 
 
 function eventFilter(e){return e.type==="significant"?cfg.significant:cfg.holidays}
 async function renderUpcoming(today){
- const panel=$("upcoming"),grid=$("upcoming-grid");panel.classList.toggle("hidden",!cfg.nextSix);grid.replaceChildren();
- if(!cfg.nextSix)return;
- const dates=Array.from({length:6},(_,i)=>{const d=new Date(today);d.setDate(today.getDate()+i+1);return d});
+ const panel=$("upcoming"),grid=$("upcoming-grid");panel.querySelector("h2").textContent=(cfg.country==="sk"?"Ďalších ":"Dalších ")+cfg.days+(cfg.days===1?" den":cfg.days>=2&&cfg.days<=4?" dny":" dnů");panel.classList.toggle("hidden",cfg.days===0);grid.replaceChildren();
+ if(cfg.days===0)return;
+ const dates=Array.from({length:cfg.days},(_,i)=>{const d=new Date(today);d.setDate(today.getDate()+i+1);return d});
  const results=await Promise.all(dates.map(async d=>{try{const r=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(d));return r.ok?await r.json():null}catch{return null}}));
  dates.forEach((d,i)=>{
  const data=results[i],card=document.createElement("article");card.className="upcoming-day";
@@ -129,5 +129,5 @@ async function renderUpcoming(today){
  });
 }
 
-update();setInterval(()=>{try{const next={...defaults,...JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")};if(params.get("country"))next.country=params.get("country");cfg=next}catch{}update()},60000);
+update();setInterval(()=>{cfg=readConfig();update()},60000);
 </script></body></html>
