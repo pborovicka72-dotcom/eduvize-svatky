@@ -94,7 +94,7 @@ const url=String(input);
 if(!url.startsWith("/holidays/api/day"))return originalFetch(input,options);
 if(!calendarPromise)calendarPromise=originalFetch("./calendar.json").then(r=>{if(!r.ok)throw Error("Calendar unavailable");return r.json()});
 const all=await calendarPromise,q=new URLSearchParams(url.split("?")[1]||""),country=q.get("country")||"cz",day=q.get("date");
-let record=all[country]?.[day];if(record&&country==="cz"&&day?.endsWith("-10-28"))record={...record,nameday:"Alfréd / Alfréda",nameday_status:"available"};
+const record=all[country]?.[day];
 return {ok:!!record,status:record?200:404,json:async()=>record};
 };
 </script>
