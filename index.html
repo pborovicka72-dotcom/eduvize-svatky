@@ -130,6 +130,40 @@ html,body{width:100%;height:100%;margin:0;overflow:auto}
 .upcoming-day{min-width:0;overflow:hidden}
 .upcoming-event{box-sizing:border-box;max-width:100%;min-width:0;white-space:normal;overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important}
 .upcoming-name{max-width:100%;min-width:0}
+
+/* NSP lower-right panoramic strip only (weather uses ratio > 2.7).
+   Do not alter the already working large upper-right segment. */
+body.strip .shell{
+ display:flex!important;flex-direction:row!important;align-items:stretch;
+ width:100%;max-width:none;height:100dvh;min-height:0;overflow:hidden;
+ padding:clamp(3px,.9vh,10px);gap:clamp(4px,1vh,10px)
+}
+body.strip .hero{
+ flex:0 0 29%;width:29%;height:100%;min-height:0;
+ padding:clamp(8px,2.5vh,26px);border-radius:clamp(8px,2vh,18px);
+ display:flex;align-items:center;justify-content:flex-start;overflow:hidden
+}
+body.strip .hero-art{display:none}
+body.strip .calendar-weekday{font-size:clamp(14px,5vh,40px)!important;line-height:1.1}
+body.strip .calendar-date{font-size:clamp(22px,10vh,84px)!important;line-height:1.06;margin:clamp(2px,1vh,8px) 0!important;letter-spacing:-.045em}
+body.strip .calendar-year{font-size:clamp(15px,5.5vh,43px)!important;line-height:1.1}
+body.strip .metrics.calendar-metrics{display:none!important}
+body.strip .upcoming{display:flex!important;flex:1;flex-direction:column;min-width:0;min-height:0;gap:0}
+body.strip .upcoming.hidden{display:none!important}
+body.strip .upcoming .section-heading{display:none}
+body.strip .upcoming-grid{
+ flex:1;min-height:0;min-width:0;display:grid;
+ grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:minmax(0,1fr);
+ gap:clamp(3px,.7vh,9px)
+}
+body.strip .upcoming-day{
+ min-width:0;min-height:0;height:100%;padding:clamp(4px,1.2vh,13px);
+ border-radius:clamp(6px,1.5vh,15px);overflow:hidden
+}
+body.strip .upcoming-date{font-size:clamp(10px,2.7vh,19px);line-height:1.12}
+body.strip .upcoming-name{font-size:clamp(11px,3.5vh,25px);margin-top:clamp(2px,1vh,9px);line-height:1.12}
+body.strip .upcoming-event{font-size:clamp(10px,2.6vh,18px);padding:clamp(3px,.8vh,8px);margin-top:clamp(2px,.7vh,7px)}
+body.strip .footer{display:none!important}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví jmeniny</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><footer class="footer"><span id="footer">Eduvize • Svátky a jmeniny</span></footer></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
