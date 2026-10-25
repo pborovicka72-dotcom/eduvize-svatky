@@ -261,5 +261,26 @@ function fitUpcomingText(){
 }
 window.addEventListener("resize",()=>requestAnimationFrame(fitUpcomingText));
 
+
+// Opt-in NSP diagnostics: ?debug=1. Never shown on ordinary display URLs.
+if(params.get("debug")==="1"){
+ const panel=document.createElement("aside");
+ panel.id="nsp-debug";
+ panel.style.cssText="position:fixed!important;z-index:2147483647!important;right:3px!important;bottom:3px!important;max-width:96vw!important;padding:5px 8px!important;border:2px solid #ffcc00!important;border-radius:4px!important;background:#111!important;color:#fff!important;font:700 13px/1.35 monospace!important;white-space:pre-wrap!important;pointer-events:none!important;box-sizing:border-box!important";
+ document.body.append(panel);
+ function diagnosticRefresh(){
+  const shell=document.querySelector(".shell"),hero=document.querySelector(".hero"),upcoming=document.querySelector(".upcoming"),grid=document.querySelector(".upcoming-grid");
+  const rect=e=>e?Math.round(e.getBoundingClientRect().width)+"×"+Math.round(e.getBoundingClientRect().height):"–";
+  panel.textContent="EDUVIZE TEST b179→diag1 | viewport "+innerWidth+"×"+innerHeight+
+   " | ratio "+(innerWidth/Math.max(1,innerHeight)).toFixed(2)+
+   " | strip "+document.body.classList.contains("strip")+
+   " | shell "+rect(shell)+" | hero "+rect(hero)+
+   " | upcoming "+rect(upcoming)+" | grid "+rect(grid)+
+   " | cards "+document.querySelectorAll(".upcoming-day").length;
+ }
+ diagnosticRefresh();
+ window.addEventListener("resize",diagnosticRefresh);
+ setInterval(diagnosticRefresh,2000);
+}
 update();setInterval(()=>{cfg=readConfig();update()},60000);
 </script></body></html>
