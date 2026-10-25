@@ -130,112 +130,6 @@ html,body{width:100%;height:100%;margin:0;overflow:auto}
 .upcoming-day{min-width:0;overflow:hidden}
 .upcoming-event{box-sizing:border-box;max-width:100%;min-width:0;white-space:normal;overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important}
 .upcoming-name{max-width:100%;min-width:0}
-
-/* NSP layouts: determined by the embedded segment's own dimensions. */
-body.nsp-wide .shell{display:grid;grid-template-columns:minmax(170px,32%) minmax(140px,24%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);align-items:stretch;height:100dvh;min-height:0;overflow:hidden;padding:clamp(5px,1vmin,12px);gap:clamp(5px,1vmin,12px)}
-body.nsp-wide .hero{height:100%;padding:clamp(9px,2vmin,22px);flex-direction:column;align-items:flex-start;justify-content:center}
-body.nsp-wide .hero-art{display:none}
-body.nsp-wide .metrics.calendar-metrics{display:flex;flex-direction:column;gap:6px;min-height:0}
-body.nsp-wide .metric.calendar-card{flex:1;padding:clamp(7px,1.3vmin,15px);overflow:hidden}
-body.nsp-wide .metric-top{gap:6px}
-body.nsp-wide .metric-icon{display:none}
-body.nsp-wide .metric-value{margin:4px 0}
-body.nsp-wide .upcoming{min-width:0;min-height:0;overflow:auto}
-body.nsp-wide .upcoming-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
-body.nsp-wide .upcoming-day{padding:6px;min-height:0}
-body.nsp-wide .upcoming-event{padding:5px;font-size:clamp(10px,1.6vmin,14px)}
-body.nsp-wide .footer{display:none}
-body.nsp-wide .section-heading{margin:0 0 5px}
-body.nsp-wide .section-heading h2{font-size:clamp(12px,2.1vmin,20px)}
-body.nsp-portrait .shell{height:100dvh;min-height:0;overflow:auto;gap:clamp(6px,1vmin,12px)}
-body.nsp-portrait .hero{flex:0 0 auto;min-height:0;padding:clamp(9px,2vmin,18px)}
-body.nsp-portrait .hero-art{display:none}
-body.nsp-portrait .metrics.calendar-metrics{grid-template-columns:minmax(0,1fr);flex:0 0 auto}
-body.nsp-portrait .upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-body.nsp-portrait .upcoming-day{min-height:0}
-body.nsp-compact .shell{padding:5px;gap:5px}
-body.nsp-compact .hero{padding:7px;border-radius:9px;min-height:0}
-body.nsp-compact .calendar-date{font-size:clamp(18px,6vmin,35px)!important;margin:2px 0}
-body.nsp-compact .calendar-weekday{font-size:clamp(11px,2.5vmin,17px)!important}
-body.nsp-compact .calendar-year{font-size:clamp(12px,2.6vmin,18px)!important}
-body.nsp-compact .hero-art{display:none}
-body.nsp-compact .metric.calendar-card{padding:6px;border-radius:8px}
-body.nsp-compact .metric-icon{display:none}
-body.nsp-compact .metric-name{font-size:clamp(10px,2.2vmin,14px)}
-body.nsp-compact .metric-value{font-size:clamp(15px,4vmin,28px)!important;margin:3px 0}
-body.nsp-compact .metric-note{font-size:clamp(9px,1.8vmin,12px)!important}
-body.nsp-compact .upcoming-day{border-radius:7px;padding:5px}
-body.nsp-compact .upcoming-name{font-size:clamp(11px,2.4vmin,17px)}
-body.nsp-compact .upcoming-date{font-size:clamp(9px,1.8vmin,13px)}
-body.nsp-compact .upcoming-event{padding:4px;font-size:clamp(9px,1.8vmin,12px)}
-body.nsp-compact .footer{display:none}
-body.nsp-wide.nsp-compact .upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-body.nsp-wide.nsp-compact .metric-note{display:none}
-
-/* NSP template-specific zones: explicit URL parameter beats viewport guessing. */
-body.zone-upper .shell{height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-body.zone-upper .hero{flex:0 0 auto;min-height:0;padding:clamp(8px,1.7vmin,22px)}
-body.zone-upper .metrics.calendar-metrics{flex:0 0 auto}
-body.zone-upper .metric.calendar-card{min-height:0}
-body.zone-upper .upcoming{display:flex;flex-direction:column;flex:1;min-height:0}
-body.zone-upper .upcoming-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);flex:1;min-height:0;gap:clamp(5px,1vmin,12px)}
-body.zone-upper .upcoming-day{min-height:0;display:flex;flex-direction:column;justify-content:flex-start;padding:clamp(6px,1.2vmin,15px);overflow:hidden}
-body.zone-upper .upcoming-name{font-size:clamp(12px,2.5vmin,24px);margin-top:5px}
-body.zone-upper .upcoming-event{font-size:clamp(10px,1.9vmin,17px);margin-top:5px}
-body.zone-upper .footer{display:none}
-body.zone-lower-left .shell{height:100dvh;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:clamp(5px,1vmin,14px);gap:clamp(5px,1vmin,12px)}
-body.zone-lower-left .hero{flex:0 0 auto;min-height:0;padding:clamp(10px,2vmin,24px)}
-body.zone-lower-left .hero-art{display:none}
-body.zone-lower-left .metrics.calendar-metrics{flex:1;min-height:0;display:flex;flex-direction:column}
-body.zone-lower-left .metric.calendar-card{flex:1;min-height:0;display:flex;justify-content:center;padding:clamp(10px,2vmin,24px)}
-body.zone-lower-left .metric.calendar-card .metric-value{font-size:clamp(23px,7vmin,78px)!important}
-body.zone-lower-left .upcoming,body.zone-lower-left .footer{display:none!important}
-body.zone-lower-right .shell{height:100dvh;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:clamp(5px,1vmin,14px);gap:clamp(5px,1vmin,12px)}
-body.zone-lower-right .hero{flex:0 0 auto;min-height:0;padding:clamp(8px,1.8vmin,20px)}
-body.zone-lower-right .hero-art{display:none}
-body.zone-lower-right .metrics.calendar-metrics{flex:0 0 auto;display:flex;flex-direction:column}
-body.zone-lower-right .metric.calendar-card{min-height:0;padding:clamp(8px,1.5vmin,16px)}
-body.zone-lower-right .upcoming{display:flex;flex-direction:column;flex:1;min-height:0;overflow:auto}
-body.zone-lower-right .upcoming-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);flex:1;gap:clamp(5px,1vmin,10px)}
-body.zone-lower-right .upcoming-day{min-height:0;padding:clamp(6px,1vmin,12px);overflow:hidden}
-body.zone-lower-right .footer{display:none}
-body.zone-lower-right .upcoming-name{font-size:clamp(13px,2.8vmin,24px)}
-body.zone-lower-right .upcoming-event{font-size:clamp(10px,1.9vmin,16px)}
-/* Specific zone rules must win over generic aspect-ratio classes. */
-body.zone-upper.nsp-wide .shell,body.zone-lower-left.nsp-wide .shell,body.zone-lower-right.nsp-wide .shell{display:flex;grid-template-columns:none;grid-template-rows:none}
-body.zone-upper.nsp-wide .hero,body.zone-lower-left.nsp-wide .hero,body.zone-lower-right.nsp-wide .hero{height:auto;flex-direction:row;align-items:center;justify-content:space-between}
-body.zone-upper.nsp-wide .metrics.calendar-metrics,body.zone-lower-right.nsp-wide .metrics.calendar-metrics{display:flex;flex-direction:column}
-body.zone-upper.nsp-wide .upcoming-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-body.zone-lower-right.nsp-wide .upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-body.zone-upper.nsp-compact .upcoming-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-body.zone-lower-right.nsp-compact .upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-
-/* Auto-classified NSP regions; identical width/height breakpoints to weather. */
-body.nsp-top .shell{height:100dvh;min-height:0;overflow:hidden;display:flex;flex-direction:column}
-body.nsp-top .hero{flex:0 0 auto;min-height:0;padding:clamp(7px,1.3vmin,18px)}
-body.nsp-top .metrics.calendar-metrics{flex:0 0 auto}
-body.nsp-top .upcoming{flex:1;min-height:0;display:flex;flex-direction:column}
-body.nsp-top .upcoming-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(5px,1vmin,10px)}
-body.nsp-top .upcoming-day{min-height:0;padding:clamp(5px,1vmin,12px);overflow:hidden}
-body.nsp-top .upcoming-name{font-size:clamp(12px,2.3vmin,22px)}
-body.nsp-top .upcoming-event{font-size:clamp(10px,1.7vmin,15px)}
-body.nsp-top .footer{display:none}
-body.nsp-one-day .shell{height:100dvh;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:clamp(6px,1vmin,14px)}
-body.nsp-one-day .hero{flex:0 0 auto;min-height:0;padding:clamp(8px,2vmin,18px)}
-body.nsp-one-day .hero-art{display:none}
-body.nsp-one-day .metrics.calendar-metrics{flex:1;min-height:0;display:flex;flex-direction:column}
-body.nsp-one-day .metric.calendar-card{flex:1;min-height:0;padding:clamp(10px,2vmin,20px)}
-body.nsp-one-day .metric.calendar-card .metric-value{font-size:clamp(24px,7vmin,75px)!important}
-body.nsp-one-day .upcoming,body.nsp-one-day .footer{display:none!important}
-body.nsp-bottom .shell{height:100dvh;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:clamp(5px,1vmin,12px);gap:clamp(5px,1vmin,10px)}
-body.nsp-bottom .hero{flex:0 0 auto;min-height:0;padding:clamp(7px,1.5vmin,16px)}
-body.nsp-bottom .hero-art{display:none}
-body.nsp-bottom .metrics.calendar-metrics{flex:0 0 auto;display:flex;flex-direction:column}
-body.nsp-bottom .metric.calendar-card{min-height:0;padding:clamp(7px,1.5vmin,16px)}
-body.nsp-bottom .upcoming{flex:1;min-height:0;overflow:auto}
-body.nsp-bottom .upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(5px,1vmin,10px)}
-body.nsp-bottom .upcoming-day{min-height:0;padding:clamp(5px,1vmin,10px)}
-body.nsp-bottom .footer{display:none}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví jmeniny</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><footer class="footer"><span id="footer">Eduvize • Svátky a jmeniny</span></footer></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
@@ -252,7 +146,7 @@ return {ok:!!record,status:record?200:404,json:async()=>record};
 const $=id=>document.getElementById(id);const params=new URLSearchParams(location.search);const defaults={country:"cz",tomorrow:true,holidays:true,significant:true,monthFormat:"text",days:0};let cfg=defaults;
 try{cfg={...defaults,...JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}}catch{}
 function readConfig(){let saved={};try{saved=JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}catch{}const x={...defaults,...saved};if(x.days===undefined)x.days=x.nextSix?6:0;for(const k of ["country","monthFormat","days","tomorrow","holidays","significant"]){if(params.has(k)){const v=params.get(k);x[k]=k==="days"?Number(v):["tomorrow","holidays","significant"].includes(k)?v==="1":v}}x.days=Math.max(0,Math.min(6,Number(x.days)||0));return x}cfg=readConfig();
-const zone="auto";const locale=()=>cfg.country==="sk"?"sk-SK":"cs-CZ";
+const locale=()=>cfg.country==="sk"?"sk-SK":"cs-CZ";
 function layout(){const w=innerWidth,h=innerHeight;document.body.classList.toggle("strip",w/h>2.7);document.body.classList.toggle("narrow",w/h<.85)}
 addEventListener("resize",layout);layout();
 function localDate(){return new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Prague"}))}
@@ -265,8 +159,8 @@ try{const u="/holidays/api/day?country="+cfg.country+"&date="+day;const r=await 
 
 function eventFilter(e){return e.type==="significant"?cfg.significant:cfg.holidays}
 async function renderUpcoming(today){
- const panel=$("upcoming"),grid=$("upcoming-grid");panel.querySelector("h2").textContent=(cfg.country==="sk"?"Ďalších ":"Dalších ")+cfg.days+(cfg.days===1?" den":cfg.days>=2&&cfg.days<=4?" dny":" dnů");panel.classList.toggle("hidden",cfg.days===0||document.body.classList.contains("nsp-one-day"));grid.replaceChildren();
- if(cfg.days===0||zone==="lower-left")return;
+ const panel=$("upcoming"),grid=$("upcoming-grid");panel.querySelector("h2").textContent=(cfg.country==="sk"?"Ďalších ":"Dalších ")+cfg.days+(cfg.days===1?" den":cfg.days>=2&&cfg.days<=4?" dny":" dnů");panel.classList.toggle("hidden",cfg.days===0);grid.replaceChildren();
+ if(cfg.days===0)return;
  const dates=Array.from({length:cfg.days},(_,i)=>{const d=new Date(today);d.setDate(today.getDate()+i+1);return d});
  const results=await Promise.all(dates.map(async d=>{try{const r=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(d));return r.ok?await r.json():null}catch{return null}}));
  dates.forEach((d,i)=>{
@@ -281,22 +175,6 @@ async function renderUpcoming(today){
 }
 
 
-function classifySegment(){
- const w=window.innerWidth,h=window.innerHeight,ratio=w/Math.max(h,1);
- const portrait=params.get("orientation")==="portrait";
- const b=document.body;
- b.classList.remove("nsp-wide","nsp-portrait","nsp-compact","nsp-one-day","nsp-top","nsp-bottom");
- // Mirror the tested weather app's NSP breakpoint selection.
- const small=ratio>=1.15&&ratio<=2.7&&((h<800||w<1100)||(w>=1600&&h>=1000&&h<1080));
- const mode=portrait?"narrow":small?"small":ratio>2.7?"strip":ratio<.82?"narrow":w<720?"small":"wide";
- b.classList.add("nsp-"+(mode==="strip"?"wide":mode==="narrow"?"portrait":mode==="small"?"compact":"wide"));
- // In the supplied template, the short landscape block is the single-day panel.
- const oneDay=!portrait&&mode==="small"&&h<=420&&w/h>=1.15;
- b.classList.toggle("nsp-one-day",oneDay);
- b.classList.toggle("nsp-top",mode==="small"&&!oneDay);
- b.classList.toggle("nsp-bottom",mode==="strip"||portrait);
-}
-classifySegment();
 function fitUpcomingText(){
  document.querySelectorAll(".upcoming-event,.upcoming-name").forEach(el=>{
   el.style.fontSize="";
@@ -319,7 +197,7 @@ function fitUpcomingText(){
   el.style.overflow="hidden";
  });
 }
-window.addEventListener("resize",()=>requestAnimationFrame(()=>{classifySegment();update();fitUpcomingText()}));
+window.addEventListener("resize",()=>requestAnimationFrame(fitUpcomingText));
 
 update();setInterval(()=>{cfg=readConfig();update()},60000);
 </script></body></html>
