@@ -987,11 +987,18 @@ function layout(){
  const panoramic=ratio>2.7;
  document.body.classList.toggle("strip",panoramic);
  document.body.classList.toggle("narrow",w/Math.max(1,h)<.85);
- document.body.classList.toggle("zone-narrow",!panoramic&&ratio<0.90);
- // NSP reports ~1921×1076 for the 872×488 segment and ~1921×1083 for the large right segment.
- // They cannot be distinguished by viewport; reuse the existing days=0 configuration.
- document.body.classList.toggle("zone-small",!panoramic&&ratio>=1.10&&ratio<=2.7&&cfg.days===0);
- document.body.classList.toggle("zone-wide",!panoramic&&ratio>=1.10&&ratio<=2.7&&cfg.days>0);
+ // NSP may report ~1921x1076 or ~1921x1083 for the upper-right panel.
+ // Keep the existing days=0 distinction for the lower-left compact panel.
+ // Lock the upper-right detailed layout after its first reliable detection,
+ // so transient viewport changes cannot switch it to another CSS mode.
+ if(!document.body.dataset.nspWideLocked&&ratio>=1.10&&ratio<=2.7&&w>=1600&&h>=950&&cfg.days>0){
+  document.body.dataset.nspWideLocked="1";
+ }
+ const lockedWide=document.body.dataset.nspWideLocked==="1";
+ document.body.classList.toggle("strip",!lockedWide&&panoramic);
+ document.body.classList.toggle("zone-narrow",!lockedWide&&!panoramic&&ratio<0.90);
+ document.body.classList.toggle("zone-small",!lockedWide&&!panoramic&&ratio>=1.10&&ratio<=2.7&&cfg.days===0);
+ document.body.classList.toggle("zone-wide",lockedWide||(!panoramic&&ratio>=1.10&&ratio<=2.7&&cfg.days>0));
  const metrics=document.querySelector(".calendar-metrics"),upcoming=document.getElementById("upcoming"),grid=document.getElementById("upcoming-grid");
  if(metrics&&upcoming&&grid){
    if(document.body.classList.contains("zone-narrow")){
@@ -1091,6 +1098,6 @@ update();setInterval(()=>{cfg=readConfig();update()},60000);
 /* Temporary immutable deployment stamp: generated at build/commit time, never ticks. */
 const buildClock=document.createElement("div");
 buildClock.id="nsp-build-clock";
-buildClock.textContent="Verze: úprava 05"; 
+buildClock.textContent="Verze: úprava 06"; 
 document.body.appendChild(buildClock);
 </script></body></html>
