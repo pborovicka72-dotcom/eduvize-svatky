@@ -810,6 +810,27 @@ body.zone-narrow:not(.strip) #upcoming-grid .upcoming-event{
 }
 /* Hide footer in every NSP layout, including older cached markup. */
 .shell>.footer,.footer,#footer{display:none!important}
+
+/* Upper-left first white card: match lower-left card typography and icon. */
+body.zone-narrow:not(.strip) #names-card .metric-icon{
+ display:grid!important;width:112px!important;height:112px!important;
+ flex:0 0 112px!important
+}
+body.zone-narrow:not(.strip) #names-card .metric-name{
+ font-size:72px!important;line-height:1.06!important
+}
+body.zone-narrow:not(.strip) #names-card .metric-value{
+ font-size:112px!important;line-height:1.05!important
+}
+/* Lower-left blue header: equal generous left/right inset. */
+body.zone-small:not(.strip) .shell>.hero{
+ padding-left:clamp(46px,4vw,82px)!important;
+ padding-right:clamp(46px,4vw,82px)!important;
+ box-sizing:border-box!important
+}
+body.zone-small:not(.strip) .shell>.hero .hero-art.calendar-art{
+ margin-left:auto!important;margin-right:0!important;flex-shrink:0!important
+}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div><div class="hero-today" id="hero-today"><div class="hero-today-name" id="hero-nameday"></div><div class="hero-today-holiday" id="hero-holiday"></div></div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
