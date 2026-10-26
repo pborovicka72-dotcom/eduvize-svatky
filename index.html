@@ -758,6 +758,56 @@ body.zone-small:not(.strip) #names-card .metric-value{
  font-size:clamp(36px,8vh,56px)!important
 }
 body.zone-small:not(.strip) #names-card .metric-value::before{content:none!important}
+
+/* NSP lower-left (days=0): double typography and calendar symbol.
+   Scale relative to the previous effective sizes, without changing 50/50 rows. */
+body.zone-small:not(.strip) .calendar-weekday,
+body.zone-small:not(.strip) .calendar-year{
+ font-size:clamp(34px,8.6vh,56px)!important;line-height:1.04!important
+}
+body.zone-small:not(.strip) .calendar-date{
+ font-size:clamp(78px,20vh,138px)!important;line-height:1!important
+}
+body.zone-small:not(.strip) .hero-art.calendar-art{
+ flex-basis:clamp(116px,32vh,184px)!important;
+ width:clamp(116px,32vh,184px)!important;
+ height:clamp(116px,32vh,184px)!important
+}
+body.zone-small:not(.strip) #names-card .metric-icon{
+ width:clamp(72px,18vh,112px)!important;
+ height:clamp(72px,18vh,112px)!important
+}
+body.zone-small:not(.strip) #names-card .metric-name{
+ font-size:clamp(44px,10.8vh,72px)!important;line-height:1.06!important
+}
+body.zone-small:not(.strip) #names-card .metric-value{
+ font-size:clamp(72px,16vh,112px)!important;
+ margin-left:clamp(92px,20vh,132px)!important;
+ line-height:1.05!important
+}
+body.zone-small:not(.strip) #names-card .metric-note{
+ font-size:clamp(28px,6vh,48px)!important
+}
+/* NSP top-left portrait: viewport ratio ~0.522 (1921×3679).
+   Keep portrait card grid; restore the reference hierarchy and teal dates. */
+body.zone-narrow:not(.strip) #names-card .metric-top{
+ display:flex!important;align-items:center!important;gap:clamp(12px,1.4vw,24px)!important
+}
+body.zone-narrow:not(.strip) #names-card .metric-value::before{content:none!important}
+body.zone-narrow:not(.strip) #names-card .metric-value{
+ display:block!important;margin:clamp(14px,1.5vh,30px) 0 0!important
+}
+body.zone-narrow:not(.strip) #names-card .metric-note{
+ display:block!important;margin-top:clamp(8px,1vh,18px)!important
+}
+body.zone-narrow:not(.strip) #upcoming-grid .upcoming-date{
+ color:#009b8d!important;font-size:clamp(30px,2.3vw,46px)!important;
+ font-weight:750!important
+}
+body.zone-narrow:not(.strip) #upcoming-grid .upcoming-event{
+ font-size:clamp(43px,3.3vw,76px)!important;
+ line-height:1.12!important;overflow-wrap:anywhere!important
+}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div><div class="hero-today" id="hero-today"><div class="hero-today-name" id="hero-nameday"></div><div class="hero-today-holiday" id="hero-holiday"></div></div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví jmeniny</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><footer class="footer"><span id="footer">Eduvize • Svátky a jmeniny</span></footer></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
