@@ -832,17 +832,6 @@ body.zone-small:not(.strip) .shell>.hero .hero-art.calendar-art{
  margin-left:auto!important;margin-right:0!important;flex-shrink:0!important
 }
 
-/* Temporary NSP deployment indicator; remove after layout is approved. */
-#nsp-build-clock{
- position:fixed!important;z-index:2147483000!important;
- left:12px!important;bottom:8px!important;
- display:block!important;visibility:visible!important;
- padding:5px 10px!important;border-radius:7px!important;
- background:rgba(7,43,70,.87)!important;color:#fff!important;
- font:700 19px/1.2 Arial,sans-serif!important;
- white-space:nowrap!important;pointer-events:none!important
-}
-
 /* Date typography: ease negative tracking so Czech diacritics remain distinct. */
 .calendar-date,
 body.strip .calendar-date,
@@ -1160,9 +1149,4 @@ if(params.get("debug")==="1"){
 }
 update();setInterval(()=>{cfg=readConfig();update()},60000);
 
-/* Temporary immutable deployment stamp: generated at build/commit time, never ticks. */
-const buildClock=document.createElement("div");
-buildClock.id="nsp-build-clock";
-buildClock.textContent="Verze: úprava 10"; 
-document.body.appendChild(buildClock);
 </script></body></html>
