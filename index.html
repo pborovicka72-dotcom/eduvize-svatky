@@ -714,6 +714,50 @@ body.zone-small:not(.strip) #names-card .metric-value{
  font-size:clamp(35px,9vh,60px)!important;line-height:1.05!important
 }
 body.zone-small:not(.strip) #names-card .metric-value:before{content:none!important}
+
+/* Verified lower-left layout override: exact split and stacked nameday. */
+body.zone-small:not(.strip) .shell{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+ grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
+ height:100vh!important;height:100dvh!important;min-height:0!important;
+ padding:0!important;gap:0!important;max-width:none!important;overflow:hidden!important
+}
+body.zone-small:not(.strip) .shell>.hero{
+ grid-area:1/1!important;height:100%!important;min-height:0!important;
+ max-height:100%!important;min-width:0!important;width:100%!important;
+ padding:clamp(8px,2vh,16px) clamp(14px,2vw,30px)!important;
+ margin:0!important;flex:none!important;border-radius:0!important
+}
+body.zone-small:not(.strip) .calendar-weekday,
+body.zone-small:not(.strip) .calendar-year{font-size:clamp(17px,4.3vh,28px)!important}
+body.zone-small:not(.strip) .calendar-date{
+ font-size:clamp(39px,10vh,69px)!important;line-height:1.02!important;
+ margin:3px 0!important;white-space:nowrap!important
+}
+body.zone-small:not(.strip) .hero-art.calendar-art{
+ display:grid!important;flex:0 0 clamp(58px,16vh,92px)!important;
+ width:clamp(58px,16vh,92px)!important;height:clamp(58px,16vh,92px)!important
+}
+body.zone-small:not(.strip) .metrics.calendar-metrics{
+ grid-area:2/1!important;display:flex!important;height:100%!important;
+ min-height:0!important;width:100%!important;flex:none!important;
+ padding:clamp(8px,2vh,14px)!important;gap:0!important
+}
+body.zone-small:not(.strip) #names-card{
+ display:flex!important;flex-direction:column!important;
+ align-items:flex-start!important;justify-content:center!important;
+ height:100%!important;min-height:0!important;flex:1 1 auto!important;
+ padding:clamp(12px,2.5vh,24px) clamp(16px,2.8vw,32px)!important
+}
+body.zone-small:not(.strip) #names-card .metric-top{
+ display:flex!important;align-items:center!important;gap:12px!important
+}
+body.zone-small:not(.strip) #names-card .metric-value{
+ display:block!important;align-self:flex-start!important;
+ margin:clamp(4px,1vh,10px) 0 0 clamp(46px,10vh,66px)!important;
+ font-size:clamp(36px,8vh,56px)!important
+}
+body.zone-small:not(.strip) #names-card .metric-value::before{content:none!important}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div><div class="hero-today" id="hero-today"><div class="hero-today-name" id="hero-nameday"></div><div class="hero-today-holiday" id="hero-holiday"></div></div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví jmeniny</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><footer class="footer"><span id="footer">Eduvize • Svátky a jmeniny</span></footer></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
@@ -732,14 +776,13 @@ try{cfg={...defaults,...JSON.parse(localStorage.getItem("eduvize-holidays-config
 function readConfig(){let saved={};try{saved=JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}catch{}const x={...defaults,...saved};if(x.days===undefined)x.days=x.nextSix?6:0;for(const k of ["country","monthFormat","days","tomorrow","holidays","significant"]){if(params.has(k)){const v=params.get(k);x[k]=k==="days"?Number(v):["tomorrow","holidays","significant"].includes(k)?v==="1":v}}x.days=Math.max(0,Math.min(6,Number(x.days)||0));return x}cfg=readConfig();
 const locale=()=>cfg.country==="sk"?"sk-SK":"cs-CZ";
 function layout(){
- const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight;
- const explicitZone=null; // NSP segments are identified automatically from their viewport.
- const panoramic=w/Math.max(1,h)>2.7;
+ const w=window.innerWidth||document.documentElement.clientWidth,h=window.innerHeight||document.documentElement.clientHeight;
+ const ratio=w/Math.max(1,h);
+ const panoramic=ratio>2.7;
  document.body.classList.toggle("strip",panoramic);
  document.body.classList.toggle("narrow",w/Math.max(1,h)<.85);
- const ratio=w/Math.max(1,h);
- document.body.classList.toggle("zone-narrow",!panoramic&&ratio<0.82);
- document.body.classList.toggle("zone-small",!panoramic&&ratio>=1.15&&ratio<=2.7&&h<800);
+ document.body.classList.toggle("zone-narrow",!panoramic&&ratio<0.90);
+ document.body.classList.toggle("zone-small",!panoramic&&ratio>=1.10&&ratio<=2.7&&(h<1050||w<1200));
  const metrics=document.querySelector(".calendar-metrics"),upcoming=document.getElementById("upcoming"),grid=document.getElementById("upcoming-grid");
  if(metrics&&upcoming&&grid){
    if(document.body.classList.contains("zone-narrow")){
