@@ -782,7 +782,9 @@ function layout(){
  document.body.classList.toggle("strip",panoramic);
  document.body.classList.toggle("narrow",w/Math.max(1,h)<.85);
  document.body.classList.toggle("zone-narrow",!panoramic&&ratio<0.90);
- document.body.classList.toggle("zone-small",!panoramic&&ratio>=1.10&&ratio<=2.7&&(h<1050||w<1200));
+ // NSP reports ~1921×1076 for the 872×488 segment and ~1921×1083 for the large right segment.
+ // They cannot be distinguished by viewport; reuse the existing days=0 configuration.
+ document.body.classList.toggle("zone-small",!panoramic&&ratio>=1.10&&ratio<=2.7&&cfg.days===0);
  const metrics=document.querySelector(".calendar-metrics"),upcoming=document.getElementById("upcoming"),grid=document.getElementById("upcoming-grid");
  if(metrics&&upcoming&&grid){
    if(document.body.classList.contains("zone-narrow")){
