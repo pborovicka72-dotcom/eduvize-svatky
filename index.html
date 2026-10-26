@@ -1054,11 +1054,30 @@ function layout(){
  document.body.dataset.segmentLayout=panoramic?"panoramic":"standard";
 }
 addEventListener("resize",layout);layout();
+/* Keep the full month name visible in the fixed-width lower-right header.
+   The blue panel width stays unchanged; only the date font scales down if needed. */
+function fitStripDate(){
+ const el=document.getElementById("date");
+ if(!el)return;
+ el.style.removeProperty("font-size");
+ if(!document.body.classList.contains("strip"))return;
+ const box=el.parentElement;
+ const available=Math.max(0,box.clientWidth-12);
+ if(!available)return;
+ const style=getComputedStyle(el);
+ const base=parseFloat(style.fontSize);
+ const canvas=document.createElement("canvas");
+ const ctx=canvas.getContext("2d");
+ if(!ctx||!base)return;
+ ctx.font=style.font;
+ const measured=ctx.measureText(el.textContent||"").width;
+ if(measured>available)el.style.setProperty("font-size",Math.max(12,base*available/measured*.98)+"px","important");
+}
 function localDate(){return new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Prague"}))}
 function iso(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
 function setText(id,value){$(id).textContent=value}
 async function update(){const now=localDate(),day=iso(now),next=new Date(now);next.setDate(next.getDate()+1);
-setText("weekday",new Intl.DateTimeFormat(locale(),{weekday:"long"}).format(now));setText("date",document.body.classList.contains("strip")?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now):(cfg.monthFormat==="number"?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"2-digit"}).format(now):new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now)));setText("year",String(now.getFullYear()));
+setText("weekday",new Intl.DateTimeFormat(locale(),{weekday:"long"}).format(now));setText("date",document.body.classList.contains("strip")?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now):(cfg.monthFormat==="number"?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"2-digit"}).format(now):new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now)));setText("year",String(now.getFullYear()));requestAnimationFrame(fitStripDate);
 $("holiday-card").classList.add("hidden");$("tomorrow").classList.toggle("hidden",!cfg.tomorrow||cfg.days>0);
 try{const u="/holidays/api/day?country="+cfg.country+"&date="+day;const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const data=await r.json();setText("names",data.nameday_status==="unavailable"?(cfg.country==="sk"?"Kalendár sa pripravuje":"Kalendář se připravuje"):(data.nameday||"—"));const events=data.holidays.filter(x=>x.type==="significant"?cfg.significant:cfg.holidays);setText("hero-nameday",data.nameday||"");setText("hero-holiday",events.map(x=>x.name).join(" • "));$("hero-today").classList.toggle("hidden",!(data.nameday||events.length));$("hero-holiday").classList.toggle("hidden",!events.length);$("holiday-card").classList.toggle("hidden",events.length===0);setText("holiday",events.map(x=>x.name).join(" • "));setText("holiday-note",events.length?events.map(x=>x.type==="significant"?(cfg.country==="sk"?"Pamätný deň":"Významný den"):x.day_off?(cfg.country==="sk"?"Deň pracovného pokoja":"Den pracovního klidu"):(cfg.country==="sk"?"Sviatok – pracovný deň":"Svátek – pracovní den")).filter((x,i,a)=>a.indexOf(x)===i).join(" • "):"");$("names").classList.toggle("long",(data.nameday||"").length>19);if(cfg.tomorrow&&cfg.days===0){const q=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(next),{cache:"no-store"});if(q.ok){const t=await q.json();setText("tomorrow",t.nameday_status==="unavailable"?"":(cfg.country==="sk"?"Zajtra: ":"Zítra: ")+(t.nameday||"—"))}}await renderUpcoming(now);}catch(e){setText("names","Údaje nejsou dostupné");setText("hero-nameday","");setText("hero-holiday","");$("holiday-card").classList.add("hidden");setText("tomorrow","");$("upcoming").classList.add("hidden");}}
 
@@ -1144,6 +1163,6 @@ update();setInterval(()=>{cfg=readConfig();update()},60000);
 /* Temporary immutable deployment stamp: generated at build/commit time, never ticks. */
 const buildClock=document.createElement("div");
 buildClock.id="nsp-build-clock";
-buildClock.textContent="Verze: úprava 09"; 
+buildClock.textContent="Verze: úprava 10"; 
 document.body.appendChild(buildClock);
 </script></body></html>
