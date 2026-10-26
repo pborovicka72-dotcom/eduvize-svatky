@@ -862,6 +862,51 @@ body.zone-small:not(.strip) .calendar-weekday,
 body.zone-small:not(.strip) .calendar-year{
  font-size:clamp(40.8px,10.32vh,67.2px)!important;line-height:1.12!important
 }
+
+/* Right-bottom panoramic strip: 25% narrower blue area, more room for white cards. */
+body.strip:not(.zone-small) .shell{
+ grid-template-columns:minmax(0,27.75fr) minmax(0,72.25fr)!important
+}
+body.strip:not(.zone-small) .upcoming-name,
+body.strip:not(.zone-small) .upcoming-event,
+body.strip:not(.zone-small) .upcoming-date{
+ font-size:120%!important
+}
+/* Right-upper standard landscape: weather-style compact blue header. */
+body:not(.strip):not(.zone-narrow):not(.zone-small) .shell>.hero{
+ min-height:0!important;padding:clamp(16px,1.7vh,30px) clamp(22px,2.2vw,44px)!important;
+ flex:0 0 auto!important
+}
+/* Upper-left portrait: cards in the same row must share height. */
+body.zone-narrow:not(.strip) .metrics.calendar-metrics{
+ grid-auto-rows:minmax(0,1fr)!important;
+ align-items:stretch!important;align-content:stretch!important;
+ flex:1 1 auto!important
+}
+body.zone-narrow:not(.strip) .metrics.calendar-metrics>.calendar-card,
+body.zone-narrow:not(.strip) #upcoming-grid .upcoming-day{
+ height:100%!important;min-height:0!important;box-sizing:border-box!important
+}
+/* Upper-left white cards: 30% larger text, with overrides for earlier rules. */
+body.zone-narrow:not(.strip) #names-card .metric-name{
+ font-size:93.6px!important
+}
+body.zone-narrow:not(.strip) #names-card .metric-value{
+ font-size:145.6px!important
+}
+body.zone-narrow:not(.strip) #holiday-card .metric-name{
+ font-size:clamp(39px,3.12vw,60px)!important
+}
+body.zone-narrow:not(.strip) #holiday-card .metric-value{
+ font-size:clamp(55px,3.64vw,83px)!important
+}
+body.zone-narrow:not(.strip) #upcoming-grid .upcoming-date{
+ font-size:clamp(39px,2.99vw,60px)!important
+}
+body.zone-narrow:not(.strip) #upcoming-grid .upcoming-name,
+body.zone-narrow:not(.strip) #upcoming-grid .upcoming-event{
+ font-size:clamp(56px,4.29vw,99px)!important
+}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div><div class="hero-today" id="hero-today"><div class="hero-today-name" id="hero-nameday"></div><div class="hero-today-holiday" id="hero-holiday"></div></div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
@@ -903,8 +948,8 @@ function iso(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),S
 function setText(id,value){$(id).textContent=value}
 async function update(){const now=localDate(),day=iso(now),next=new Date(now);next.setDate(next.getDate()+1);
 setText("weekday",new Intl.DateTimeFormat(locale(),{weekday:"long"}).format(now));setText("date",document.body.classList.contains("strip")?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now):(cfg.monthFormat==="number"?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"2-digit"}).format(now):new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now)));setText("year",String(now.getFullYear()));
-$("holiday-card").classList.add("hidden");$("tomorrow").classList.toggle("hidden",!cfg.tomorrow);
-try{const u="/holidays/api/day?country="+cfg.country+"&date="+day;const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const data=await r.json();setText("names",data.nameday_status==="unavailable"?(cfg.country==="sk"?"Kalendár sa pripravuje":"Kalendář se připravuje"):(data.nameday||"—"));const events=data.holidays.filter(x=>x.type==="significant"?cfg.significant:cfg.holidays);setText("hero-nameday",data.nameday||"");setText("hero-holiday",events.map(x=>x.name).join(" • "));$("hero-today").classList.toggle("hidden",!(data.nameday||events.length));$("hero-holiday").classList.toggle("hidden",!events.length);$("holiday-card").classList.toggle("hidden",events.length===0);setText("holiday",events.map(x=>x.name).join(" • "));setText("holiday-note",events.length?events.map(x=>x.type==="significant"?(cfg.country==="sk"?"Pamätný deň":"Významný den"):x.day_off?(cfg.country==="sk"?"Deň pracovného pokoja":"Den pracovního klidu"):(cfg.country==="sk"?"Sviatok – pracovný deň":"Svátek – pracovní den")).filter((x,i,a)=>a.indexOf(x)===i).join(" • "):"");$("names").classList.toggle("long",(data.nameday||"").length>19);if(cfg.tomorrow){const q=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(next),{cache:"no-store"});if(q.ok){const t=await q.json();setText("tomorrow",t.nameday_status==="unavailable"?"":(cfg.country==="sk"?"Zajtra: ":"Zítra: ")+(t.nameday||"—"))}}await renderUpcoming(now);}catch(e){setText("names","Údaje nejsou dostupné");setText("hero-nameday","");setText("hero-holiday","");$("holiday-card").classList.add("hidden");setText("tomorrow","");$("upcoming").classList.add("hidden");}}
+$("holiday-card").classList.add("hidden");$("tomorrow").classList.toggle("hidden",!cfg.tomorrow||cfg.days>0);
+try{const u="/holidays/api/day?country="+cfg.country+"&date="+day;const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const data=await r.json();setText("names",data.nameday_status==="unavailable"?(cfg.country==="sk"?"Kalendár sa pripravuje":"Kalendář se připravuje"):(data.nameday||"—"));const events=data.holidays.filter(x=>x.type==="significant"?cfg.significant:cfg.holidays);setText("hero-nameday",data.nameday||"");setText("hero-holiday",events.map(x=>x.name).join(" • "));$("hero-today").classList.toggle("hidden",!(data.nameday||events.length));$("hero-holiday").classList.toggle("hidden",!events.length);$("holiday-card").classList.toggle("hidden",events.length===0);setText("holiday",events.map(x=>x.name).join(" • "));setText("holiday-note",events.length?events.map(x=>x.type==="significant"?(cfg.country==="sk"?"Pamätný deň":"Významný den"):x.day_off?(cfg.country==="sk"?"Deň pracovného pokoja":"Den pracovního klidu"):(cfg.country==="sk"?"Sviatok – pracovný deň":"Svátek – pracovní den")).filter((x,i,a)=>a.indexOf(x)===i).join(" • "):"");$("names").classList.toggle("long",(data.nameday||"").length>19);if(cfg.tomorrow&&cfg.days===0){const q=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(next),{cache:"no-store"});if(q.ok){const t=await q.json();setText("tomorrow",t.nameday_status==="unavailable"?"":(cfg.country==="sk"?"Zajtra: ":"Zítra: ")+(t.nameday||"—"))}}await renderUpcoming(now);}catch(e){setText("names","Údaje nejsou dostupné");setText("hero-nameday","");setText("hero-holiday","");$("holiday-card").classList.add("hidden");setText("tomorrow","");$("upcoming").classList.add("hidden");}}
 
 function eventFilter(e){return e.type==="significant"?cfg.significant:cfg.holidays}
 async function renderUpcoming(today){
@@ -988,6 +1033,6 @@ update();setInterval(()=>{cfg=readConfig();update()},60000);
 /* Temporary immutable deployment stamp: generated at build/commit time, never ticks. */
 const buildClock=document.createElement("div");
 buildClock.id="nsp-build-clock";
-buildClock.textContent="Verze: 26. 10. 2026 11:00"; 
+buildClock.textContent="Verze: úprava 02"; 
 document.body.appendChild(buildClock);
 </script></body></html>
