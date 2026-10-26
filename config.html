@@ -91,7 +91,7 @@ body{min-height:100vh}
 const $=x=>document.getElementById(x);
 const defaults={viewMode:"nsp",country:"cz",monthFormat:"text",days:0,tomorrow:true,holidays:true,significant:true};
 let saved={};try{saved=JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}catch{}
-const c={...defaults,...saved};if(saved.days===undefined&&saved.nextSix)c.days=6;
+const c={...defaults,...saved,viewMode:"nsp"};if(saved.days===undefined&&saved.nextSix)c.days=6;
 const params=new URLSearchParams(location.search);
 for(const k of Object.keys(defaults)){if(params.has(k)){const v=params.get(k);c[k]=k==="days"?Number(v):["tomorrow","holidays","significant"].includes(k)?v==="1":v}}
 for(const k of ["viewMode","country","monthFormat","days"])$(k).value=String(c[k]);
