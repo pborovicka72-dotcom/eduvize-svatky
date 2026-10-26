@@ -585,6 +585,13 @@ body.zone-narrow:not(.strip) #upcoming-grid .upcoming-event{
  font-size:clamp(18px,1.25vw,28px)!important
 }
 body.zone-narrow:not(.strip) #upcoming{display:none!important}
+
+/* Portrait NSP: double the visual card height with generous vertical breathing room. */
+body.zone-narrow:not(.strip) #names-card,
+body.zone-narrow:not(.strip) #upcoming-grid .upcoming-day{
+ padding-top:clamp(44px,4.2vh,90px)!important;
+ padding-bottom:clamp(44px,4.2vh,90px)!important;
+}
 </style></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div><div class="hero-today" id="hero-today"><div class="hero-today-name" id="hero-nameday"></div><div class="hero-today-holiday" id="hero-holiday"></div></div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví jmeniny</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><footer class="footer"><span id="footer">Eduvize • Svátky a jmeniny</span></footer></main><script>
 const originalFetch=window.fetch.bind(window);
 let calendarPromise;
