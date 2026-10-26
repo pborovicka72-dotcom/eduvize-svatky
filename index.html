@@ -985,12 +985,9 @@ if(params.get("debug")==="1"){
 }
 update();setInterval(()=>{cfg=readConfig();update()},60000);
 
-/* Temporary local time, refreshed every second, on every NSP segment. */
+/* Temporary immutable deployment stamp: generated at build/commit time, never ticks. */
 const buildClock=document.createElement("div");
 buildClock.id="nsp-build-clock";
+buildClock.textContent="Verze: 26. 10. 2026 11:00"; 
 document.body.appendChild(buildClock);
-function refreshBuildClock(){
- buildClock.textContent=new Intl.DateTimeFormat("cs-CZ",{timeZone:"Europe/Prague",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(new Date());
-}
-refreshBuildClock();setInterval(refreshBuildClock,1000);
 </script></body></html>
