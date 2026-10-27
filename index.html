@@ -1174,4 +1174,71 @@ if(params.get("debug")==="1"){
 }
 update();setInterval(()=>{cfg=readConfig();update()},60000);
 
-</script><script src="segment-display.js?v=20261027-1"></script></body></html>
+</script><style id="ev-modern-segments">
+body.ev-modern{background:#eaf2f8!important;overflow:hidden!important}
+body.ev-modern .shell{box-sizing:border-box!important;width:100%!important;max-width:none!important;height:100dvh!important;min-height:0!important;padding:22px!important;gap:12px!important;margin:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;background:#eaf2f8!important}
+body.ev-modern .header,body.ev-modern .footer{display:none!important}
+body.ev-modern .hero{box-sizing:border-box!important;position:relative!important;flex:0 0 auto!important;width:100%!important;height:var(--ev-head,150px)!important;min-height:0!important;max-height:none!important;margin:0!important;padding:18px 32px!important;border-radius:22px!important;box-shadow:none!important;background:linear-gradient(110deg,#0c2e54 0%,#08618b 65%,#168e99 100%)!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;overflow:hidden!important}
+body.ev-modern .hero>div:first-child{min-width:0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important}
+body.ev-modern .calendar-weekday{font-size:clamp(15px,2.1vh,34px)!important;line-height:1.05!important}
+body.ev-modern .calendar-date{font-size:clamp(30px,5vh,78px)!important;line-height:1.02!important;letter-spacing:-.04em!important;white-space:nowrap!important}
+body.ev-modern .calendar-year{font-size:clamp(14px,2vh,30px)!important;line-height:1.1!important}
+body.ev-modern .hero-today{font-size:clamp(13px,2vh,27px)!important;line-height:1.1!important;margin-top:4px!important}
+body.ev-modern .hero-art.calendar-art{display:flex!important;flex:0 0 auto!important;width:clamp(52px,6vh,105px)!important;height:clamp(52px,6vh,105px)!important;align-items:center!important;justify-content:center!important}
+body.ev-modern .hero-art.calendar-art svg{width:72%!important;height:72%!important}
+body.ev-modern .metrics.calendar-metrics{box-sizing:border-box!important;flex:0 0 auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;width:100%!important;margin:0!important;padding:0!important;background:transparent!important}
+body.ev-modern .metric.calendar-card{box-sizing:border-box!important;min-height:0!important;padding:18px 22px!important;border-radius:18px!important;overflow:hidden!important;box-shadow:none!important;background:#fff!important}
+body.ev-modern .metric.calendar-card .metric-value{font-size:clamp(19px,3.4vh,56px)!important;line-height:1.12!important;margin:8px 0!important}
+body.ev-modern .metric.calendar-card .metric-name{font-size:clamp(13px,1.8vh,25px)!important}
+body.ev-modern .upcoming{display:flex!important;flex:1 1 auto!important;flex-direction:column!important;min-height:0!important;gap:10px!important;margin:0!important;padding:0!important;overflow:hidden!important}
+body.ev-modern .upcoming.hidden{display:none!important}
+body.ev-modern .upcoming .section-heading{flex:0 0 auto!important;margin:0!important}
+body.ev-modern .upcoming .section-heading h2{font-size:clamp(16px,2vh,30px)!important}
+body.ev-modern .upcoming-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-rows:minmax(0,1fr)!important;gap:12px!important;flex:1 1 auto!important;min-height:0!important;width:100%!important;max-height:100%!important;margin:0!important;padding:0!important}
+body.ev-modern .upcoming-day{box-sizing:border-box!important;min-height:0!important;padding:clamp(12px,1.8vh,26px)!important;border-radius:18px!important;overflow:hidden!important;background:#fff!important;box-shadow:none!important}
+body.ev-modern .upcoming-date{font-size:clamp(12px,1.7vh,24px)!important}
+body.ev-modern .upcoming-name{font-size:clamp(18px,2.8vh,43px)!important;line-height:1.15!important;margin-top:7px!important}
+body.ev-modern .upcoming-event{font-size:clamp(12px,1.7vh,24px)!important;line-height:1.2!important}
+body.ev-modern.ev-tall{--ev-head:300px}
+body.ev-modern.ev-tall .hero{padding:28px!important}
+body.ev-modern.ev-tall .calendar-date{font-size:clamp(48px,6vh,110px)!important}
+body.ev-modern.ev-tall .metrics.calendar-metrics{grid-template-columns:1fr!important}
+body.ev-modern.ev-tall .upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+body.ev-modern.ev-wide{--ev-head:240px}
+body.ev-modern.ev-wide .metrics.calendar-metrics{flex:0 0 auto!important}
+body.ev-modern.ev-wide .upcoming-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+body.ev-modern.ev-strip{--ev-head:150px}
+body.ev-modern.ev-strip .shell{padding:11px!important;gap:9px!important}
+body.ev-modern.ev-strip .hero{height:150px!important;padding:12px 26px!important;border-radius:18px!important}
+body.ev-modern.ev-strip .calendar-weekday{font-size:18px!important}
+body.ev-modern.ev-strip .calendar-date{font-size:40px!important}
+body.ev-modern.ev-strip .calendar-year{font-size:16px!important}
+body.ev-modern.ev-strip .hero-today{font-size:17px!important}
+body.ev-modern.ev-strip .hero-art.calendar-art{width:62px!important;height:62px!important}
+body.ev-modern.ev-strip .metrics.calendar-metrics{display:none!important}
+body.ev-modern.ev-strip .upcoming{display:flex!important;flex:1 1 auto!important}
+body.ev-modern.ev-strip .upcoming .section-heading{display:none!important}
+body.ev-modern.ev-strip .upcoming-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-auto-rows:minmax(0,1fr)!important;gap:9px!important}
+body.ev-modern.ev-strip .upcoming-day{padding:10px 14px!important;border-radius:14px!important}
+body.ev-modern.ev-strip .upcoming-date{font-size:14px!important}
+body.ev-modern.ev-strip .upcoming-name{font-size:19px!important;margin-top:4px!important}
+body.ev-modern.ev-strip .upcoming-event{font-size:13px!important}
+body.ev-modern.ev-compact{--ev-head:115px}
+body.ev-modern.ev-compact .shell{padding:10px!important;gap:8px!important}
+body.ev-modern.ev-compact .hero{padding:12px 20px!important;border-radius:15px!important}
+body.ev-modern.ev-compact .calendar-weekday{font-size:16px!important}
+body.ev-modern.ev-compact .calendar-date{font-size:35px!important}
+body.ev-modern.ev-compact .calendar-year{font-size:14px!important}
+body.ev-modern.ev-compact .hero-today{font-size:15px!important}
+body.ev-modern.ev-compact .hero-art.calendar-art{width:50px!important;height:50px!important}
+body.ev-modern.ev-compact .metrics.calendar-metrics{display:none!important}
+body.ev-modern.ev-compact .upcoming .section-heading{display:none!important}
+body.ev-modern.ev-compact .upcoming-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+body.ev-modern.ev-compact .upcoming-day{padding:7px!important;border-radius:9px!important}
+body.ev-modern.ev-compact .upcoming-date{font-size:11px!important}
+body.ev-modern.ev-compact .upcoming-name{font-size:14px!important;margin-top:3px!important}
+body.ev-modern.ev-compact .upcoming-event{font-size:10px!important}
+body.ev-modern .upcoming-name,body.ev-modern .upcoming-event,body.ev-modern .metric-value{overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important}
+</style><script>
+(()=>{const q=new URLSearchParams(location.search);if(q.get('ev_inner')!=='1')return;const o=q.get('segment_orientation'),style=Number(q.get('segment_style')),block=Number(q.get('segment_block'));const sizes={landscape:{1:[[3840,2160]],2:[[1200,2160],[2640,1480],[2640,680]],3:[[960,2160],[2880,2160]],4:[[1680,1080],[2160,2160],[1680,1080]],5:[[1920,1080],[1920,1080],[1920,1080],[1920,1080]],6:[[872,1672],[2968,1672],[872,488],[2968,488]],7:[[1280,2160],[1280,2160],[1280,2160]],8:[[3840,1672],[3840,488]]},portrait:{1:[[2160,3840]],2:[[2160,960],[2160,2880]],3:[[2160,560],[2160,1216],[1080,2064],[1080,2064]],4:[[2160,560],[2160,1390],[2160,1890]],5:[[1080,1920],[1080,1920],[1080,1920],[1080,1920]]}};const rect=sizes[o]?.[style]?.[block-1];if(!rect)return;const [w,h]=rect;document.body.classList.add('ev-modern');document.body.classList.add(h<=560?'ev-compact':h<=700?'ev-strip':w/h<.9?'ev-tall':'ev-wide');const grid=document.getElementById('upcoming-grid'),upcoming=document.getElementById('upcoming');if(grid&&upcoming&&grid.parentElement!==upcoming)upcoming.append(grid);})();
+</script><script src="segment-display.js?v=20261027-3"></script></body></html>
