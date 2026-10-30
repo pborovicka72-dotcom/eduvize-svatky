@@ -1,147 +1,15 @@
-<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Eduvize | Svátky a jmeniny</title><style>@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
-:root{font-family:'Open Sans',Arial,sans-serif;color:#172b4d;background:#eaf2f8}*{box-sizing:border-box}html,body{margin:0;min-height:100%;}body{background:radial-gradient(circle at 92% 0%,#d9f8ef,transparent 36%),#eaf2f8}.hidden{display:none!important}
-.shell{max-width:1800px;min-height:100vh;margin:auto;padding:clamp(14px,2.2vw,36px);display:flex;flex-direction:column;gap:clamp(12px,1.4vw,22px)}
-.header{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:8px 3px}.brand{display:flex;align-items:center;gap:15px}.brandmark{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(135deg,#0876bb,#00b79b);color:#fff}.brandmark svg{width:29px;height:29px}.eyebrow{font-size:13px;letter-spacing:.16em;font-weight:800;color:#078b9e;text-transform:uppercase}h1{font-size:clamp(25px,2.4vw,40px);letter-spacing:-.04em;margin:2px 0 0;line-height:1.12}.status{display:flex;align-items:center;gap:9px;padding:11px 16px;border-radius:100px;border:1px solid #d1e6e5;background:#fff;color:#19796e;font-weight:750;font-size:14px}.status:before{content:"";width:9px;height:9px;border-radius:50%;background:#15bb92;box-shadow:0 0 0 5px #15bb921c}
-.hero{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(225px,32vh,370px);border-radius:30px;padding:clamp(26px,3.4vw,58px);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(112deg,#0c2e54 4%,#075c86 60%,#168e99 100%);box-shadow:0 18px 40px #11436624}
-.hero:before{content:"";position:absolute;z-index:-1;width:700px;height:700px;right:-10%;top:-125%;border-radius:50%;border:2px solid #ffffff20;box-shadow:0 0 0 60px #ffffff08,0 0 0 130px #ffffff08}.hero:after{content:"";position:absolute;z-index:-1;width:350px;height:350px;right:12%;bottom:-110%;border-radius:50%;background:#12d9b328;filter:blur(35px)}
-.calendar-weekday{font-size:clamp(22px,2.4vw,40px);font-weight:650;color:#d1edf0;line-height:1.12}.calendar-date{font-size:clamp(48px,5vw,96px);font-weight:800;letter-spacing:-.045em;line-height:1.05;margin:9px 0 4px}.calendar-year{font-size:clamp(24px,3vw,54px);font-weight:650;color:#d1edf0;line-height:1.1}.hero-today{margin-top:12px}.hero-art{flex:0 0 clamp(110px,19vw,270px);width:clamp(110px,19vw,270px);height:clamp(110px,19vw,270px);display:grid;place-items:center;position:relative}.hero-art:before{content:"";position:absolute;inset:8%;border-radius:50%;background:#ffffff12;border:1px solid #ffffff30;box-shadow:0 0 0 20px #ffffff09,0 0 0 42px #ffffff07}.hero-art svg{width:65%;height:65%;filter:drop-shadow(0 12px 18px #06253e66)}
-.metrics.calendar-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.calendar-metrics:has(#holiday-card.hidden){grid-template-columns:1fr}.metric.calendar-card{display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;min-width:0;min-height:180px;padding:clamp(18px,2vw,32px);border-radius:24px;background:#fff;box-shadow:0 8px 28px #143b5510}.metric.calendar-card:after{content:"";position:absolute;right:-35px;bottom:-50px;width:125px;height:125px;border-radius:50%;background:#eff9f8}.metric-top{position:relative;z-index:1;display:flex;align-items:center;gap:13px}.metric-icon{width:clamp(38px,3.3vw,54px);height:clamp(38px,3.3vw,54px);display:grid;place-items:center;flex:none;border-radius:14px;background:#e5f7f4;color:#008f91}.metric-icon svg{width:55%;height:55%}.metric-name{font-size:clamp(14px,1.25vw,21px);font-weight:650;color:#4b667b}.metric-value{position:relative;z-index:1;font-size:clamp(35px,5vw,82px);font-weight:800;letter-spacing:-.045em;line-height:1.15;margin:14px 0 6px;overflow-wrap:break-word}.metric-value.long{font-size:clamp(25px,3vw,52px)}.metric-note{position:relative;z-index:1;font-size:clamp(14px,1.3vw,22px);color:#8295a4}
-.upcoming{display:flex;flex-direction:column;gap:12px;min-width:0}.section-heading h2{font-size:clamp(17px,1.5vw,23px);margin:0}.upcoming-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.upcoming-day{min-width:0;padding:clamp(10px,1.3vw,20px);border-radius:18px;background:#fff;box-shadow:0 8px 28px #143b5510}.upcoming-date{color:#087c91;font-size:clamp(12px,1.05vw,17px);font-weight:750}.upcoming-name{font-size:clamp(17px,1.65vw,27px);font-weight:800;color:#172b4d;margin-top:9px;overflow-wrap:break-word}.upcoming-event{font-size:clamp(11px,.9vw,15px);color:#087c91;background:#dff6ef;border-left:4px solid #12a994;border-radius:8px;padding:8px;margin-top:10px;font-weight:700;overflow-wrap:break-word}
-@media(max-width:850px){.upcoming-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.metrics.calendar-metrics{grid-template-columns:1fr}}@media(max-width:520px){.upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:20px}.hero-art{width:85px;height:85px;flex-basis:85px}.header{flex-wrap:wrap}}
-/* Newline output: same visual components, pixel geometry supplied by the exact segment catalogue. */
-body.ev-modern{width:100%;height:100%;overflow:hidden;background:#eaf2f8}
-body.ev-modern .header{display:none}
-body.ev-modern .shell{width:100%;max-width:none;height:100vh;min-height:0;overflow:hidden;margin:0;padding:var(--ev-pad-top,22px) var(--ev-pad-right,22px) var(--ev-pad-bottom,22px) var(--ev-pad-left,22px);gap:var(--ev-gap,22px);justify-content:flex-start}
-body.ev-modern .hero{flex:0 0 var(--ev-head,230px);height:var(--ev-head,230px);min-height:var(--ev-head,230px);max-height:var(--ev-head,230px);padding:var(--ev-head-pad,26px) var(--ev-head-side,58px);border-radius:var(--ev-radius,30px);gap:var(--ev-head-gap,28px);box-shadow:none}
-body.ev-modern .hero>div:first-child{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:clamp(0px,var(--ev-head-gap,28px) * .08,5px);min-width:0;overflow:hidden;flex:1 1 auto}
-body.ev-modern .calendar-weekday,body.ev-modern .calendar-year{font-size:clamp(11px,calc(var(--ev-head,230px) * .14),36px);white-space:nowrap;line-height:1.08}
-body.ev-modern .calendar-date{font-size:clamp(20px,calc(var(--ev-head,230px) * .32),90px);margin:0;white-space:nowrap;line-height:1.08}
-body.ev-modern .calendar-date-year{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;flex-wrap:nowrap;gap:0;max-width:100%;min-width:0}
-body.ev-modern .calendar-date-year .calendar-date,body.ev-modern .calendar-date-year .calendar-year{flex:0 1 auto;min-width:0}
-body.ev-modern .hero-art{order:-1;flex:0 0 var(--ev-icon,86px);width:var(--ev-icon,86px);height:var(--ev-icon,86px);border-radius:20px;background:#ffffff22}
-body.ev-modern .hero-art:before{display:none}body.ev-modern .hero-art svg{width:58%;height:58%}
-body.ev-modern .hero-today{display:none}
-body.ev-modern .metrics.calendar-metrics{display:flex;flex:0 0 auto;flex-direction:column;gap:var(--ev-gap,22px)}
-body.ev-modern .metric.calendar-card{min-height:var(--ev-today-height,300px);padding:var(--ev-card-pad,32px);border-radius:var(--ev-radius,30px);box-shadow:0 8px 28px #143b5510}
-body.ev-modern .metric-name{font-size:var(--ev-subtitle,42px)}body.ev-modern .metric-icon{width:var(--ev-small-icon,65px);height:var(--ev-small-icon,65px)}body.ev-modern .metric-value{font-size:var(--ev-name,90px);margin:12px 0}body.ev-modern .metric-note{font-size:var(--ev-note,27px)}
-body.ev-modern .upcoming{flex:0 0 auto;min-height:0;overflow:hidden;gap:var(--ev-gap,22px)}
-body.ev-modern .section-heading h2{font-size:var(--ev-subtitle,42px)}
-body.ev-modern .upcoming-grid{flex:0 0 auto;min-height:0;grid-template-columns:repeat(var(--ev-columns,6),minmax(0,1fr));grid-template-rows:repeat(var(--ev-rows,1),auto);grid-auto-rows:auto;align-content:start;gap:var(--ev-gap,22px)}
-body.ev-modern .upcoming-day{display:flex;flex-direction:column;align-items:flex-start;overflow:hidden;min-height:0;padding:var(--ev-card-pad,32px);border-radius:var(--ev-radius,30px)}
-body.ev-modern .upcoming-date{font-size:var(--ev-day-label,32px)}body.ev-modern .upcoming-name{font-size:var(--ev-day-name,52px);margin-top:var(--ev-name-gap,14px);line-height:1.18;overflow-wrap:normal;word-break:normal;hyphens:none}body.ev-modern .upcoming-event{font-size:var(--ev-day-event,26px);padding:var(--ev-event-pad,16px);margin-top:var(--ev-name-gap,14px);border-radius:var(--ev-event-radius,18px);overflow-wrap:normal;word-break:normal;hyphens:none}
-body.ev-modern.ev-tall .upcoming-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,auto)}
-body.ev-modern.ev-strip .metrics.calendar-metrics,body.ev-modern.ev-compact .metrics.calendar-metrics{display:none}
-body.ev-modern.ev-strip .upcoming .section-heading,body.ev-modern.ev-compact .upcoming .section-heading{display:none}
-body.ev-modern.ev-strip .upcoming-grid,body.ev-modern.ev-compact .upcoming-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:auto}
-body.ev-modern.ev-strip .upcoming-date,body.ev-modern.ev-compact .upcoming-date{font-size:var(--ev-day-label,19px)}
-body.ev-modern.ev-strip .upcoming-name,body.ev-modern.ev-compact .upcoming-name{font-size:var(--ev-day-name,29px)}
-body.ev-modern.ev-strip .upcoming-event,body.ev-modern.ev-compact .upcoming-event{font-size:var(--ev-day-event,17px)}
-body.ev-modern.ev-compact .metric.calendar-card,body.ev-modern.ev-tall .metric.calendar-card{min-height:0}
-
-/* Only specified long, narrow segments use full-height upcoming cards. */
-body.ev-modern.ev-fill-days .upcoming{flex:1 1 auto;min-height:0}
-body.ev-modern.ev-fill-days .upcoming-grid{flex:1 1 auto;min-height:0;grid-template-rows:repeat(var(--ev-rows,1),minmax(0,1fr));grid-auto-rows:minmax(0,1fr)}
-body.ev-modern.ev-fill-days .upcoming-day{min-height:0}
-/* Landscape style 6, block 3: date and today's names only. */
-body.ev-modern.ev-no-upcoming .upcoming{display:none!important}
-/* Style 6 / segment 3: keep the compact Dnes slaví card visible. */
-body.ev-modern.ev-no-upcoming .metrics.calendar-metrics{display:flex!important;flex:0 0 auto;gap:0}
-body.ev-modern.ev-no-upcoming .metrics.calendar-metrics:has(#names-card.hidden){display:none!important}
-body.ev-modern.ev-no-upcoming #holiday-card{display:none!important}
-body.ev-modern.ev-no-upcoming #names-card{min-height:0;height:auto;padding:clamp(12px,2.5vw,20px);border-radius:18px}
-body.ev-modern.ev-no-upcoming #names-card .metric-name{font-size:clamp(20px,2.8vw,30px)}
-body.ev-modern.ev-no-upcoming #names-card .metric-value{font-size:clamp(32px,4.2vw,50px);line-height:1.08;margin:5px 0}
-body.ev-modern.ev-no-upcoming #names-card .metric-note{font-size:clamp(12px,1.6vw,18px)}
-body.ev-modern.ev-no-upcoming #names-card .metric-icon{width:38px;height:38px}
-
-
-body.ev-modern.ev-portrait-top .hero{height:calc(var(--ev-head,230px) * 1.5);min-height:calc(var(--ev-head,230px) * 1.5);max-height:calc(var(--ev-head,230px) * 1.5);flex-basis:calc(var(--ev-head,230px) * 1.5)}
-body.ev-modern.ev-no-upcoming .metrics.calendar-metrics{flex:1 1 auto!important;min-height:0}
-body.ev-modern.ev-no-upcoming #names-card{flex:1 1 auto!important;display:flex;flex-direction:column;justify-content:center}
-.web-header{justify-content:flex-start}.web-header .web-logo{display:block;width:330px;max-width:100%;height:auto}
-
-/* Compact regular-page date header: names are shown only in Dnes slavi card. */
-body:not(.ev-modern) .hero{min-height:150px;height:auto;padding:22px clamp(22px,3vw,42px);gap:16px}
-body:not(.ev-modern) .hero .calendar-weekday,body:not(.ev-modern) .hero .calendar-year{font-size:clamp(18px,2vw,30px)}
-body:not(.ev-modern) .hero .calendar-date{font-size:clamp(35px,4vw,64px)}
-body:not(.ev-modern) .hero .hero-art{flex-basis:110px;width:110px;height:110px}
-body .hero-today{display:none!important}
-
-/* Give the holiday title the same visual importance as today's names. */
-#holiday-card .metric-value.long{font-size:clamp(30px,4.4vw,76px);line-height:1.1;overflow-wrap:normal;word-break:normal;hyphens:none}
-body.ev-modern #holiday-card .metric-value.long{font-size:clamp(25px,calc(var(--ev-name,90px) * .9),82px);line-height:1.1;overflow-wrap:normal;word-break:normal;hyphens:none;margin:8px 0}
-body.ev-modern #names-card .metric-value{font-size:clamp(28px,var(--ev-name,90px),90px);line-height:1.1;overflow-wrap:normal;word-break:normal}
-
-/* All cards in a multi-row upcoming grid share the same natural row height. */
-body.ev-modern .upcoming-grid{grid-auto-rows:1fr;align-items:stretch}
-body.ev-modern.ev-tall .upcoming-grid{grid-template-rows:repeat(3,minmax(0,1fr));grid-auto-rows:1fr}
-body.ev-modern .upcoming-grid .upcoming-day{height:100%;align-self:stretch}
-body.ev-modern.ev-fill-days .upcoming-grid{grid-auto-rows:minmax(0,1fr)}
-/* NSP iframe: eliminate page gutters without changing web layout */
-html:has(body[data-ev-segment]) ,body[data-ev-segment]{width:100%!important;height:100%!important;min-height:0!important;overflow:hidden!important;margin:0!important}
-body[data-ev-segment] .shell{max-width:none!important;width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important}
-</style><style>html.kiosk-output{height:100%}html.kiosk-output body{min-height:100%;margin:0}html.kiosk-output .shell{width:100%!important;max-width:none!important;min-height:100dvh!important;margin:0!important;padding:clamp(8px,1.5vmin,22px)!important}html.kiosk-output .web-header{display:none!important}html.kiosk-output .hero{margin-top:0!important}html.kiosk-output html,html.kiosk-output body{overflow-x:hidden}html.kiosk-output button,html.kiosk-output a,html.kiosk-output input,html.kiosk-output select{touch-action:manipulation}</style><script>if(new URLSearchParams(location.search).get('viewMode')==='kiosk'||new URLSearchParams(location.search).get('output')==='kiosk')document.documentElement.classList.add('kiosk-output');</script><style id="eduvize-kiosk-unified-header">html.kiosk-header-synced .hero{height:var(--kiosk-header-height)!important;min-height:var(--kiosk-header-height)!important;max-height:var(--kiosk-header-height)!important;box-sizing:border-box!important;overflow:hidden!important;flex:0 0 var(--kiosk-header-height)!important;}html.kiosk-header-synced .hero h1{font-size:clamp(15px,2.2vw,28px)!important}html.kiosk-header-synced .hero .hero-art{max-height:95%!important}</style><script>window.addEventListener('message',function(event){if(!['https://pborovicka72-dotcom.github.io','https://eduvize-kiosek.onrender.com'].includes(event.origin)||!event.data||event.data.type!=='eduvize-kiosk-layout')return;const h=Number(event.data.headerHeight);if(!Number.isFinite(h)||h<60||h>500)return;document.documentElement.style.setProperty('--kiosk-header-height',Math.round(h)+'px');document.documentElement.classList.add('kiosk-header-synced')});</script><script>/* Apply unified kiosk framing before the parent sizing message arrives. */(function(){const p=new URLSearchParams(location.search);if(p.get('viewMode')==='kiosk'||p.get('output')==='kiosk'){document.documentElement.classList.add('kiosk-header-synced');document.documentElement.style.setProperty('--kiosk-header-height','clamp(120px,22vh,210px)')}})();</script>
-<style id="eduvize-kiosk-layout-contract">
-/* Kiosk owns the visible frame; modules own only their internal content. */
-html.kiosk-output .shell{padding-top:clamp(6px,.9vmin,14px)!important;box-sizing:border-box!important}
-html.kiosk-output .shell>.hero{border:0!important;outline:0!important;box-shadow:none!important;
- margin-top:0!important;box-sizing:border-box!important}
-html.kiosk-output .shell>.hero::after{border:0!important;box-shadow:none!important}
-html.kiosk-output .shell>.hero>.eduvize-kiosk-frame{display:none!important}
-</style></head><body><main class="shell"><header class="header web-header"><img class="web-logo" src="assets/eduvize-logo.svg?v=20261027-27" alt="Eduvize" width="330" height="82"></header><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div><div class="hero-today" id="hero-today"><div class="hero-today-name" id="hero-nameday"></div><div class="hero-today-holiday" id="hero-holiday"></div></div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section></main><script>
-const originalFetch=window.fetch.bind(window);
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Eduvize | Svátky a jmeniny</title><script>if(new URLSearchParams(location.search).get('viewMode')==='kiosk'||new URLSearchParams(location.search).get('output')==='kiosk')document.documentElement.classList.add('kiosk-output');</script><script>window.addEventListener('message',function(event){if(!['https://pborovicka72-dotcom.github.io','https://eduvize-kiosek.onrender.com'].includes(event.origin)||!event.data||event.data.type!=='eduvize-kiosk-layout')return;const h=Number(event.data.headerHeight);if(!Number.isFinite(h)||h<60||h>500)return;document.documentElement.style.setProperty('--kiosk-header-height',Math.round(h)+'px');document.documentElement.classList.add('kiosk-header-synced')});</script><script>/* Apply unified kiosk framing before the parent sizing message arrives. */(function(){const p=new URLSearchParams(location.search);if(p.get('viewMode')==='kiosk'||p.get('output')==='kiosk'){document.documentElement.classList.add('kiosk-header-synced');document.documentElement.style.setProperty('--kiosk-header-height','clamp(120px,22vh,210px)')}})();</script>
+<link rel="stylesheet" href="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/admin-tokens.css?v=2"><link rel="stylesheet" href="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/holidays.css?v=1"><link rel="stylesheet" href="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/preview-viewport.css?v=1"><script src="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/preview-viewport.js?v=1"></script><script src="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/nsp-geometry.js?v=1"></script><script defer src="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/active-theme.js?v=15"></script></head><body><main class="shell"><section class="hero"><div><div class="calendar-weekday" id="weekday">—</div><div class="calendar-date" id="date">—</div><div class="calendar-year" id="year">—</div></div><div class="hero-art calendar-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></div></section><section class="metrics calendar-metrics"><article class="metric calendar-card" id="names-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Dnes slaví</span></div><div class="metric-value" id="names">Načítání…</div><div class="metric-note" id="tomorrow"></div></article><article class="metric calendar-card" id="holiday-card"><div class="metric-top"><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3M14 15h3"/></svg></span><span class="metric-name">Kalendářní svátky</span></div><div class="metric-value long" id="holiday">Načítání…</div><div class="metric-note" id="holiday-note"></div></article></section><section id="upcoming" class="upcoming hidden" aria-label="Kalendář na dalších šest dnů"><div class="section-heading"><h2>Dalších 6 dnů</h2></div><div id="upcoming-grid" class="upcoming-grid"></div></section><p id="calendar-status" class="calendar-status" role="status" hidden></p></main><script>
 let calendarPromise;
-window.fetch=async function(input,options){
-const url=String(input);
-if(!url.startsWith("/holidays/api/day"))return originalFetch(input,options);
-if(!calendarPromise)calendarPromise=originalFetch("./calendar.json").then(r=>{if(!r.ok)throw Error("Calendar unavailable");return r.json()});
-const all=await calendarPromise,q=new URLSearchParams(url.split("?")[1]||""),country=q.get("country")||"cz",day=q.get("date");
-const record=all[country]?.[day];
-return {ok:!!record,status:record?200:404,json:async()=>record};
-};
+async function calendarDay(country,date){if(!calendarPromise)calendarPromise=fetch('./calendar.json').then(r=>{if(!r.ok)throw Error('Kalendář není dostupný');return r.json()}).catch(error=>{calendarPromise=null;throw error});const all=await calendarPromise;const data=all[country]?.[date];if(!data)throw Error('Pro tento den nejsou k dispozici údaje.');return data;}
 </script>
 <script>
 const $=id=>document.getElementById(id);const params=new URLSearchParams(location.search);const defaults={viewMode:"nsp",country:"cz",tomorrow:true,holidays:true,significant:true,monthFormat:"text",days:0};let cfg=defaults;
 try{cfg={...defaults,...JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}}catch{}
-function readConfig(){let saved={};try{saved=JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}catch{}const x={...defaults,...saved};if(x.days===undefined)x.days=x.nextSix?6:0;for(const k of ["viewMode","country","monthFormat","days","tomorrow","holidays","significant"]){if(params.has(k)){const v=params.get(k);x[k]=k==="days"?Number(v):["tomorrow","holidays","significant"].includes(k)?v==="1":v}}x.days=Math.max(0,Math.min(6,Number(x.days)||0));return x}cfg=readConfig();
+function readConfig(){let saved={};try{saved=JSON.parse(localStorage.getItem("eduvize-holidays-config")||"{}")}catch{}const x={...defaults,...saved};if(saved.days===undefined&&saved.nextSix)x.days=6;for(const k of ["viewMode","country","monthFormat","days","tomorrow","holidays","significant"]){if(params.has(k)){const v=params.get(k);x[k]=k==="days"?Number(v):["tomorrow","holidays","significant"].includes(k)?v==="1":v}}x.country=x.country==="sk"?"sk":"cz";x.viewMode=x.viewMode==="web"?"web":"nsp";x.monthFormat=x.monthFormat==="number"?"number":"text";x.days=Math.max(0,Math.min(6,Math.trunc(Number(x.days)||0)));return x}cfg=readConfig();
 const locale=()=>cfg.country==="sk"?"sk-SK":"cs-CZ";
-function layout(){
- const web=cfg.viewMode==="web";
- document.body.classList.toggle("web-mode",web);
- if(web){
-  document.body.classList.remove("strip","narrow","zone-narrow","zone-small","zone-wide");
-  delete document.body.dataset.nspWideLocked;
-  const upcoming=document.getElementById("upcoming"),grid=document.getElementById("upcoming-grid");
-  if(upcoming&&grid&&grid.parentElement!==upcoming)upcoming.appendChild(grid);
-  document.body.dataset.segmentLayout="standard";
-  return;
- }
- const w=window.innerWidth||document.documentElement.clientWidth,h=window.innerHeight||document.documentElement.clientHeight;
- const ratio=w/Math.max(1,h);
- const panoramic=ratio>2.7;
- document.body.classList.toggle("strip",panoramic);
- document.body.classList.toggle("narrow",w/Math.max(1,h)<.85);
- // NSP may report ~1921x1076 or ~1921x1083 for the upper-right panel.
- // Keep the existing days=0 distinction for the lower-left compact panel.
- // Lock the upper-right detailed layout after its first reliable detection,
- // so transient viewport changes cannot switch it to another CSS mode.
- if(!document.body.dataset.nspWideLocked&&ratio>=1.10&&ratio<=2.7&&w>=1600&&h>=950&&cfg.days>0){
-  document.body.dataset.nspWideLocked="1";
- }
- const lockedWide=document.body.dataset.nspWideLocked==="1";
- document.body.classList.toggle("strip",!lockedWide&&panoramic);
- document.body.classList.toggle("zone-narrow",!lockedWide&&!panoramic&&ratio<0.90);
- document.body.classList.toggle("zone-small",!lockedWide&&!panoramic&&ratio>=1.10&&ratio<=2.7&&cfg.days===0);
- document.body.classList.toggle("zone-wide",lockedWide||(!panoramic&&ratio>=1.10&&ratio<=2.7&&cfg.days>0));
- const metrics=document.querySelector(".calendar-metrics"),upcoming=document.getElementById("upcoming"),grid=document.getElementById("upcoming-grid");
- if(metrics&&upcoming&&grid){
-   if(document.body.classList.contains("zone-narrow")){
-     if(grid.parentElement!==metrics)metrics.appendChild(grid);
-   }else if(grid.parentElement!==upcoming)upcoming.appendChild(grid);
- }
- document.body.dataset.segmentLayout=panoramic?"panoramic":"standard";
-}
-addEventListener("resize",layout);layout();
+function layout(){const web=cfg.viewMode==='web';document.body.classList.toggle('web-mode',web);document.body.classList.toggle('strip',!web&&innerWidth/Math.max(1,innerHeight)>2.7);document.body.dataset.segmentLayout=web?'standard':document.body.classList.contains('strip')?'panoramic':'standard';}
+addEventListener('resize',layout);layout();
 /* Keep the full month name visible in the fixed-width lower-right header.
    The blue panel width stays unchanged; only the date font scales down if needed. */
 function fitStripDate(){
@@ -164,17 +32,17 @@ function fitStripDate(){
 function localDate(){return new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Prague"}))}
 function iso(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}
 function setText(id,value){$(id).textContent=value}
-async function update(){const now=localDate(),day=iso(now),next=new Date(now);next.setDate(next.getDate()+1);
+async function update(){$('names-card').querySelector('.metric-name').textContent=cfg.country==='sk'?'Dnes oslavuje':'Dnes slaví';$('holiday-card').querySelector('.metric-name').textContent=cfg.country==='sk'?'Kalendárne sviatky':'Kalendářní svátky';const now=localDate(),day=iso(now),next=new Date(now);next.setDate(next.getDate()+1);
 setText("weekday",new Intl.DateTimeFormat(locale(),{weekday:"long"}).format(now));setText("date",document.body.classList.contains("strip")?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now):(cfg.monthFormat==="number"?new Intl.DateTimeFormat(locale(),{day:"numeric",month:"2-digit"}).format(now):new Intl.DateTimeFormat(locale(),{day:"numeric",month:"long"}).format(now)));setText("year",String(now.getFullYear()));requestAnimationFrame(fitStripDate);
 $("holiday-card").classList.add("hidden");$("names-card").classList.add("hidden");$("tomorrow").classList.toggle("hidden",!cfg.tomorrow||cfg.days>0);
-try{const u="/holidays/api/day?country="+cfg.country+"&date="+day;const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const data=await r.json();const hasNameday=data.nameday_status!=="unavailable"&&Boolean(String(data.nameday||"").trim());$("names-card").classList.toggle("hidden",!hasNameday);setText("names",hasNameday?data.nameday:"");const events=data.holidays.filter(x=>x.type==="significant"?cfg.significant:cfg.holidays);setText("hero-nameday",data.nameday||"");setText("hero-holiday",events.map(x=>x.name).join(" • "));$("hero-today").classList.toggle("hidden",!(data.nameday||events.length));$("hero-holiday").classList.toggle("hidden",!events.length);$("holiday-card").classList.toggle("hidden",events.length===0);setText("holiday",events.map(x=>x.name).join(" • "));setText("holiday-note",events.length?events.map(x=>x.type==="significant"?(cfg.country==="sk"?"Pamätný deň":"Významný den"):x.day_off?(cfg.country==="sk"?"Deň pracovného pokoja":"Den pracovního klidu"):(cfg.country==="sk"?"Sviatok – pracovný deň":"Svátek – pracovní den")).filter((x,i,a)=>a.indexOf(x)===i).join(" • "):"");$("names").classList.toggle("long",(data.nameday||"").length>19);if(cfg.tomorrow&&cfg.days===0){const q=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(next),{cache:"no-store"});if(q.ok){const t=await q.json();setText("tomorrow",t.nameday_status==="unavailable"?"":(cfg.country==="sk"?"Zajtra: ":"Zítra: ")+(t.nameday||"—"))}}await renderUpcoming(now);}catch(e){$("names-card").classList.add("hidden");setText("names","");setText("hero-nameday","");setText("hero-holiday","");$("holiday-card").classList.add("hidden");setText("tomorrow","");$("upcoming").classList.add("hidden");}}
+try{const data=await calendarDay(cfg.country,day);$("calendar-status").hidden=true;const hasNameday=data.nameday_status!=="unavailable"&&Boolean(String(data.nameday||"").trim());$("names-card").classList.toggle("hidden",!hasNameday);setText("names",hasNameday?data.nameday:"");const events=(data.holidays||[]).filter(x=>x.type==="significant"?cfg.significant:cfg.holidays);$("holiday-card").classList.toggle("hidden",events.length===0);setText("holiday",events.map(x=>x.name).join(" • "));setText("holiday-note",events.length?events.map(x=>x.type==="significant"?(cfg.country==="sk"?"Pamätný deň":"Významný den"):x.day_off?(cfg.country==="sk"?"Deň pracovného pokoja":"Den pracovního klidu"):(cfg.country==="sk"?"Sviatok – pracovný deň":"Svátek – pracovní den")).filter((x,i,a)=>a.indexOf(x)===i).join(" • "):"");$("names").classList.toggle("long",(data.nameday||"").length>19);if(cfg.tomorrow&&cfg.days===0){try{const t=await calendarDay(cfg.country,iso(next));setText("tomorrow",t.nameday_status==="unavailable"?"":(cfg.country==="sk"?"Zajtra: ":"Zítra: ")+(t.nameday||"—"));}catch{setText("tomorrow","");}}await renderUpcoming(now);}catch(e){$("calendar-status").hidden=false;$("calendar-status").textContent="Kalendář se nepodařilo načíst. Zkusíme to znovu při další aktualizaci.";$("names-card").classList.add("hidden");setText("names","");$("holiday-card").classList.add("hidden");setText("tomorrow","");$("upcoming").classList.add("hidden");}}
 
 function eventFilter(e){return e.type==="significant"?cfg.significant:cfg.holidays}
 async function renderUpcoming(today){
- const panel=$("upcoming"),grid=$("upcoming-grid");panel.querySelector("h2").textContent=(cfg.country==="sk"?"Ďalších ":"Dalších ")+cfg.days+(cfg.days===1?" den":cfg.days>=2&&cfg.days<=4?" dny":" dnů");panel.classList.toggle("hidden",cfg.days===0);grid.replaceChildren();
+ const panel=$("upcoming"),grid=$("upcoming-grid");panel.querySelector("h2").textContent=(cfg.country==="sk"?"Ďalších ":"Dalších ")+cfg.days+(cfg.country==="sk"?(cfg.days===1?" deň":cfg.days<=4?" dni":" dní"):(cfg.days===1?" den":cfg.days<=4?" dny":" dnů"));panel.setAttribute("aria-label",panel.querySelector("h2").textContent);panel.classList.toggle("hidden",cfg.days===0);grid.replaceChildren();
  if(cfg.days===0)return;
  const dates=Array.from({length:cfg.days},(_,i)=>{const d=new Date(today);d.setDate(today.getDate()+i+1);return d});
- const results=await Promise.all(dates.map(async d=>{try{const r=await fetch("/holidays/api/day?country="+cfg.country+"&date="+iso(d));return r.ok?await r.json():null}catch{return null}}));
+ const results=await Promise.all(dates.map(async d=>{try{return await calendarDay(cfg.country,iso(d))}catch{return null}}));
  dates.forEach((d,i)=>{
  const data=results[i],card=document.createElement("article");card.className="upcoming-day";
  const title=document.createElement("div");title.className="upcoming-date";title.textContent=new Intl.DateTimeFormat(locale(),{weekday:"short",day:"numeric",month:cfg.monthFormat==="number"?"numeric":"short"}).format(d);
@@ -183,7 +51,7 @@ async function renderUpcoming(today){
  const events=(data?.holidays||[]).filter(eventFilter);if(events.length){card.classList.add(events.some(e=>e.type!=="significant")?"is-public-holiday":"is-significant-day");const note=document.createElement("div");note.className="upcoming-event"+(!names.textContent?" primary-event":"");note.textContent=events.map(e=>e.name).join(" • ");card.append(note)}
  grid.append(card);
  });
- requestAnimationFrame(()=>requestAnimationFrame(fitUpcomingText));
+ const columns=Math.max(1,Math.min(cfg.days,Number(getComputedStyle(document.body).getPropertyValue("--ev-columns"))||3));grid.style.setProperty("--calendar-columns",String(columns));grid.style.setProperty("--calendar-rows",String(Math.ceil(cfg.days/columns)));requestAnimationFrame(()=>requestAnimationFrame(fitUpcomingText));
 }
 
 
@@ -206,8 +74,9 @@ function fitUpcomingText(){
    el.style.fontSize=target+"px";
   }
   // Extremely narrow containers: prevent painting into neighboring cards.
-  el.style.overflow="hidden";
+
  });
+ fitPanoramicText();
 }
 
 function fitPanoramicText(){
@@ -217,12 +86,11 @@ function fitPanoramicText(){
   const available=card.clientHeight-parseFloat(getComputedStyle(card).paddingTop)-parseFloat(getComputedStyle(card).paddingBottom);
   let used=elements.reduce((sum,el)=>sum+el.getBoundingClientRect().height+parseFloat(getComputedStyle(el).marginTop||"0"),0);
   if(used>available&&available>0){const factor=Math.max(.35,available/used*.95);
-   for(const el of elements){const n=parseFloat(getComputedStyle(el).fontSize);el.style.setProperty("font-size",Math.max(10,Math.floor(n*factor))+"px","important");}
+   for(const el of elements){const n=parseFloat(getComputedStyle(el).fontSize);el.style.setProperty("font-size",Math.max(10,Math.floor(n*factor))+"px");}
   }
  });
 }
-const previousFitUpcomingText=fitUpcomingText;
-fitUpcomingText=function(){previousFitUpcomingText();fitPanoramicText()};
+
 window.addEventListener("resize",()=>requestAnimationFrame(()=>requestAnimationFrame(fitUpcomingText)));
 
 
@@ -230,7 +98,7 @@ window.addEventListener("resize",()=>requestAnimationFrame(()=>requestAnimationF
 if(params.get("debug")==="1"){
  const panel=document.createElement("aside");
  panel.id="nsp-debug";
- panel.style.cssText="position:fixed!important;z-index:2147483647!important;right:3px!important;bottom:3px!important;max-width:96vw!important;padding:5px 8px!important;border:2px solid #ffcc00!important;border-radius:4px!important;background:#111!important;color:#fff!important;font:700 13px/1.35 monospace!important;white-space:pre-wrap!important;pointer-events:none!important;box-sizing:border-box!important";
+ panel.className='edu-calendar-debug';
  document.body.append(panel);
  function diagnosticRefresh(){
   const shell=document.querySelector(".shell"),hero=document.querySelector(".hero"),upcoming=document.querySelector(".upcoming"),grid=document.querySelector(".upcoming-grid");
@@ -246,8 +114,8 @@ if(params.get("debug")==="1"){
  window.addEventListener("resize",diagnosticRefresh);
  setInterval(diagnosticRefresh,2000);
 }
-update();setInterval(()=>{cfg=readConfig();update()},60000);
+update();setInterval(()=>{cfg=readConfig();layout();update()},60000);
 
 </script><script>
-(()=>{const q=new URLSearchParams(location.search);if(q.get('ev_inner')!=='1')return;document.body.dataset.evSegment='1';const o=q.get('segment_orientation'),style=Number(q.get('segment_style')),block=Number(q.get('segment_block'));const sizes={landscape:{1:[[3840,2160]],2:[[1200,2160],[2640,1480],[2640,680]],3:[[960,2160],[2880,2160]],4:[[1680,1080],[2160,2160],[1680,1080]],5:[[1920,1080],[1920,1080],[1920,1080],[1920,1080]],6:[[872,1672],[2968,1672],[872,488],[2968,488]],7:[[1280,2160],[1280,2160],[1280,2160]],8:[[3840,1672],[3840,488]]},portrait:{1:[[2160,3840]],2:[[2160,960],[2160,2880]],3:[[2160,560],[2160,1216],[1080,2064],[1080,2064]],4:[[2160,560],[2160,1390],[2160,1890]],5:[[1080,1920],[1080,1920],[1080,1920],[1080,1920]]}};const rect=sizes[o]?.[style]?.[block-1];if(!rect)return;const [w,h]=rect;const fillDays=(o==='landscape'&&((style===2&&block===3)||(style===6&&block===4)||(style===8&&block===2)))||(o==='portrait'&&((style===3||style===4)&&block===1));const noUpcoming=o==='landscape'&&style===6&&block===3;document.body.classList.toggle('ev-fill-days',fillDays);document.body.classList.toggle('ev-no-upcoming',noUpcoming);document.body.classList.add('ev-modern');document.body.classList.toggle('ev-portrait-top',o==='portrait'&&(style===3||style===4)&&block===1);const dateEl=document.getElementById('date'),yearEl=document.getElementById('year');if(dateEl&&yearEl&&!dateEl.parentElement.classList.contains('calendar-date-year')){const row=document.createElement('div');row.className='calendar-date-year';dateEl.before(row);row.append(dateEl,yearEl);}document.body.classList.add(h<=560?'ev-compact':h<=700?'ev-strip':w/h<.9?'ev-tall':'ev-wide');const W=o==='portrait'?2160:3840,H=o==='portrait'?3840:2160;const positions={landscape:{1:[[0,0]],2:[[0,0],[1200,0],[1200,1480]],3:[[0,0],[960,0]],4:[[0,0],[1680,0],[0,1080]],5:[[0,0],[1920,0],[0,1080],[1920,1080]],6:[[0,0],[872,0],[0,1672],[872,1672]],7:[[0,0],[1280,0],[2560,0]],8:[[0,0],[0,1672]]},portrait:{1:[[0,0]],2:[[0,0],[0,960]],3:[[0,0],[0,560],[0,1776],[1080,1776]],4:[[0,0],[0,560],[0,1950]],5:[[0,0],[1080,0],[0,1920],[1080,1920]]}};const [x,y]=positions[o]?.[style]?.[block-1]||[0,0];const pad={top:y===0?22:11,left:x===0?22:11,right:x+w>=W?22:11,bottom:y+h>=H?22:11};for(const [k,v] of Object.entries(pad))document.body.style.setProperty('--ev-pad-'+k,v+'px');const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));const short=h/w<.33;let head=o==='landscape'&&style===6?(block<=2?230:150):clamp(h*(short?.25:.21),short?24:46,short?75:230);if(o==='landscape'&&style===2&&block===3)head=170;if(o==='landscape'&&style===8&&block===2)head=150;if(o==='portrait'&&(style===3||style===4)&&block===1)head*=1.5;document.body.style.setProperty('--ev-head',head+'px');document.body.style.setProperty('--ev-title',clamp(Math.min(head*.43,w*.064),13,100)+'px');document.body.style.setProperty('--ev-icon',clamp(Math.min(head*.52,w*.095),20,125)+'px');document.body.style.setProperty('--ev-label',clamp(Math.min(head*.20,w*.023),10,36)+'px');const unit=Math.max(1,Math.min(w,h));const set=(k,v)=>document.body.style.setProperty('--ev-'+k,v+'px');set('head-pad',clamp(head*.12,4,28));set('head-side',clamp(w*.027,22,75));set('head-gap',clamp(Math.min(head*.16,w*.024),12,34));set('content-pad',clamp(unit*.028,16,58));set('small-icon',clamp(unit*.047,30,100));set('subtitle',clamp(unit*.032,20,64));set('name',clamp(unit*.069,32,120));set('note',clamp(unit*.019,13,38));set('day-label',clamp(unit*.023,14,42));set('day-name',clamp(unit*.038,20,78));set('day-event',clamp(unit*.02,12,40));set('card-pad',clamp(unit*.025,10,48));document.body.style.setProperty('--ev-columns',w/h<.9?2:w/h<1.5?3:6);document.body.style.setProperty('--ev-rows',w/h<.9?3:w/h<1.5?2:1);const gap=clamp(Math.min(w,h)*.011,12,34);set('gap',gap);set('radius',clamp(Math.min(w,h)*.014,16,32));set('today-height',clamp(h*.14,125,350));set('name-gap',clamp(Math.min(w,h)*.008,7,19));set('event-pad',clamp(Math.min(w,h)*.008,7,19));set('event-radius',clamp(Math.min(w,h)*.008,9,20));if(w/h>=1.5&&h>700){document.body.style.setProperty('--ev-columns',6);document.body.style.setProperty('--ev-rows',1)}if(w/h<1.5&&w/h>=.9&&h>700){document.body.style.setProperty('--ev-columns',3);document.body.style.setProperty('--ev-rows',2)}if(h<=700){set('gap',clamp(h*.024,9,17));set('radius',clamp(h*.035,12,24));set('card-pad',clamp(h*.04,10,28));set('day-label',clamp(h*.047,15,31));set('day-name',clamp(h*.071,22,46));set('day-event',clamp(h*.038,12,24));set('event-pad',clamp(h*.022,7,15));}const grid=document.getElementById('upcoming-grid'),upcoming=document.getElementById('upcoming');if(grid&&upcoming&&grid.parentElement!==upcoming)upcoming.append(grid);})();
-</script><script src="segment-display.js?v=20261027-27"></script></body></html>
+(()=>{const q=new URLSearchParams(location.search);if(q.get('ev_inner')!=='1'||cfg.viewMode==='web')return;document.body.dataset.evSegment='1';const o=q.get('segment_orientation'),style=Number(q.get('segment_style')),block=Number(q.get('segment_block'));const sizes=window.EduvizeNSPLayouts.layouts;const rect=sizes[o]?.[style]?.[block-1];if(!rect)return;const [w,h]=rect;const fillDays=(o==='landscape'&&((style===2&&block===3)||(style===6&&block===4)||(style===8&&block===2)))||(o==='portrait'&&((style===3||style===4)&&block===1));const noUpcoming=o==='landscape'&&style===6&&block===3;document.body.classList.toggle('ev-fill-days',fillDays);document.body.classList.toggle('ev-no-upcoming',noUpcoming);document.body.classList.add('ev-modern');document.body.classList.toggle('ev-portrait-top',o==='portrait'&&(style===3||style===4)&&block===1);const dateEl=document.getElementById('date'),yearEl=document.getElementById('year');if(dateEl&&yearEl&&!dateEl.parentElement.classList.contains('calendar-date-year')){const row=document.createElement('div');row.className='calendar-date-year';dateEl.before(row);row.append(dateEl,yearEl);}document.body.classList.add(h<=560?'ev-compact':h<=700?'ev-strip':w/h<.9?'ev-tall':'ev-wide');const W=o==='portrait'?2160:3840,H=o==='portrait'?3840:2160;const positions=window.EduvizeNSPLayouts.positions;const [x,y]=positions[o]?.[style]?.[block-1]||[0,0];const pad={top:y===0?22:11,left:x===0?22:11,right:x+w>=W?22:11,bottom:y+h>=H?22:11};for(const [k,v] of Object.entries(pad))document.body.style.setProperty('--ev-pad-'+k,v+'px');const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));const short=h/w<.33;let head=o==='landscape'&&style===6?(block<=2?230:150):clamp(h*(short?.25:.21),short?24:46,short?75:230);if(o==='landscape'&&style===2&&block===3)head=170;if(o==='landscape'&&style===8&&block===2)head=150;if(o==='portrait'&&(style===3||style===4)&&block===1)head*=1.5;document.body.style.setProperty('--ev-head',head+'px');document.body.style.setProperty('--ev-title',clamp(Math.min(head*.43,w*.064),13,100)+'px');document.body.style.setProperty('--ev-icon',clamp(Math.min(head*.52,w*.095),20,125)+'px');document.body.style.setProperty('--ev-label',clamp(Math.min(head*.20,w*.023),10,36)+'px');const unit=Math.max(1,Math.min(w,h));const set=(k,v)=>document.body.style.setProperty('--ev-'+k,v+'px');set('head-pad',clamp(head*.12,4,28));set('head-side',clamp(w*.027,22,75));set('head-gap',clamp(Math.min(head*.16,w*.024),12,34));set('content-pad',clamp(unit*.028,16,58));set('small-icon',clamp(unit*.047,30,100));set('subtitle',clamp(unit*.032,20,64));set('name',clamp(unit*.069,32,120));set('note',clamp(unit*.019,13,38));set('day-label',clamp(unit*.023,14,42));set('day-name',clamp(unit*.038,20,78));set('day-event',clamp(unit*.02,12,40));set('card-pad',clamp(unit*.025,10,48));document.body.style.setProperty('--ev-columns',w/h<.9?2:w/h<1.5?3:6);document.body.style.setProperty('--ev-rows',w/h<.9?3:w/h<1.5?2:1);const gap=clamp(Math.min(w,h)*.011,12,34);set('gap',gap);set('radius',clamp(Math.min(w,h)*.014,16,32));set('today-height',clamp(h*.14,125,350));set('name-gap',clamp(Math.min(w,h)*.008,7,19));set('event-pad',clamp(Math.min(w,h)*.008,7,19));set('event-radius',clamp(Math.min(w,h)*.008,9,20));if(w/h>=1.5&&h>700){document.body.style.setProperty('--ev-columns',6);document.body.style.setProperty('--ev-rows',1)}if(w/h<1.5&&w/h>=.9&&h>700){document.body.style.setProperty('--ev-columns',3);document.body.style.setProperty('--ev-rows',2)}if(h<=700){set('gap',clamp(h*.024,9,17));set('radius',clamp(h*.035,12,24));set('card-pad',clamp(h*.04,10,28));set('day-label',clamp(h*.047,15,31));set('day-name',clamp(h*.071,22,46));set('day-event',clamp(h*.038,12,24));set('event-pad',clamp(h*.022,7,15));}const grid=document.getElementById('upcoming-grid'),upcoming=document.getElementById('upcoming');if(grid&&upcoming&&grid.parentElement!==upcoming)upcoming.append(grid);})();
+</script><script src="segment-display.js?v=20261030-41"></script></body></html>
