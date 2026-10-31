@@ -11,7 +11,7 @@ for(const k of ["tomorrow","holidays","significant"])$(k).checked=!!c[k];
 function updateTomorrow(){const replaced=Number($("days").value)>0;$("tomorrow").disabled=replaced;$("tomorrow").closest('label').title=replaced?'Zítřejší jmeniny jsou součástí přehledu následujících dnů.':'';}
 $("days").addEventListener('change',updateTomorrow);updateTomorrow();
 function values(){return {viewMode:$("viewMode").value,country:$("country").value,monthFormat:$("monthFormat").value,days:Number($("days").value),tomorrow:$("tomorrow").checked,holidays:$("holidays").checked,significant:$("significant").checked}}
-function outputUrl(){const v=values(),q=new URLSearchParams();for(const [k,x] of Object.entries(v))q.set(k,typeof x==="boolean"?(x?"1":"0"):String(x));if(window.EduvizeSegmentSelection&&v.viewMode==="nsp"){const seg=window.EduvizeSegmentSelection.params();q.set("segment_orientation",seg.orientation);q.set("segment_style",seg.style);q.set("segment_block",seg.block)}return window.EduvizeOutputModes.url(new URL("./index.html?"+q,location.href),v.viewMode).href}
+function outputUrl(){const v=values(),q=new URLSearchParams();q.set("v","20261031-name-gap-1");for(const [k,x] of Object.entries(v))q.set(k,typeof x==="boolean"?(x?"1":"0"):String(x));if(window.EduvizeSegmentSelection&&v.viewMode==="nsp"){const seg=window.EduvizeSegmentSelection.params();q.set("segment_orientation",seg.orientation);q.set("segment_style",seg.style);q.set("segment_block",seg.block)}return window.EduvizeOutputModes.url(new URL("./index.html?"+q,location.href),v.viewMode).href}
 async function copyOutputUrl(){
  const url=outputUrl();
  try{
