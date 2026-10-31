@@ -26,7 +26,7 @@ try{const data=await calendarDay(cfg.country,day);$("calendar-status").hidden=tr
 function eventFilter(e){return e.type==="significant"?cfg.significant:cfg.holidays}
 async function renderUpcoming(today){
  const visibleDays=displayPolicy.upcomingDays;
- const panel=$("upcoming"),grid=$("upcoming-grid");panel.querySelector("h2").textContent=(cfg.country==="sk"?"Ďalších ":"Dalších ")+visibleDays+(cfg.country==="sk"?(visibleDays===1?" deň":visibleDays<=4?" dni":" dní"):(visibleDays===1?" den":visibleDays<=4?" dny":" dnů"));panel.setAttribute("aria-label",panel.querySelector("h2").textContent);panel.classList.toggle("hidden",visibleDays===0);grid.replaceChildren();
+ const panel=$("upcoming"),grid=$("upcoming-grid");panel.querySelector("h2").textContent=(cfg.country==="sk"?(visibleDays===1?"Ďalší ":visibleDays<=4?"Ďalšie ":"Ďalších "):(visibleDays<=4?"Další ":"Dalších "))+visibleDays+(cfg.country==="sk"?(visibleDays===1?" deň":visibleDays<=4?" dni":" dní"):(visibleDays===1?" den":visibleDays<=4?" dny":" dnů"));panel.setAttribute("aria-label",panel.querySelector("h2").textContent);panel.classList.toggle("hidden",visibleDays===0);grid.replaceChildren();
  if(visibleDays===0)return;
  const dates=Array.from({length:visibleDays},(_,i)=>{const d=new Date(today);d.setDate(today.getDate()+i+1);return d});
  const results=await Promise.all(dates.map(async d=>{try{return await calendarDay(cfg.country,iso(d))}catch{return null}}));
