@@ -24,7 +24,7 @@ $("openOutput").addEventListener("click",copyOutputUrl);
 function saveSettings(){try{localStorage.setItem("eduvize-holidays-config",JSON.stringify(values()));$("result").textContent="Nastavení uloženo v tomto prohlížeči.";}catch{$("result").textContent="Prohlížeč nepovolil uložení. Nastavení je nadále součástí odkazu na výstup.";}}
 $("saveSettings").onclick=saveSettings;
 $("save").onclick=()=>{saveSettings();location.assign(outputUrl())};
-</script><script src="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/nsp-geometry.js?v=1"></script><script src="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/nsp-segments.js?v=profiles-20261031-1"></script>
+</script><script src="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/nsp-geometry.js?v=1"></script><script src="https://pborovicka72-dotcom.github.io/eduvize-styly/design-system/nsp-segments.js?v=20261031-nsp-kiosk-parity-4"></script>
 <script id="eduvize-profile-adapter">
 window.EduvizeProfileAdapter={app:"holidays",read:()=>({schemaVersion:1,values:window.EduvizeProfiles.fields(["viewMode", "country", "monthFormat", "days", "tomorrow", "holidays", "significant"]).read(),segment:window.EduvizeProfiles.segment()}),
 apply:async config=>{window.EduvizeProfiles.fields(["viewMode", "country", "monthFormat", "days", "tomorrow", "holidays", "significant"]).apply(config.values);window.EduvizeProfiles.applySegment(config.segment);}};
