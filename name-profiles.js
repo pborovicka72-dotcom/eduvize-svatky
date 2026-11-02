@@ -54,19 +54,19 @@
  function node(tag,cls,text){const el=document.createElement(tag);el.className=cls;if(text)el.textContent=text;return el;}
  function fit(){
   queued=false;if(!box||!current)return;
-  const card=box.parentElement,web=root.EduvizeOutputModes?.mode?.()==='web';
+  const card=box.parentElement;card.classList.remove('hidden');const web=root.EduvizeOutputModes?.mode?.()==='web';
   box.hidden=false;box.querySelector('.name-profile-extra').hidden=false;box.querySelector('.name-profile-text').textContent=current.text;
   if(web)return;
   // Preserve the existing reading scale; reduce detail before touching the primary name.
   const fits=()=>card.scrollHeight<=card.clientHeight+1;
   if(!fits())box.querySelector('.name-profile-extra').hidden=true;
   if(!fits())box.querySelector('.name-profile-text').textContent=shorten(current.text,170);
-  if(!fits())box.hidden=true;
+  if(!fits()){box.hidden=true;card.classList.add('hidden');}
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(fit);}}
  function draw(profile,name){
   if(!box){box=node('section','name-profile');box.setAttribute('aria-label','O jménu');document.getElementById('names-card').append(box);new ResizeObserver(schedule).observe(box.parentElement);}
-  box.replaceChildren();current=profile;
+  box.parentElement.classList.add('name-profile-card');box.parentElement.classList.remove('hidden');box.replaceChildren();current=profile;
   box.append(node('h3','name-profile-heading',name+' · '+profile.lead),node('p','name-profile-text',profile.text),node('p','name-profile-extra',profile.extra));
   const source=node('div','name-profile-source');source.dataset.eduSourceDetails='';
   source.append(document.createTextNode('Zpracováno podle '));
