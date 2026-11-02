@@ -78,12 +78,17 @@
   const card=document.getElementById('upcoming'),grid=document.getElementById('upcoming-grid');
   const web=root.EduvizeOutputModes?.mode?.()==='web';
   const rect=card.getBoundingClientRect(),ratio=innerWidth/Math.max(1,innerHeight);
-  const side=rect.width>=1100&&rect.width/Math.max(1,rect.height)>=1.3;
+  const tile=ratio>=2.7||ratio<=.6||(innerWidth<=1200&&innerHeight<=720);
+  card.classList.toggle('calendar-tile-details',tile);
+  grid.querySelectorAll('.upcoming-day').forEach(e=>e.hidden=false);
+  if(tile){const last=grid.querySelector('.upcoming-day:last-of-type');if(last)last.hidden=true;grid.prepend(box);}else if(box.parentElement!==card)card.prepend(box);
+  const side=!tile&&rect.width>=1100&&rect.width/Math.max(1,rect.height)>=1.3;
   card.classList.toggle('calendar-side-details',side);
   document.body.classList.toggle('calendar-hide-provenance',ratio>=2.7||ratio<=.45||(innerWidth<=1200&&innerHeight<=720));
   box.hidden=false;box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=false);
   box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=current[i].text);
   if(web)return;
+  if(tile){box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,170));return;}
   const cs=getComputedStyle(card),font=parseFloat(getComputedStyle(box).fontSize)||20;
   const rows=Math.max(1,Number(grid.style.getPropertyValue('--calendar-rows'))||1);
   const reserve=rows*(font*4+24)+(card.querySelector('.section-heading')?.getBoundingClientRect().height||0)+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)+(parseFloat(cs.rowGap)||0)*2;
