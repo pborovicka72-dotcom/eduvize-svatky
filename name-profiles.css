@@ -18,3 +18,5 @@
 .calendar-tile-details .name-profile{height:100%;box-sizing:border-box;overflow:hidden;padding:var(--ev-card-pad,16px)}
 .calendar-tile-details .name-profile~.name-profile{display:none}
 .calendar-tile-details .name-profile-source{display:none}
+
+.calendar-tile-details #upcoming-grid{min-width:0;width:100%;max-width:100%}.calendar-tile-details .calendar-details{min-width:0;max-width:100%}
