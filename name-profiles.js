@@ -14,13 +14,13 @@
   const doc=new DOMParser().parseFromString(html,'text/html');
   doc.querySelectorAll('sup,table,.mw-editsection,.navbox,.reference').forEach(e=>e.remove());
   if(kind==='wiktionary'){
-   const headings=[...doc.querySelectorAll('h2,h3')];let czech=false;
+   const headings=[...doc.querySelectorAll('h2,h3,h4,h5')];let czech=false;
    for(const heading of headings){
     if(heading.tagName==='H2')czech=/^čeština$/i.test(clean(heading.textContent));
     if(!czech||!/^etymologie$/i.test(clean(heading.textContent)))continue;
     const parent=heading.parentElement.matches('.mw-heading')?heading.parentElement:heading;
     let n=parent.nextElementSibling,parts=[];
-    while(n&&!n.matches('h2,h3,.mw-heading')){if(n.matches('p'))parts.push(clean(n.textContent));n=n.nextElementSibling;}
+    while(n&&!n.matches('h2,h3,h4,h5,.mw-heading')){if(n.matches('p'))parts.push(clean(n.textContent));n=n.nextElementSibling;}
     const text=parts.join(' ');if(text.length>30)return shorten(text,480);
    }
   }else{
