@@ -1,11 +1,10 @@
-/* Optional name details inherit the same active theme and reading scale in every mode. */
-.name-profile{flex:none;min-width:0;border-top:2px solid var(--ev-border);margin-top:.6em;padding-top:.65em;font-size:var(--edu-text-label,var(--ev-note,20px));line-height:1.4}
-.name-profile h3,.name-profile p{margin:0 0 .4em;font:inherit}
-.name-profile h3{font-weight:650}.name-profile-extra{color:var(--ev-muted)}
-.name-profile-source{font-size:.72em;line-height:1.4;color:var(--ev-muted)}.name-profile-source a{color:inherit;text-decoration:underline}
-.ev-modern .calendar-metrics.name-profiles-enabled{max-height:48%}
-.ev-modern .shell:has(>.upcoming.hidden) .calendar-metrics.name-profiles-enabled{max-height:none}
-.web-mode .name-profile{font-size:clamp(18px,1.6vw,26px);max-width:65em}
-
-.name-profile-card>.metric-top,.name-profile-card>.metric-value,.name-profile-card>.metric-note{display:none!important}
-.name-profile-card .name-profile{border:0;margin:0;padding:0}
+/* Explanatory text and upcoming days share one surface in every output mode. */
+#upcoming{padding:var(--ev-card-pad,24px);border:var(--edu-card-border-width,2px) solid var(--edu-card-border-color,var(--ev-border));border-radius:var(--ev-card-radius);background:var(--ev-surface);color:var(--ev-text);min-width:0}
+.calendar-details{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:var(--ev-gap,20px);flex:none;min-width:0;font-size:var(--edu-text-label,var(--ev-note,20px));line-height:1.4;border-bottom:1px solid var(--ev-border);padding-bottom:.6em}
+.name-profile{min-width:0}.name-profile h3,.name-profile p{margin:0 0 .35em;font:inherit}.name-profile h3{font-weight:650}.name-profile-extra{color:var(--ev-muted)}
+.name-profile-source{font-size:clamp(10px,calc(var(--edu-text-caption,var(--ev-note,16px))*.65),20px);line-height:1.3;color:var(--ev-muted)}
+.name-profile-source a{color:inherit;text-decoration:underline}
+.calendar-hide-provenance .name-profile-source{display:none!important}
+.ev-modern #upcoming{overflow:hidden}
+.ev-modern #upcoming .section-heading{padding-inline:0}
+.web-mode .calendar-details{font-size:clamp(18px,1.6vw,26px)}
