@@ -6,3 +6,6 @@
 .ev-modern .calendar-metrics.name-profiles-enabled{max-height:48%}
 .ev-modern .shell:has(>.upcoming.hidden) .calendar-metrics.name-profiles-enabled{max-height:none}
 .web-mode .name-profile{font-size:clamp(18px,1.6vw,26px);max-width:65em}
+
+.name-profile-card>.metric-top,.name-profile-card>.metric-value,.name-profile-card>.metric-note{display:none!important}
+.name-profile-card .name-profile{border:0;margin:0;padding:0}
