@@ -88,13 +88,13 @@
   box.hidden=false;box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=false);
   box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=current[i].text);
   if(web)return;
-  if(tile){box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,170));return;}
+  if(tile){box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,110));return;}
   const cs=getComputedStyle(card),font=parseFloat(getComputedStyle(box).fontSize)||20;
   const rows=Math.max(1,Number(grid.style.getPropertyValue('--calendar-rows'))||1);
   const reserve=rows*(font*4+24)+(card.querySelector('.section-heading')?.getBoundingClientRect().height||0)+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)+(parseFloat(cs.rowGap)||0)*2;
   const fits=()=> (side?box.getBoundingClientRect().height+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)<=rect.height:box.getBoundingClientRect().height+reserve<=rect.height)&&card.scrollHeight<=card.clientHeight+2;
   if(!fits())box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);
-  if(!fits())box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,170));
+  if(!fits())box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,110));
   if(!fits()){
    card.classList.remove('calendar-side-details');card.classList.add('calendar-tile-details');
    const last=grid.querySelector('.upcoming-day:last-of-type');if(last)last.hidden=true;
