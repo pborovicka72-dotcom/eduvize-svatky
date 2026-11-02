@@ -1,0 +1,36 @@
+/* One presentation, identical reading scale for NSP and kiosk. */
+.holiday-editorial .hero{--art-bg:var(--ev-primary);--art-main:var(--ev-primary-text);--art-soft:var(--ev-secondary);--art-ink:var(--ev-primary-text);--art-accent:var(--ev-accent);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.8fr) minmax(0,1fr);gap:var(--edu-header-inset,24px);overflow:hidden;align-items:center}
+.holiday-editorial .hero>.calendar-art{display:none!important}
+.holiday-editorial .hero>div:first-child{display:flex;flex-direction:column!important;align-items:flex-start!important;gap:.15em;min-width:0;border-right:1px solid currentColor;padding-right:var(--edu-header-inset,24px)}
+.holiday-editorial .calendar-date-year{display:flex;flex-direction:column!important;align-items:flex-start!important;gap:.15em}
+.holiday-editorial .calendar-date{font-size:var(--edu-text-title,var(--ev-name,44px));white-space:normal;line-height:1.15}
+.holiday-feature-copy{min-width:0;max-height:100%;display:flex;flex-direction:column;justify-content:center;gap:.35em}
+.holiday-feature-label{font-size:var(--edu-text-label,var(--ev-subtitle,20px));font-weight:550;line-height:1.25}
+.holiday-feature-title{font-size:var(--edu-text-title,var(--ev-name,44px));font-weight:700;line-height:1.12;overflow-wrap:normal;word-break:normal;hyphens:none;max-height:3.5em;overflow:hidden}
+.holiday-feature-art{min-width:0;min-height:0;height:100%;max-height:100%;display:flex;align-items:center;justify-content:flex-end}
+.holiday-feature-art svg{display:block;width:100%;height:100%;max-height:100%;aspect-ratio:32/21;object-fit:contain}
+.holiday-editorial .hero.holiday-light{background:var(--ev-surface)!important;color:var(--ev-text)!important;--art-bg:var(--ev-surface);--art-main:var(--ev-primary);--art-soft:var(--ev-secondary);--art-ink:var(--ev-text);--art-accent:var(--ev-accent);border:1px solid var(--ev-border)}
+.holiday-editorial .hero.holiday-light .edu-header-title,.holiday-editorial .hero.holiday-light .edu-header-meta{color:var(--ev-text)!important}
+.holiday-editorial .hero.holiday-compact{grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto}
+.holiday-compact .holiday-feature-art{width:var(--edu-header-icon,64px);height:var(--edu-header-icon,64px);max-height:100%}
+.holiday-compact .holiday-feature-art svg{width:100%;height:100%}
+.holiday-compact .holiday-feature-label{display:none}
+.holiday-compact .holiday-feature-title{font-size:var(--edu-text-label,var(--ev-subtitle,20px));max-height:3.5em}
+.holiday-editorial .upcoming-date{align-self:flex-start;background:var(--ev-secondary);color:var(--ev-secondary-text);border-radius:var(--ev-control-radius);padding:.18em .5em;white-space:nowrap}
+.holiday-editorial .upcoming-name{margin-top:.1em}
+body.web-mode.holiday-editorial .hero{min-height:230px;height:auto;padding:28px;--edu-text-title:clamp(24px,3vw,48px);--edu-text-label:clamp(18px,1.7vw,26px)}
+body.web-mode.holiday-editorial .holiday-feature-art{max-height:220px}
+@media(max-width:620px){body.web-mode.holiday-editorial .hero{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:18px;padding:20px;min-height:180px}body.web-mode.holiday-editorial .holiday-feature-art{display:none}}
+
+body.holiday-editorial section.hero.edu-output-header{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr) minmax(0,.9fr)!important}
+body.holiday-editorial section.hero.edu-output-header.holiday-compact{grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto!important}
+body.holiday-editorial section.hero.edu-output-header>.calendar-art{display:none!important}
+body.holiday-editorial .holiday-feature-title{font-size:var(--edu-header-title,var(--edu-text-title,44px))}
+body.holiday-editorial .holiday-compact .holiday-feature-title{font-size:var(--edu-header-meta,var(--edu-text-label,22px))}
+body.web-mode.holiday-editorial section.hero.edu-output-header{height:auto!important;min-height:230px!important;max-height:none!important}
+/* Reserve each date column before fitting the adjacent headline. */
+body.holiday-editorial section.hero #date{font-size:var(--holiday-date-size,calc(var(--edu-header-title,64px)*.72))!important;max-width:100%}
+body.holiday-editorial section.hero .calendar-date-year{max-width:100%}
+body.holiday-editorial section.hero .holiday-feature-copy{overflow:hidden}
+body.holiday-editorial section.hero .calendar-weekday,body.holiday-editorial section.hero .calendar-year{font-size:var(--edu-header-meta,24px)!important}
+.holiday-feature-note{font-size:var(--edu-header-meta,20px);line-height:1.3}.holiday-feature-note:empty,.holiday-compact .holiday-feature-note{display:none}
