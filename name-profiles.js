@@ -84,7 +84,7 @@
   if(tile){const last=grid.querySelector('.upcoming-day:last-of-type');if(last)last.hidden=true;grid.prepend(box);}else if(box.parentElement!==card)card.prepend(box);
   const side=!tile&&rect.width>=1100&&rect.width/Math.max(1,rect.height)>=1.3;
   card.classList.toggle('calendar-side-details',side);
-  document.body.classList.toggle('calendar-hide-provenance',ratio>=2.7||ratio<=.45);
+  document.body.classList.toggle('calendar-hide-provenance',ratio>=2.7||ratio<=.4);
   box.hidden=false;box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=false);
   box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=current[i].text);
   if(web)return;
