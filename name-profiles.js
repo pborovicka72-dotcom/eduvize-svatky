@@ -76,7 +76,7 @@
  }
  async function present(value,enabled){
   const key=(enabled?'1:':'0:')+value;
-  if(key===currentKey){schedule();return;}currentKey=key;const ticket=++sequence;current=null;if(box)box.hidden=true;
+  if(key===currentKey){schedule();return;}currentKey=key;const ticket=++sequence;current=null;if(box){box.hidden=true;box.parentElement.classList.remove('name-profile-card');}
   document.querySelector('.calendar-metrics')?.classList.remove('name-profiles-enabled');
   if(!enabled)return;
   const list=names(value);
