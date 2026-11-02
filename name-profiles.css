@@ -1,0 +1,8 @@
+/* Optional name details inherit the same active theme and reading scale in every mode. */
+.name-profile{flex:none;min-width:0;border-top:2px solid var(--ev-border);margin-top:.6em;padding-top:.65em;font-size:var(--edu-text-label,var(--ev-note,20px));line-height:1.4}
+.name-profile h3,.name-profile p{margin:0 0 .4em;font:inherit}
+.name-profile h3{font-weight:650}.name-profile-extra{color:var(--ev-muted)}
+.name-profile-source{font-size:.72em;line-height:1.4;color:var(--ev-muted)}.name-profile-source a{color:inherit;text-decoration:underline}
+.ev-modern .calendar-metrics.name-profiles-enabled{max-height:48%}
+.ev-modern .shell:has(>.upcoming.hidden) .calendar-metrics.name-profiles-enabled{max-height:none}
+.web-mode .name-profile{font-size:clamp(18px,1.6vw,26px);max-width:65em}
