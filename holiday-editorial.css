@@ -37,3 +37,14 @@ body.holiday-editorial section.hero .calendar-weekday,body.holiday-editorial sec
 
 .holiday-feature-copy{height:100%;min-height:0}.holiday-feature-title{flex:0 1 auto}
 @media(max-width:1000px) and (orientation:portrait){body.holiday-editorial section.hero.edu-output-header.holiday-compact{grid-template-columns:minmax(0,1fr) minmax(0,2.4fr)!important}.holiday-compact .holiday-feature-art{display:none!important}}
+
+/* Calendar identity follows the approved day / month / weekday-and-year design. */
+body.holiday-editorial section.hero.edu-output-header>div:first-child{border:0;padding:0;height:100%;justify-content:center}
+.holiday-date-panel{width:100%;height:100%;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--edu-header-height,240px)*.025);padding:calc(var(--edu-header-height,240px)*.035);border-radius:var(--ev-control-radius,16px);background:var(--ev-secondary);color:var(--ev-secondary-text);text-align:center}
+.holiday-date-day{font-size:calc(var(--edu-header-height,240px)*.47);font-weight:750;line-height:.85;letter-spacing:-.04em}
+.holiday-date-month{font-size:calc(var(--edu-header-height,240px)*.125);font-weight:700;line-height:1.15;text-transform:uppercase;white-space:nowrap;max-width:100%}
+.holiday-date-foot{font-size:calc(var(--edu-header-height,240px)*.08);font-weight:550;line-height:1.2;white-space:nowrap}
+.holiday-compact .holiday-date-day{font-size:calc(var(--edu-header-height,240px)*.39)}
+.holiday-compact .holiday-date-month{font-size:calc(var(--edu-header-height,240px)*.105)}
+.holiday-compact .holiday-date-foot{font-size:calc(var(--edu-header-height,240px)*.075)}
+body.web-mode.holiday-editorial .holiday-date-panel{min-height:180px}
