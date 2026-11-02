@@ -78,13 +78,13 @@
   const card=document.getElementById('upcoming'),grid=document.getElementById('upcoming-grid');
   const web=root.EduvizeOutputModes?.mode?.()==='web';
   const rect=card.getBoundingClientRect(),ratio=innerWidth/Math.max(1,innerHeight);
-  const tile=ratio>=2.7||ratio<=.6||(innerWidth<=1200&&innerHeight<=720);
+  const tile=ratio>=2.7||ratio<=.6||rect.width<1500||rect.height<700;
   card.classList.toggle('calendar-tile-details',tile);
   grid.querySelectorAll('.upcoming-day').forEach(e=>e.hidden=false);
   if(tile){const last=grid.querySelector('.upcoming-day:last-of-type');if(last)last.hidden=true;grid.prepend(box);}else if(box.parentElement!==card)card.prepend(box);
   const side=!tile&&rect.width>=1100&&rect.width/Math.max(1,rect.height)>=1.3;
   card.classList.toggle('calendar-side-details',side);
-  document.body.classList.toggle('calendar-hide-provenance',ratio>=2.7||ratio<=.45||(innerWidth<=1200&&innerHeight<=720));
+  document.body.classList.toggle('calendar-hide-provenance',ratio>=2.7||ratio<=.45);
   box.hidden=false;box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=false);
   box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=current[i].text);
   if(web)return;
@@ -95,7 +95,11 @@
   const fits=()=> (side?box.getBoundingClientRect().height+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)<=rect.height:box.getBoundingClientRect().height+reserve<=rect.height)&&card.scrollHeight<=card.clientHeight+2;
   if(!fits())box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);
   if(!fits())box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,170));
-  if(!fits())box.hidden=true;
+  if(!fits()){
+   card.classList.remove('calendar-side-details');card.classList.add('calendar-tile-details');
+   const last=grid.querySelector('.upcoming-day:last-of-type');if(last)last.hidden=true;
+   grid.prepend(box);box.hidden=false;
+  }
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(fit);}}
  function draw(profiles){
