@@ -78,6 +78,8 @@
   const card=document.getElementById('upcoming'),grid=document.getElementById('upcoming-grid');
   const web=root.EduvizeOutputModes?.mode?.()==='web';
   const rect=card.getBoundingClientRect(),ratio=innerWidth/Math.max(1,innerHeight);
+  const side=rect.width>=1100&&rect.width/Math.max(1,rect.height)>=1.3;
+  card.classList.toggle('calendar-side-details',side);
   document.body.classList.toggle('calendar-hide-provenance',ratio>=2.7||ratio<=.45||(innerWidth<=1200&&innerHeight<=720));
   box.hidden=false;box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=false);
   box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=current[i].text);
@@ -85,7 +87,7 @@
   const cs=getComputedStyle(card),font=parseFloat(getComputedStyle(box).fontSize)||20;
   const rows=Math.max(1,Number(grid.style.getPropertyValue('--calendar-rows'))||1);
   const reserve=rows*(font*4+24)+(card.querySelector('.section-heading')?.getBoundingClientRect().height||0)+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)+(parseFloat(cs.rowGap)||0)*2;
-  const fits=()=>box.getBoundingClientRect().height+reserve<=rect.height&&card.scrollHeight<=card.clientHeight+2;
+  const fits=()=> (side?box.getBoundingClientRect().height+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)<=rect.height:box.getBoundingClientRect().height+reserve<=rect.height)&&card.scrollHeight<=card.clientHeight+2;
   if(!fits())box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);
   if(!fits())box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,170));
   if(!fits())box.hidden=true;
@@ -121,6 +123,7 @@
    const data=await lookup('Dušičky','event');if(ticket!==sequence)return;
    if(data)profiles.push({...data,lead:'Památka zesnulých'});
   }
+  if(profiles.length)draw(profiles);
   // The detail heading identifies its name even on dates with multiple namedays.
   for(const name of names(value)){
    const data=await lookup(name);if(ticket!==sequence)return;
