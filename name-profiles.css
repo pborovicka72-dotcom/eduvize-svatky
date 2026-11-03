@@ -1,25 +1,48 @@
-/* Explanatory text and upcoming days share one surface in every output mode. */
-#upcoming{padding:var(--ev-card-pad,24px);border:var(--edu-card-border-width,2px) solid var(--edu-card-border-color,var(--ev-border));border-radius:var(--ev-card-radius);background:var(--ev-surface);color:var(--ev-text);min-width:0}
-.calendar-details{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:var(--ev-gap,20px);flex:none;min-width:0;font-size:var(--edu-text-label,var(--ev-note,20px));line-height:1.4;border-bottom:1px solid var(--ev-border);padding-bottom:.6em}
-.name-profile{min-width:0}.name-profile h3,.name-profile p{margin:0 0 .35em;font:inherit}.name-profile h3{font-weight:650}.name-profile-extra{color:var(--ev-muted)}
-.name-profile-source{font-size:clamp(10px,calc(var(--edu-text-caption,var(--ev-note,16px))*.65),20px);line-height:1.3;color:var(--ev-muted)}
+/* One readable editorial panel. Source data never changes layout geometry. */
+.calendar-details{min-width:0;min-height:0}
+.name-profile{box-sizing:border-box;min-width:0;min-height:0;padding:var(--ev-card-pad,24px);background:var(--ev-surface);color:var(--ev-text);border:var(--edu-card-border-width,2px) solid var(--edu-card-border-color,var(--ev-border));border-radius:var(--ev-card-radius);display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:var(--ev-gap,24px)}
+.name-profile[hidden],.calendar-details[hidden]{display:none!important}
+.name-profile-copy{display:flex;flex-direction:column;min-width:0;min-height:0;gap:.6em}
+.name-profile-heading{margin:0;font-size:1.12em;font-weight:700;line-height:1.25}
+.name-profile-text{margin:0;line-height:1.5;word-break:normal;overflow-wrap:normal;hyphens:none}
+.name-profile-footer{display:flex;align-items:end;justify-content:space-between;gap:1em;margin-top:auto}
+.name-profile-source{font-size:max(12px,.45em);line-height:1.35;color:var(--ev-muted)}
 .name-profile-source a{color:inherit;text-decoration:underline}
-.calendar-hide-provenance .name-profile-source{display:none!important}
-.ev-modern #upcoming{overflow:hidden}
-.ev-modern #upcoming .section-heading{padding-inline:0}
-.web-mode .calendar-details{font-size:clamp(18px,1.6vw,26px)}
+.name-profile-count{font-size:.55em;white-space:nowrap;color:var(--ev-muted)}
+.name-profile-art{display:flex;align-items:center;justify-content:center;color:var(--ev-primary);min-width:0;min-height:0;--art-bg:var(--ev-surface);--art-main:var(--ev-primary);--art-ink:var(--ev-text);--art-soft:var(--ev-secondary);--art-accent:var(--ev-accent,var(--ev-primary))}
+.name-profile-art svg{display:block;width:100%;height:100%;max-height:100%;object-fit:contain}
+body.calendar-reading .calendar-metrics{display:none!important}
+body.calendar-reading.ev-modern .shell{display:flex!important;flex-direction:column!important}
+body.calendar-reading.ev-modern .shell>#upcoming{display:grid!important;flex:1 1 0!important;min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto minmax(0,.42fr);gap:var(--ev-gap,20px);background:transparent;border:0;padding:0}
+body.calendar-reading.ev-modern .shell>#upcoming.calendar-reading-only{grid-template-rows:minmax(0,1fr)}
+body.calendar-reading #upcoming>.calendar-details{grid-row:1;display:block;font-size:clamp(20px,calc(var(--edu-text-body,40px)*.65),84px)}
+body.calendar-reading.ev-modern .name-profile{height:100%;overflow:hidden}
+body.calendar-reading.ev-modern .name-profile-text{flex:1 1 0;min-height:0;overflow:hidden}
+body.calendar-reading #upcoming>.section-heading{display:flex!important;grid-row:2;margin:0;padding:0}
+body.calendar-reading #upcoming>.section-heading[hidden],body.calendar-reading #upcoming>#upcoming-grid[hidden]{display:none!important}
+body.calendar-reading #upcoming>#upcoming-grid{grid-row:3;min-height:0;grid-auto-rows:1fr!important}
+body.calendar-reading .hero .holiday-feature-art{visibility:hidden}
+body.calendar-reading .hero.edu-output-header{grid-template-columns:var(--edu-header-icon,96px) minmax(0,1fr)!important}
+body.calendar-reading .name-profile-art{max-height:100%}
+body.calendar-reading-web #upcoming{display:flex!important;flex-direction:column;gap:24px}
+body.calendar-reading-web .calendar-details{display:grid;gap:24px;font-size:clamp(18px,1.5vw,24px)}
+body.calendar-reading-web .name-profile-text{overflow:visible;flex:none}
+body.calendar-reading-web .name-profile-art{max-height:300px}
+body.calendar-reading-web .name-profile-count{display:none}
+@media(max-aspect-ratio:3/4){body.calendar-reading.ev-modern .name-profile{grid-template-columns:minmax(0,3fr) minmax(0,1fr)}}
+@media(min-aspect-ratio:3/1){body.calendar-reading.ev-modern .shell>#upcoming{grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}body.calendar-reading #upcoming>.calendar-details{grid-row:1/3;grid-column:1}body.calendar-reading #upcoming>.section-heading{grid-row:1;grid-column:2}body.calendar-reading #upcoming>#upcoming-grid{grid-row:2;grid-column:2}body.calendar-reading .name-profile{grid-template-columns:minmax(0,1fr)}body.calendar-reading .name-profile-art{display:none}}
+@media(max-width:600px){body.calendar-reading-web .name-profile{grid-template-columns:minmax(0,1fr)}body.calendar-reading-web .name-profile-art{display:none}}
 
-.ev-modern #upcoming.calendar-side-details:has(.calendar-details:not([hidden])){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);grid-template-rows:auto minmax(0,1fr);align-items:stretch}
-.calendar-side-details .calendar-details{grid-column:1;grid-row:1/3;display:flex;flex-direction:column;justify-content:flex-start;border-bottom:0;border-right:1px solid var(--ev-border);padding:0 var(--ev-gap,20px) 0 0}
-.calendar-side-details>.section-heading,.calendar-side-details>#upcoming-grid{grid-column:2}
+body.calendar-reading #upcoming>.section-heading h2{font-size:clamp(20px,calc(var(--edu-text-body,40px)*.65),72px)!important;line-height:1.25;margin:0}
+body.calendar-reading #upcoming .upcoming-day{padding:clamp(12px,1vmin,24px)!important;gap:.2em}
+body.calendar-reading #upcoming .upcoming-date{font-size:clamp(16px,calc(var(--edu-text-body,40px)*.45),48px)!important}
+body.calendar-reading #upcoming .upcoming-name{font-size:clamp(22px,calc(var(--edu-text-body,40px)*.7),84px)!important;line-height:1.2}
+body.calendar-reading #upcoming .upcoming-event{font-size:clamp(16px,calc(var(--edu-text-body,40px)*.45),48px)!important;line-height:1.25}
 
-.name-profile{border:var(--edu-card-border-width,2px) solid var(--edu-card-border-color,var(--ev-border));border-radius:var(--ev-card-radius);padding:var(--ev-card-pad,24px);align-self:start;background:var(--ev-surface)}
-.calendar-tile-details .calendar-details{display:block;min-height:0;border:0;padding:0;overflow:hidden;font-size:clamp(24px,var(--ev-day-label,32px),44px)}
-.calendar-tile-details .name-profile{height:100%;box-sizing:border-box;overflow:hidden;padding:var(--ev-card-pad,16px)}
-.calendar-tile-details .name-profile~.name-profile{display:none}
-
-
-.calendar-tile-details #upcoming-grid{min-width:0;width:100%;max-width:100%}.calendar-tile-details .calendar-details{min-width:0;max-width:100%}
-
-.calendar-tile-details .name-profile-source{font-size:clamp(10px,calc(var(--ev-day-label,20px)*.55),20px)}
-.calendar-tile-details .calendar-details{align-self:stretch}.calendar-tile-details .name-profile{display:flex;flex-direction:column;justify-content:flex-start}.calendar-tile-details .name-profile-source{margin-top:auto}
+body.calendar-reading.ev-modern .shell{padding:clamp(12px,1.5vmin,28px)!important}
+/* Clear panoramic header grid placement when using the editorial reading surface. */
+html body.calendar-reading.holiday-editorial section.hero.edu-output-header,
+html body.calendar-reading.holiday-editorial section.hero.edu-output-header.holiday-compact{width:100%!important;max-width:100%!important;min-width:0!important;grid-template-columns:var(--edu-header-icon,96px) minmax(0,1fr)!important;justify-content:normal!important;justify-items:stretch!important}
+html body.calendar-reading.holiday-editorial section.hero.edu-output-header>div{grid-area:auto!important;margin:0!important;min-width:0!important}
+html body.calendar-reading.holiday-editorial section.hero.edu-output-header>.holiday-feature-art{display:none!important}
+html body.calendar-reading.holiday-editorial section.hero.edu-output-header{padding:clamp(12px,1.5vmin,28px)!important}

@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const scope={};vm.runInNewContext(fs.readFileSync(new URL('../calendar-copy.js',import.meta.url),'utf8'),scope);
+const {daysHeading,splitWords}=scope.EduvizeCalendarCopy;
+assert.deepEqual([0,1,2,3,4,5,6].map(n=>daysHeading(n)),['','Další den','Další 2 dny','Další 3 dny','Další 4 dny','Dalších 5 dnů','Dalších 6 dnů']);
+assert.deepEqual([0,1,2,3,4,5,6].map(n=>daysHeading(n,'sk')),['','Ďalší deň','Ďalšie 2 dni','Ďalšie 3 dni','Ďalšie 4 dni','Ďalších 5 dní','Ďalších 6 dní']);
+const text='Památka zesnulých připomíná naše blízké. Tobiáš má vlastní jmeniny.';
+const parts=splitWords(text,s=>s.length<=40);
+assert.equal(parts.join(' '),text);assert.ok(parts.every(s=>s.length<=40));
+assert.equal(splitWords('dlouhéslovo',()=>false)[0],'dlouhéslovo');
+console.log('Actual counts, Czech/Slovak declension and lossless word pagination passed');

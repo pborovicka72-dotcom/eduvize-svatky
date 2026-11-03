@@ -40,11 +40,11 @@
     const parent=heading.parentElement.matches('.mw-heading')?heading.parentElement:heading;
     let n=parent.nextElementSibling,parts=[];
     while(n&&!n.matches('h2,h3,h4,h5,.mw-heading')){if(n.matches('p'))parts.push(clean(n.textContent));n=n.nextElementSibling;}
-    const text=parts.join(' ');if(text.length>30)return shorten(text,480);
+    const text=parts.join(' ');if(text.length>30)return text;
    }
   }else{
    const paragraphs=[...doc.querySelectorAll('.mw-parser-output > p,.mw-parser-output > section > p')];
-   return shorten(paragraphs.map(p=>clean(p.textContent)).find(t=>/\bjméno\b/iu.test(t)&&/původ|odvoz|pocház|význam/iu.test(t))||'',480);
+   return paragraphs.map(p=>clean(p.textContent)).find(t=>/\bjméno\b/iu.test(t)&&/původ|odvoz|pocház|význam/iu.test(t))||'';
   }
   return '';
  }
@@ -59,13 +59,13 @@
    return {lead:'Původ a význam jména',text,extra:'',url:'https://'+host+'/w/index.php?title='+encodeURIComponent(data.parse.title)+'&oldid='+data.parse.revid,title:(kind==='wiktionary'?'Wikislovník':'Wikipedie')+' – '+data.parse.title};
   }catch{return null;}finally{clearTimeout(timer);}
  }
- function extractEvent(html){const doc=new DOMParser().parseFromString(html,'text/html');doc.querySelectorAll('sup,table,.mw-editsection,.navbox,.reference,.hatnote').forEach(e=>e.remove());return shorten([...doc.querySelectorAll('.mw-parser-output > p,.mw-parser-output > section > p')].map(e=>clean(e.textContent)).find(t=>t.length>70)||'',480);}
+ function extractEvent(html){const doc=new DOMParser().parseFromString(html,'text/html');doc.querySelectorAll('sup,table,.mw-editsection,.navbox,.reference,.hatnote').forEach(e=>e.remove());return [...doc.querySelectorAll('.mw-parser-output > p,.mw-parser-output > section > p')].map(e=>clean(e.textContent)).find(t=>t.length>70)||'';}
  async function lookup(name,kind='name'){
   if(kind==='name'&&curated[name])return curated[name];
   const lookupKey=kind+':'+name;
   if(pending.has(lookupKey))return pending.get(lookupKey);
   const task=(async()=>{
-   const key='eduvize-calendar-profile-v2:'+lookupKey;
+   const key='eduvize-calendar-profile-v3:'+lookupKey;
    try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&Date.now()-saved.time<30*86400000&&saved.data?.url?.startsWith('https://cs.')&&saved.data.text)return saved.data;}catch{}
    const data=kind==='event'?await request(name,'event'):await request(name,'wiktionary')||await request(name,'wikipedia');
    if(data)try{localStorage.setItem(key,JSON.stringify({time:Date.now(),data}));}catch{}
@@ -73,33 +73,60 @@
   })();pending.set(lookupKey,task);return task;
  }
  function node(tag,cls,text){const el=document.createElement(tag);el.className=cls;if(text)el.textContent=text;return el;}
+
+ let timer=null,pages=[],pageIndex=0;
+ const isWeb=()=>root.EduvizeOutputModes?.mode?.()==='web';
+ function showPage(index){
+  if(!pages.length||!box)return;
+  pageIndex=(index+pages.length)%pages.length;
+  box.querySelectorAll('.name-profile').forEach(entry=>entry.hidden=true);
+  const page=pages[pageIndex],entry=box.children[page.profile];entry.hidden=false;
+  entry.querySelector('.name-profile-text').textContent=page.text;
+  const profile=current[page.profile],title=document.querySelector('.holiday-feature-title'),label=document.querySelector('.holiday-feature-label');
+  if(title)title.textContent=profile.kind==='name'?profile.lead.split(' · ')[0]:profile.lead;
+  if(label)label.textContent=profile.kind==='name'?(currentCountry==='sk'?'Dnes oslavuje':'Dnes slaví'):(currentCountry==='sk'?'Dnešná pripomienka':'Dnešní připomínka');
+  root.EduvizeHolidayArt?.fit();
+  const count=entry.querySelector('.name-profile-count');
+  count.textContent=pages.length>1?(pageIndex+1)+' / '+pages.length:'';
+  // A shared date header stays compact; the reading area identifies the active subject.
+ }
  function fit(){
   queued=false;if(!box||!current)return;
-  const card=document.getElementById('upcoming'),grid=document.getElementById('upcoming-grid');
-  const web=root.EduvizeOutputModes?.mode?.()==='web';
-  const rect=card.getBoundingClientRect(),ratio=innerWidth/Math.max(1,innerHeight);
-  const tile=ratio>=2.7||ratio<=.6||rect.width<1500||rect.height<700;
-  card.classList.toggle('calendar-tile-details',tile);
-  grid.querySelectorAll('.upcoming-day').forEach(e=>e.hidden=false);
-  if(tile){const last=grid.querySelector('.upcoming-day:last-of-type');if(last)last.hidden=true;grid.prepend(box);}else if(box.parentElement!==card)card.prepend(box);
-  const side=!tile&&rect.width>=1100&&rect.width/Math.max(1,rect.height)>=1.3;
-  card.classList.toggle('calendar-side-details',side);
-  document.body.classList.toggle('calendar-hide-provenance',ratio>=2.7||ratio<=.4);
-  box.hidden=false;box.querySelectorAll('.name-profile-heading').forEach((e,i)=>e.textContent=current[i].lead);box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=false);
-  box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=current[i].text);
-  if(web)return;
-  if(tile){box.querySelectorAll('.name-profile-heading').forEach((e,i)=>e.textContent=current[i].lead.split(' · ')[0]);box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,110));return;}
-  const cs=getComputedStyle(card),font=parseFloat(getComputedStyle(box).fontSize)||20;
-  const rows=Math.max(1,Number(grid.style.getPropertyValue('--calendar-rows'))||1);
-  const reserve=rows*(font*4+24)+(card.querySelector('.section-heading')?.getBoundingClientRect().height||0)+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)+(parseFloat(cs.rowGap)||0)*2;
-  const fits=()=> (side?box.getBoundingClientRect().height+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0)<=rect.height:box.getBoundingClientRect().height+reserve<=rect.height)&&card.scrollHeight<=card.clientHeight+2;
-  if(!fits())box.querySelectorAll('.name-profile-extra').forEach(e=>e.hidden=true);
-  if(!fits())box.querySelectorAll('.name-profile-text').forEach((e,i)=>e.textContent=shorten(current[i].text,110));
-  if(!fits()){
-   card.classList.remove('calendar-side-details');card.classList.add('calendar-tile-details');
-   const last=grid.querySelector('.upcoming-day:last-of-type');if(last)last.hidden=true;
-   grid.prepend(box);box.hidden=false;box.querySelectorAll('.name-profile-heading').forEach((e,i)=>e.textContent=current[i].lead.split(' · ')[0]);
-  }
+  clearInterval(timer);timer=null;
+  const web=isWeb(),host=document.getElementById('upcoming');
+  host.classList.remove('calendar-side-details','calendar-tile-details');
+  document.body.classList.add('calendar-reading');root.EduvizeOutputHeader?.update();
+  document.body.classList.toggle('calendar-reading-web',web);
+  host.classList.remove('hidden');box.hidden=false;
+  const dayCards=[...document.querySelectorAll('#upcoming-grid>.upcoming-day')];
+  dayCards.forEach(e=>e.hidden=false);
+  const heading=host.querySelector('.section-heading'),grid=document.getElementById('upcoming-grid');
+  heading.hidden=dayCards.length===0;grid.hidden=dayCards.length===0;
+  host.classList.toggle('calendar-reading-only',dayCards.length===0);
+  const text=heading.querySelector('h2');
+  text.textContent=root.EduvizeCalendarCopy.daysHeading(dayCards.length,currentCountry);
+  host.setAttribute('aria-label',dayCards.length?text.textContent:'O dnešním dni');
+  document.getElementById('names-card').classList.add('hidden');
+  document.getElementById('holiday-card').classList.add('hidden');
+  pages=[];
+  [...box.children].forEach((entry,i)=>{
+   entry.hidden=false;
+   const copy=entry.querySelector('.name-profile-text'),profile=current[i];
+   const full=[profile.text,profile.extra].filter(Boolean).join(' ');
+   copy.textContent=full;
+   if(web){pages.push({profile:i,text:full});return;}
+   const parts=root.EduvizeCalendarCopy.splitWords(full,value=>{
+    copy.textContent=value;
+    return copy.scrollHeight<=copy.clientHeight+1&&copy.scrollWidth<=copy.clientWidth+1;
+   });
+   pages.push(...parts.map(value=>({profile:i,text:value})));
+   entry.hidden=true;
+  });
+  if(web){const title=document.querySelector('.holiday-feature-title');if(title&&current.length>1)title.textContent=currentCountry==='sk'?'Sviatky a meniny':'Svátky a jmeniny';return;}
+  const byProfile=current.map((_,i)=>pages.filter(page=>page.profile===i));
+  pages=[];for(let part=0;byProfile.some(list=>list.length>part);part++)for(const list of byProfile)if(list[part])pages.push(list[part]);
+  showPage(Math.min(pageIndex,pages.length-1));
+  if(pages.length>1)timer=setInterval(()=>{if(!document.hidden)showPage(pageIndex+1);},20000);
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(fit);}}
  function draw(profiles){
@@ -107,36 +134,43 @@
   if(!box){box=node('div','calendar-details');box.setAttribute('aria-label','Původ jména a význam dne');host.prepend(box);new ResizeObserver(schedule).observe(host);}
   current=profiles;box.replaceChildren();
   for(const profile of profiles){
-   const entry=node('section','name-profile');
-   entry.append(node('h3','name-profile-heading',profile.lead),node('p','name-profile-text',profile.text),node('p','name-profile-extra',profile.extra));
-   const source=node('div','name-profile-source');source.dataset.eduSourceDetails='';
+   const entry=node('section','name-profile'),copy=node('div','name-profile-copy');
+   const heading=node('h3','name-profile-heading',profile.lead),text=node('p','name-profile-text',profile.text);
+   const footer=node('div','name-profile-footer'),source=node('div','name-profile-source');source.dataset.eduSourceDetails='';
    source.append(document.createTextNode('Zpracováno podle '));
    const link=node('a','',profile.title);link.href=profile.url;link.target='_blank';link.rel='noopener noreferrer';
    const license=node('a','','CC BY-SA 4.0');license.href='https://creativecommons.org/licenses/by-sa/4.0/';license.target='_blank';license.rel='noopener noreferrer';
-   source.append(link,document.createTextNode(' · upraveno · '),license);entry.append(source);box.append(entry);
+   source.append(link,document.createTextNode(' · upraveno · '),license);
+   footer.append(source,node('span','name-profile-count'));copy.append(heading,text,footer);
+   const art=node('div','name-profile-art');art.setAttribute('aria-hidden','true');
+   if(profile.kind==='event'&&root.EduvizeHolidayArt)art.innerHTML=root.EduvizeHolidayArt.svg(root.EduvizeHolidayArt.motif(currentDay,profile.lead,currentEvents)||18);
+   else art.innerHTML='<svg viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="5" aria-hidden="true"><circle cx="120" cy="120" r="96" opacity=".12"/><rect x="53" y="102" width="134" height="88" rx="10"/><path d="M43 80h154v35H43zM120 80v110M120 80C62 80 69 25 99 42c14 8 21 38 21 38Zm0 0c58 0 51-55 21-38-14 8-21 38-21 38Z"/></svg>';
+   entry.append(copy,art);box.append(entry);
   }
   schedule();
  }
+ let currentCountry='cz',currentDay='',currentEvents=[];
  async function present(value,enabled,day='',events=[],options={}){
   const host=document.getElementById('upcoming');
+  currentCountry=options.country||'cz';currentDay=day;currentEvents=events;
   const key=JSON.stringify([value,enabled,day,events.map(e=>e.name)]);
-  if(key===currentKey){schedule();return;}currentKey=key;const ticket=++sequence;current=null;if(box)box.hidden=true;
-  if(!enabled||host.classList.contains('hidden'))return;
+  if(key===currentKey){schedule();return;}currentKey=key;const ticket=++sequence;current=null;clearInterval(timer);timer=null;if(box)box.hidden=true;
+  if(!enabled){document.body.classList.remove('calendar-reading','calendar-reading-web');return;}
   const profiles=[],event=eventProfile(day,events,options);
-  if(event)profiles.push(event);
+  if(event)profiles.push({...event,kind:'event'});
   else if(events.length){
    const article=eventArticles[day.slice(5)]||events[0].name;
    const data=await lookup(article,'event');if(ticket!==sequence)return;
-   if(data)profiles.push({...data,lead:events[0].name});
+   if(data)profiles.push({...data,lead:events[0].name,kind:'event'});
   }else if(day.slice(5)==='11-02'&&options.significant!==false){
    const data=await lookup('Dušičky','event');if(ticket!==sequence)return;
-   if(data)profiles.push({...data,lead:'Památka zesnulých'});
+   if(data)profiles.push({...data,lead:'Památka zesnulých',kind:'event'});
   }
   if(profiles.length)draw(profiles);
   // The detail heading identifies its name even on dates with multiple namedays.
   for(const name of names(value)){
    const data=await lookup(name);if(ticket!==sequence)return;
-   if(data){profiles.push({...data,lead:name+' · '+data.lead});break;}
+   if(data)profiles.push({...data,lead:name+' · '+data.lead,kind:'name'});
   }
   if(profiles.length)draw(profiles);
  }
