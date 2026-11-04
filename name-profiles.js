@@ -90,6 +90,34 @@
   count.textContent=pages.length>1?(pageIndex+1)+' / '+pages.length:'';
   // A shared date header stays compact; the reading area identifies the active subject.
  }
+
+ // Keep each description on one screen. Shrink only 15%, then shorten the copy.
+ function fitDescription(copy,full){
+  copy.style.removeProperty('font-size');
+  copy.textContent=full;
+  const base=parseFloat(getComputedStyle(copy).fontSize);
+  const fits=()=>copy.scrollHeight<=copy.clientHeight+1&&copy.scrollWidth<=copy.clientWidth+1;
+  if(fits())return full;
+  const minimum=Math.min(base,Math.max(20,base*.85));
+  copy.style.fontSize=minimum+'px';
+  if(fits()){
+   let low=minimum,high=base;
+   for(let i=0;i<10;i++){const mid=(low+high)/2;copy.style.fontSize=mid+'px';if(fits())low=mid;else high=mid;}
+   copy.style.fontSize=low+'px';
+   return full;
+  }
+  const words=full.trim().split(/\s+/u);
+  let low=0,high=words.length;
+  const excerpt=n=>words.slice(0,n).join(' ').replace(/[,;:]$/u,'')+'…';
+  while(low<high){const mid=Math.ceil((low+high)/2);copy.textContent=excerpt(mid);if(fits())low=mid;else high=mid-1;}
+  let result=excerpt(low);
+  // Prefer a complete sentence when it uses most of the available space.
+  const sentence=words.slice(0,low).join(' ').match(/^([\s\S]*[.!?])\s/u)?.[1];
+  if(sentence&&sentence.length>=result.length*.75)result=sentence;
+  copy.textContent=result;
+  return result;
+ }
+
  function fit(){
   queued=false;if(!box||!current)return;
   clearInterval(timer);timer=null;
@@ -115,18 +143,14 @@
    const full=[profile.text,profile.extra].filter(Boolean).join(' ');
    copy.textContent=full;
    if(web){pages.push({profile:i,text:full});return;}
-   const parts=root.EduvizeCalendarCopy.splitWords(full,value=>{
-    copy.textContent=value;
-    return copy.scrollHeight<=copy.clientHeight+1&&copy.scrollWidth<=copy.clientWidth+1;
-   });
-   pages.push(...parts.map(value=>({profile:i,text:value})));
+   pages.push({profile:i,text:fitDescription(copy,full)});
    entry.hidden=true;
   });
   if(web){const title=document.querySelector('.holiday-feature-title');if(title&&current.length>1)title.textContent=currentCountry==='sk'?'Sviatky a meniny':'Svátky a jmeniny';return;}
   const byProfile=current.map((_,i)=>pages.filter(page=>page.profile===i));
   pages=[];for(let part=0;byProfile.some(list=>list.length>part);part++)for(const list of byProfile)if(list[part])pages.push(list[part]);
   showPage(Math.min(pageIndex,pages.length-1));
-  if(pages.length>1)timer=setInterval(()=>{if(!document.hidden)showPage(pageIndex+1);},20000);
+  if(pages.length>1&&root.EduvizeOutputModes?.mode?.()!=='kiosk')timer=setInterval(()=>{if(!document.hidden)showPage(pageIndex+1);},20000);
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(fit);}}
  function draw(profiles){
