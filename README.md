@@ -47,3 +47,7 @@ Sdílené soubory se načítají ze stejného originu `/eduvize-styly/design-sys
 Resolver, publikování a veřejná konfigurace se integrují až přes koordinované rozhraní podle `../EDUVIZE-OUTPUT-CONTRACT.md`. Nezavádět aplikační API ani alternativní generátor. Historické vývojové odkazy nemusí zůstat kompatibilní; školní data se nemažou.
 
 Podrobný audit, důkazy a dosud nevyřešené společné závislosti: [AUDIT-2026-11-06.md](AUDIT-2026-11-06.md). Tato příprava nepotvrzuje nezávislost celého nasazení na Renderu.
+
+## Publikované výstupy v1
+
+Nový renderer `published.html` a backend balíček `eduvize_holidays.output_adapter` integrují společný registr. Administrace rozlišuje koncept a publikaci; kopírování ani otevření veřejného odkazu nepublikuje změny. Starší `index.html` je dosavadní vývojový/náhledový renderer, nikoli cíl nového resolveru. Aktuální integrace a její testovací omezení jsou v [OUTPUT-V1-INTEGRATION.md](OUTPUT-V1-INTEGRATION.md); starší audit zachycuje výchozí stav před touto implementací.
