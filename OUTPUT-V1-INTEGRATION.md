@@ -26,3 +26,11 @@ Vyžaduje koordinované test-only balení adaptéru do administračního obrazu,
 Koordinace probíhá s vláknem Hlavní strategie a workflow. Během zmrazeného okna galerie neprovádět main merge ani přestavbu testu. Produkce zůstává mimo rozsah změn. Lokální test ani úspěšné CI nepotvrzují vzdálené nasazení nebo úplný OAuth průchod.
 
 Samostatný `publication-admin-browser.cjs` prošel skutečným formulářem administrace: explicitní založení konceptu, pokus o kopírování nepublikovaného výstupu bez zápisu, publikace, změna formuláře, kopírování poslední publikace bez zápisu a explicitní uložení konceptu. Používá syntetickou autentizační fasádu a společné skripty s existujícím single-host přepisem; není to důkaz skutečného přihlášení. Výsledek v `audit/publication-admin-results.json`.
+
+## CI a přístup ke společnému jádru
+
+Běh GitHub Actions 42215712593 skončil na checkout soukromého eduvize-admin (Repository not found pro GITHUB_TOKEN veřejného repo). Veřejné CI proto spouští pouze vlastní kalendářní/regresní a payload testy. API a browser integrační testy zůstávají povinné v prostředí soukromého backendu; nebyly potichu označeny za CI úspěch. Jádro se nevendorizuje do veřejného repozitáře a nepřidává se žádný trvalý přístupový token.
+
+Lokální integrační příkaz: nastavte PYTHONPATH na tento repozitář a připnuté jádro admin, spusťte python -m unittest discover -s tests -p test_*.py. Loopback harness se spouští python -m uvicorn output_test_server:app --host 127.0.0.1 --port 8794 (PYTHONPATH musí zahrnout také adresář tests) s HOLIDAYS_TEST_STYLES cestou k připnutému shared klientovi. Browser skripty očekávají nadřazený workspace, port 8794 a instalovaný playwright. Syntetické sessions/harness nikdy nenasazovat na veřejnou doménu.
+
+Vzdálená nezapisující kontrola 6. 11.: /api/v1/outputs/schema HTTP200, /eduvize-svatky/published.html HTTP404. Svátky tedy ještě nejsou nasazené; žádný vzdálený E2E nebyl prohlášen za úspěšný.
