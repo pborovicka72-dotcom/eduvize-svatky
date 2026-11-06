@@ -75,6 +75,8 @@
  function node(tag,cls,text){const el=document.createElement(tag);el.className=cls;if(text)el.textContent=text;return el;}
 
  let timer=null,pages=[],pageIndex=0;
+ let controls=null;
+ const interactive=()=>root.EduvizeOutputModes?.isInteractive?.()||root.EduvizeOutputModes?.mode?.()==='kiosk';
  const isWeb=()=>root.EduvizeOutputModes?.mode?.()==='web';
  function showPage(index){
   if(!pages.length||!box)return;
@@ -88,6 +90,7 @@
   root.EduvizeHolidayArt?.fit();
   const count=entry.querySelector('.name-profile-count');
   count.textContent=pages.length>1?(pageIndex+1)+' / '+pages.length:'';
+  if(controls){controls.hidden=pages.length<2||!interactive();controls.querySelector('[role=status]').textContent=(pageIndex+1)+' / '+pages.length;}
   // A shared date header stays compact; the reading area identifies the active subject.
  }
 
@@ -143,19 +146,27 @@
    const full=[profile.text,profile.extra].filter(Boolean).join(' ');
    copy.textContent=full;
    if(web){pages.push({profile:i,text:full});return;}
+   if(root.EduvizeOutputModes?.mode?.()==='kiosk'){pages.push({profile:i,text:full});entry.hidden=true;return;}
    pages.push({profile:i,text:fitDescription(copy,full)});
    entry.hidden=true;
   });
-  if(web){const title=document.querySelector('.holiday-feature-title');if(title&&current.length>1)title.textContent=currentCountry==='sk'?'Sviatky a meniny':'Svátky a jmeniny';return;}
+  if(web){if(controls)controls.hidden=true;const title=document.querySelector('.holiday-feature-title');if(title&&current.length>1)title.textContent=currentCountry==='sk'?'Sviatky a meniny':'Svátky a jmeniny';return;}
   const byProfile=current.map((_,i)=>pages.filter(page=>page.profile===i));
   pages=[];for(let part=0;byProfile.some(list=>list.length>part);part++)for(const list of byProfile)if(list[part])pages.push(list[part]);
   showPage(Math.min(pageIndex,pages.length-1));
-  if(pages.length>1&&root.EduvizeOutputModes?.mode?.()!=='kiosk')timer=setInterval(()=>{if(!document.hidden)showPage(pageIndex+1);},20000);
+  if(pages.length>1&&!interactive())timer=setInterval(()=>{if(!document.hidden)showPage(pageIndex+1);},20000);
  }
  function schedule(){if(!queued){queued=true;requestAnimationFrame(fit);}}
  function draw(profiles){
   const host=document.getElementById('upcoming');
   if(!box){box=node('div','calendar-details');box.setAttribute('aria-label','Původ jména a význam dne');host.prepend(box);new ResizeObserver(schedule).observe(host);}
+  if(!controls){
+   controls=node('nav','calendar-detail-controls');controls.setAttribute('aria-label','Podrobnosti dne');
+   const previous=node('button','','Předchozí'),status=node('span',''),next=node('button','','Další');
+   previous.type=next.type='button';status.setAttribute('role','status');
+   previous.onclick=()=>showPage(pageIndex-1);next.onclick=()=>showPage(pageIndex+1);
+   controls.append(previous,status,next);host.append(controls);
+  }
   current=profiles;box.replaceChildren();
   for(const profile of profiles){
    const entry=node('section','name-profile'),copy=node('div','name-profile-copy');
@@ -179,6 +190,7 @@
   currentCountry=options.country||'cz';currentDay=day;currentEvents=events;
   const key=JSON.stringify([value,enabled,day,events.map(e=>e.name)]);
   if(key===currentKey){schedule();return;}currentKey=key;const ticket=++sequence;current=null;clearInterval(timer);timer=null;if(box)box.hidden=true;
+  if(controls)controls.hidden=true;
   if(!enabled){document.body.classList.remove('calendar-reading','calendar-reading-web');return;}
   const profiles=[],event=eventProfile(day,events,options);
   if(event)profiles.push({...event,kind:'event'});

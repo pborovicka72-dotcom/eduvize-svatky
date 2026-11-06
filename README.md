@@ -32,6 +32,18 @@ Původní SvátkyAPI nebylo použito pro nový import: jeho interval vrací jen 
 
 ## Prostor pro popis a souběh událostí
 
-NSP a kiosek sdílejí jednu čtecí plochu. Jmeniny a svátky se střídají po 20 sekundách včetně hlavičky. Delší text se dělí podle skutečné kapacity na celé části bez ztráty slov. Běžná stránka ukáže všechny popisy pod sebou.
+NSP bez interaktivního ovládání střídá medailonky po 20 sekundách. Každý popis se vejde na jednu obrazovku: písmo se zmenší nejvýše o 15 %, poté se text zkrátí na hranici věty nebo slova. Nedělí se na další textové stránky.
 
-Následující dny mají vlastní pás a nadpis vzniká ze skutečného počtu vykreslených karet. S popisem je široký výstup omezen na nejvýše 3 následující dny, portrétní na 4 (vždy také respektuje zvolený limit a kapacitu segmentu). Žádná karta není nahrazena popisem. Česká i slovenská varianta mají samostatné skloňování.
+Kiosek a interaktivní NSP mají tlačítka Předchozí / Další, pokud existuje více medailonků. Automaticky nepřepínají. Kiosek ukazuje celý text v přirozené výšce karty; běžná stránka všechny medailonky pod sebou. Podrobnosti fungují i s nulovým počtem dalších dnů. Při nedostupném doplňujícím zdroji zůstanou základní jmeniny a svátky.
+
+Následující dny mají vlastní pás a nadpis ze skutečného počtu karet. S popisem je široký výstup omezen na nejvýše 3 následující dny, portrétní na 4, vždy podle zvoleného limitu a kapacity. Popis nenahrazuje budoucí kartu. Česká i slovenská varianta mají samostatné skloňování.
+
+## Příprava společného kontraktu
+
+Veřejný výstup nečte rozpracované nastavení z localStorage. Parametrické adresy jsou dosavadní vývojová cesta, nikoli implementace nového registru publikací. Bez explicitního profilu používá výstup standardní vzhled; nesmí přebrat profil posledního správce.
+
+Sdílené soubory se načítají ze stejného originu `/eduvize-styly/design-system/`. Pro místní kontrolu servírujte společný nadřazený adresář obsahující oba repozitáře. Samotný server pro tento repozitář nestačí.
+
+Resolver, publikování a veřejná konfigurace se integrují až přes koordinované rozhraní podle `../EDUVIZE-OUTPUT-CONTRACT.md`. Nezavádět aplikační API ani alternativní generátor. Historické vývojové odkazy nemusí zůstat kompatibilní; školní data se nemažou.
+
+Podrobný audit, důkazy a dosud nevyřešené společné závislosti: [AUDIT-2026-11-06.md](AUDIT-2026-11-06.md). Tato příprava nepotvrzuje nezávislost celého nasazení na Renderu.
