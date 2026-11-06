@@ -34,3 +34,13 @@ Běh GitHub Actions 42215712593 skončil na checkout soukromého eduvize-admin (
 Lokální integrační příkaz: nastavte PYTHONPATH na tento repozitář a připnuté jádro admin, spusťte python -m unittest discover -s tests -p test_*.py. Loopback harness se spouští python -m uvicorn output_test_server:app --host 127.0.0.1 --port 8794 (PYTHONPATH musí zahrnout také adresář tests) s HOLIDAYS_TEST_STYLES cestou k připnutému shared klientovi. Browser skripty očekávají nadřazený workspace, port 8794 a instalovaný playwright. Syntetické sessions/harness nikdy nenasazovat na veřejnou doménu.
 
 Vzdálená nezapisující kontrola 6. 11.: /api/v1/outputs/schema HTTP200, /eduvize-svatky/published.html HTTP404. Svátky tedy ještě nejsou nasazené; žádný vzdálený E2E nebyl prohlášen za úspěšný.
+
+## Navazující ověření 6. 11. — obnovení po výpadku
+
+Při novém požadavku na vzdálené nasazení koordinace potvrdila, že okno není uvolněné: serverová změna root-owned pilotních source pins vyžaduje dostupné sudo. Fronta je inventura → login CSS → společný runtime a gallery/transport regrese → Počasí → Svátky. Nejde o zákaz autorizované práce, ale o koordinované pořadí; žádný blind rerun/main merge ani produkční změna nebyly provedeny. Renderer na testu nadále HTTP404.
+
+Svátky byly nově ověřeny proti immutable opravě společného runtime styles PR11 / 7ac201ecd34c03366a98fa462f09f3812c0a4afb. Čtyři browser prezentace prošly; web scénář navíc vložil krátké 503 při snapshot pollu a ověřil obnovení kalendářního načítání při stejné publikované revizi. Produkční renderer nebyl kvůli této chybě upravován workaroundem. Důkaz obsahuje source SHA a transientRecovery=true. Shared PR11 není tímto testem sloučený ani nasazený.
+
+Nástroj tools/verify_remote_test.cjs je připraven pro skutečný test-only průchod: používá dvě již existující školní fixtures (nevytváří profily), autentizuje skutečnou relaci administrace, ověřuje koncept/publikaci/read-only kopii, sedm geometrických variant, cizí školu, profilový styl s obnovou a revoke. Vyžaduje privátní fixtures soubor s právy600, stav operací a přesný release ID. První fixture musí obsahovat serverem potvrzený profileThemeId, aby dočasná změna stylu zachovala přesnou původní vazbu. Tokeny ani hlavičky do reportu nevypisuje. Zatím nebyl spuštěn proti vzdálenému testu; předpokládá koordinované aktivování adaptéru, serverovou blokádu Renderu a ověření studeného startu mimo browser.
+
+Přímý SSH privilege check z tohoto aplikačního chatu skončil na chybě ověření host key. Kontrola nebyla vypnuta a žádný nový klíč nebyl automaticky přijat; serverová koordinace zůstává vlastníkem přístupu a testovací aktivace.

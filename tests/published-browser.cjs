@@ -14,10 +14,11 @@ if(!/^http:\/\/127\.0\.0\.1:\d+$/.test(base))throw Error('Loopback integration h
   const draft={schemaVersion:1,payloadVersion:1,payload,presentation};
   let o=await mutate('post','/api/v1/outputs',{schemaVersion:1,appId:'holidays',profileId:'b'.repeat(32),assemblyId:assembly.id,draft});
   o=await mutate('post','/api/v1/outputs/'+o.id+'/publish',{expectedRevision:o.revision});
-  const context=await browser.newContext({viewport:label==='kiosk'?{width:1080,height:1920}:{width:1920,height:1080},serviceWorkers:'block'}),page=await context.newPage(),network=[],errors=[],denied=[];
+  const context=await browser.newContext({viewport:label==='kiosk'?{width:1080,height:1920}:{width:1920,height:1080},serviceWorkers:'block'}),page=await context.newPage(),network=[],errors=[],denied=[];let failSnapshot=false;
   await context.route('**/*',async route=>{
    const u=new URL(route.request().url());network.push(u.origin+u.pathname);
    if(u.origin!==origin){denied.push(u.origin+u.pathname);return route.abort();}
+   if(failSnapshot&&u.pathname==='/api/public/v1/outputs/'+o.id){failSnapshot=false;return route.fulfill({status:503,json:{error:{code:'TEST_TRANSIENT_OUTAGE',message:'Isolated transient test'}}});}
    const response=await route.fetch({url:base+u.pathname+u.search,maxRedirects:0});return route.fulfill({response});
   });
   await page.clock.install({time:new Date('2026-11-03T11:00:00Z')});
@@ -30,6 +31,13 @@ if(!/^http:\/\/127\.0\.0\.1:\d+$/.test(base))throw Error('Loopback integration h
   assert.equal(await page.locator('html').getAttribute('data-output-mode'),presentation.mode);
   assert.equal(await page.locator('html').getAttribute('data-kiosk-header'),presentation.mode==='kiosk'?(presentation.kioskLayout==='menu'?'light':'dark'):null);
   assert.ok(!network.some(u=>u.includes('onrender.com')),'Render attempted');assert.deepEqual(errors,[]);
+  if(process.env.HOLIDAYS_RECOVERY_TEST==='1'&&label==='web'){
+   failSnapshot=true;await page.clock.fastForward(61000);await page.waitForTimeout(500);
+   const stopped=network.filter(u=>u.endsWith('/calendar.json')).length;
+   await page.clock.fastForward(61000);await page.waitForTimeout(500);
+   assert.ok(network.filter(u=>u.endsWith('/calendar.json')).length>stopped,'Same revision did not restart calendar after transient abort');
+   assert.ok(await page.locator('main').isVisible());
+  }
   const privateRead=await api.get('/api/v1/outputs/'+o.id);assert.equal(privateRead.status(),200);
   const d={...draft,payload:{...payload,country:'sk'}};
   const saved=await mutate('put','/api/v1/outputs/'+o.id+'/draft',{expectedRevision:o.revision,draft:d});
@@ -56,7 +64,7 @@ if(!/^http:\/\/127\.0\.0\.1:\d+$/.test(base))throw Error('Loopback integration h
   await mutate('post','/api/v1/outputs/'+o.id+'/revoke',{expectedRevision:saved.revision});
   await page.clock.fastForward(61000);await page.waitForTimeout(500);assert.ok(await page.locator('main').isHidden());
   assert.equal((await api.get('/api/public/v1/outputs/'+o.id)).status(),410);
-  results.push({label,id:o.id,presentation,rendered:'Hubert',unrelatedLocalProfileIgnored:true,draftDoesNotPublish:true,linkStable:true,themeChanged:theme!==initialTheme,revokeClears:true,network,denied,errors});
+  results.push({label,id:o.id,presentation,rendered:'Hubert',unrelatedLocalProfileIgnored:true,draftDoesNotPublish:true,linkStable:true,themeChanged:theme!==initialTheme,revokeClears:true,transientRecovery:process.env.HOLIDAYS_RECOVERY_TEST==='1'&&label==='web',network,denied,errors});
   await context.close();await api.post('/__test/theme',{data:{color:'#112233'}});
  }
  fs.writeFileSync('eduvize-svatky/audit/published-browser-results.json',JSON.stringify({environment:'local-loopback-shared-api',remoteTestVerified:false,results},null,2));
