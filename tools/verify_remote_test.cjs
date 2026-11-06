@@ -2,6 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {chromium,request}=require('playwright');
 const BASE='https://test.skola.eduvize.cz';
+if(process.env.HOLIDAYS_TEST_GATE_RELEASED!=='1')throw Error('Remote acceptance is on hold until the server security owner explicitly releases the gate policy.');
 const access=process.env.HOLIDAYS_TEST_ACCESS_FILE,stateFile=process.env.HOLIDAYS_TEST_STATE_FILE,reportFile=process.env.HOLIDAYS_TEST_REPORT;
 if(!access||!stateFile||!reportFile||!process.env.EDUVIZE_TEST_RELEASE)throw Error('Private fixtures, state, report and release are required');
 let stage='initialization',browser,report={environment:BASE,release:process.env.EDUVIZE_TEST_RELEASE,startedAt:new Date().toISOString(),profilesCreated:0,productionChanged:false,checks:[],network:[],renderAttempts:[],pageErrors:[]},state={operations:{},outputs:{}};
