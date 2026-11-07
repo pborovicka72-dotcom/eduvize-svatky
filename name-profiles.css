@@ -61,3 +61,9 @@ html.kiosk-output body.calendar-reading .name-profile{height:auto!important;over
 html.kiosk-output body.calendar-reading .name-profile-text{flex:none!important;overflow:visible!important}
 html.kiosk-output body.calendar-reading .name-profile-art{max-height:240px}
 body.calendar-reading:has(.calendar-detail-controls:not([hidden])) .name-profile-count{display:none}
+
+/* With no following days, the reading panel owns the entire assigned segment. */
+body.calendar-reading.ev-modern .shell>#upcoming.calendar-reading-only{grid-template-columns:minmax(0,1fr)}
+body.calendar-reading #upcoming.calendar-reading-only>.calendar-details{grid-column:1;grid-row:1}
+body.calendar-reading.ev-modern .shell>#upcoming.calendar-reading-only:has(.calendar-detail-controls:not([hidden])){grid-template-rows:minmax(0,1fr) auto}
+body.calendar-reading #upcoming.calendar-reading-only>.calendar-detail-controls{grid-column:1;grid-row:2}
