@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 const root=new URL('../',import.meta.url),read=p=>fs.readFileSync(new URL(p,root),'utf8');
 const m=JSON.parse(read('deployment/renderer-allowlist.json'));
-for(const [path,expected] of Object.entries({...m.staticFiles,...m.backendFiles}))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(new URL(path,root))).digest('hex'),expected,path);
+for(const [path,expected] of Object.entries({...m.staticFiles,...m.backendFiles,...m.adminBridgeFiles}))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(new URL(path,root))).digest('hex'),expected,path);
 const html=read('published.html');
 const refs=[...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
 for(const ref of refs)assert.ok(ref.startsWith('/')?m.sharedAssets.includes(ref):Object.hasOwn(m.staticFiles,ref),'Unlisted dependency: '+ref);

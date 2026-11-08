@@ -1,0 +1,14 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const scope={};vm.runInNewContext(fs.readFileSync(new URL('../output-settings.js',import.meta.url),'utf8'),scope);
+const {payload,createDraftGetter}=scope.EduvizeHolidaysOutputSettings;
+const values={country:'cz',monthFormat:'text',days:'0',tomorrow:true,holidays:true,significant:true,nameDetails:false,viewMode:'nsp',profileId:'untrusted',token:'not-published'};
+assert.deepEqual(JSON.parse(JSON.stringify(payload({values}))),{country:'cz',monthFormat:'text',days:0,tomorrow:true,holidays:true,significant:true,nameDetails:false});
+for(const delta of [{days:true},{days:'01'},{days:7},{tomorrow:'1'},{country:'xx'},{nameDetails:undefined}])assert.throws(()=>payload({values:{...values,...delta}}));
+assert.throws(()=>payload({}));
+let ctx={appId:'holidays',schoolId:'school-a',profileId:'profile-a',slotId:'canonical-web'};
+const p={mode:'web',geometry:null,interaction:'display'};
+const getter=createDraftGetter({context:()=>ctx,loadSaved:async c=>{assert.equal(c.profileId,'profile-a');return {values};},presentation:()=>p});
+const draft=JSON.parse(JSON.stringify(await getter()));assert.deepEqual(draft.presentation,p);assert.equal(draft.payload.days,0);assert.equal(draft.payload.profileId,undefined);assert.equal(draft.payload.viewMode,undefined);
+const racing=createDraftGetter({context:()=>ctx,loadSaved:async()=>{ctx={...ctx,profileId:'profile-b'};return {values};},presentation:()=>p});await assert.rejects(racing(),/změnil/);
+const denied=createDraftGetter({context:()=>ctx,loadSaved:async()=>{throw Error('Forbidden');},presentation:()=>p});await assert.rejects(denied(),/Forbidden/);
+console.log('Saved holidays payload projection, no defaults/private fields, shared Presentation and context-race denial passed.');

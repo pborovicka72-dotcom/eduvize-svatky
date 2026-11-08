@@ -67,5 +67,9 @@
     "significant",
     "nameDetails"
   ],
-  "presentation": "Existing core Draft/Presentation; never include identity/geometry in calendar payload"
+  "presentation": "Existing core Draft/Presentation; never include identity/geometry in calendar payload",
+  "adminBridgeFiles": {
+    "output-settings.js": "54010cd27cd426aaa5ff16b37089cc12b7a354a7e78b809db9c8660121a934ee"
+  },
+  "adminBridge": "EduvizeHolidaysOutputSettings.createDraftGetter({loadSaved,context,presentation}); loadSaved is existing authenticated saved profile config reader; use Accounts managedslot lookup, no local matcher"
 }
