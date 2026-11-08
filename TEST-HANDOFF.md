@@ -1,21 +1,11 @@
-# Svátky — předání po uvolnění brány
+# Svátky — ověření běžných výstupů V2 na TEST
 
-Stav: lokální příprava; žádné nasazení, merge ani změna serveru. Stávající ovládací prvky a jejich rozmístění se v této etapě nemění.
+Zdrojové zapojení: deployment/RENDERER-HANDOFF.md a renderer-allowlist.json. Atomicky vyměnit adminBridgeFiles a odstranit publication-admin.js; žádný starý technický panel/handler současně s V2. Server jediný executor. Produkci neměnit.
 
-## Podmínky vzdáleného ověření
+Nutné sdílené verze: frozen V2 actions48bd6c1e/clientef4ce854 + existing guarded GET output-slots API; native readeraaed6374 je přesně přibalený app asset; kiosk setter93a1b157 se aplikuje jako reviewed hunk k aktuálnímu nsp-segments. Zachovat současné core, entitlement a profilové bezpečnostní kontroly. Package a adapter env append při build, ostatní apps zachovat.
 
-- Serverový vlastník výslovně uvolní přístupovou politiku a přidělí testovací okno. Současný login gate se neobchází; redirect na přihlášení není aplikační regrese.
-- Potvrdit přesné zdrojové revize, test-only image digest, lokální entitlement app.holidays a balení adaptéru vedle ostatních aplikací.
-- Použít existující nezbytné školní fixtures, ověřit jejich vazby. Žádné automatické vytváření nebo mazání profilů.
-- Soukromý vstup fixtures musí mít práva600. Obsahuje školní sessions a serverem potvrzený explicitní profileThemeId pro bezpečnou obnovu stylu; nesmí do Git ani logů.
-- Teprve potom nastavit HOLIDAYS_TEST_GATE_RELEASED=1 a spustit tools/verify_remote_test.cjs se stanoveným release ID. Tato proměnná bránu neodemyká a není souhlasem s výjimkou v zabezpečení.
+Před vzdálenou akceptací potvrdit current TEST release/image/hash/CAS a approved public-output gate policy. Login gate se neobchází. Použít existující nezbytné školní fixtures a ověřit vazby; žádné automatické vytváření/mazání profilů. Soukromý fixtures soubor mode600, nikdy do Git/logů. HOLIDAYS_TEST_GATE_RELEASED=1 pouze potvrzuje dříve schválenou politiku, bránu neodemyká.
 
-## Akceptace
+tools/verify_remote_test.cjs má aktuální běžný UI průchod: původní uložený profil → Uložit do Eduvize bez registry write → Generate/Update → read-only Copy → anonymní skutečný renderer → stejný URL po Update → fresh-browser Copy/Open GET-only → cizí škola/anonymous private API denied. Nespouští technical panels, first-of-many resolver, ani demo/default publication. Přesné release a report path povinné. Ve zdroji tento vzdálený test nebyl spuštěn.
 
-Skutečná administrace → koncept → publikace → read-only kopie → resolver dle schválené gate policy; dvě školy/profily; web, NSP a kiosek v obou orientacích; aktuální kalendář a medailonky; profilový styl a jeho obnova; revoke/clear; krátký výpadek a obnova stejné revize. Porovnat pořadí a seskupení používaných ovládacích prvků s výchozím UI.
-
-Serverová blokáda Renderu a cold start vyžadují samostatný důkaz od vlastníka infrastruktury. Lokální browser testy nejsou důkazem vzdálené akceptace. Historické důkazy platí jen pro uvedené revize a tehdejší přístupovou politiku. Produkční aplikace ani přístupová politika se tímto úkolem nemění.
-
-## CI
-
-Veřejné CI spouští vlastní kalendářní/payload regrese a kontrolu syntaxe klienta a akceptačních nástrojů. Integrační API/browser sady vyžadují oprávněný přístup k soukromému jádru a připnuté zdroje; soukromé jádro se do veřejného repo nekopíruje.
+Dále skutečně porovnat layout s původním UI, pořadí používaných tlačítek, dnešek fullwidth a multi-day rozvržení; uloženou plnou Presentation web/NSP/kiosk obě orientace, kiosk reload zachová viewport; render matici, style polling/izolaci, revoke/clear a krátký výpadek stejné revize. Serverová blokáda Renderu a cold start vyžadují samostatný infra důkaz. Lokální syntetické testy ani zelené veřejné CI nejsou tímto důkazem.

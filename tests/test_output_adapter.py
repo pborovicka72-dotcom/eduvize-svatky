@@ -17,7 +17,12 @@ class Connection:
     def __init__(self,path):
         self.conn=sqlite3.connect(path,timeout=15);self.conn.execute('BEGIN IMMEDIATE')
     def execute(self,sql,args=()):
-        if 'pg_advisory_xact_lock' in sql or sql == "SET LOCAL lock_timeout = '15s'":return self.conn.execute('SELECT 1')
+        if 'pg_advisory_xact_lock' in sql or sql in ("SET LOCAL lock_timeout = '15s'", 'SET TRANSACTION READ ONLY'):return self.conn.execute('SELECT 1')
+        if sql.startswith("SELECT to_regclass("):
+            import re
+            names=re.findall(r"to_regclass\('([a-z0-9_]+)'\)",sql)
+            values=[self.conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?",(n,)).fetchone() for n in names]
+            return self.conn.execute('SELECT '+','.join('?' for _ in names),tuple(v[0] if v else None for v in values))
         return self.conn.execute(sql.replace('%s','?'),args)
     def __enter__(self):return self
     def __exit__(self,typ,value,tb):

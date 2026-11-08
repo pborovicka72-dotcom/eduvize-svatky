@@ -23,5 +23,20 @@
     "renderRequests": 0,
     "remoteTestVerified": false
   },
-  "caution": "Use current reviewed security core including active public profile checks; no downgrade to test baseline."
+  "caution": "Use current reviewed security core including active public profile checks; no downgrade to test baseline.",
+  "v2": {
+    "actionsSha256": "48bd6c1ec321c6eb37478ce6ae861999630bfa80d99477c5792cdb040c94c050",
+    "clientSha256": "ef4ce8544cf5a91aff7f3669fcd62205cd0e32d656ad3df4db7b55967c923341",
+    "readerSha256": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5",
+    "nspSourceSha256": "93a1b15749ab341c47979ef9804c51027919458231c360efa326ad3032b48c2c",
+    "registrySourceSha256": "5ad6686f726f0bc802afe9de578ed6b632381e16899d0e5c64645b97852d7ce3",
+    "apiSourceSha256": "f63d7d4d8c35e29ab84b6ed07e7337abdc127698c93541a0f9abfdbd58fe02e0",
+    "ordinaryUIFlow": "PASS",
+    "fullSavedPresentationAndKioskReload": "PASS",
+    "saveNoRegistryWrites": "PASS",
+    "freshBrowserCopyOpenGetOnly": "PASS",
+    "nativeEnvelopeAndControlOrder": "PASS",
+    "remoteAcceptance": false,
+    "previewNote": "Legacy preview licensing endpoint not supplied by synthetic harness; preview viewport/control layout verified, actual preview entitlement rendering remains server QA."
+  }
 }

@@ -42,7 +42,6 @@
   ],
   "externalFailure": "Base calendar remains available; medallion optional",
   "exclude": [
-    "config.html",
     "index.html",
     "publication-admin.js",
     "tests/",
@@ -69,7 +68,41 @@
   ],
   "presentation": "Existing core Draft/Presentation; never include identity/geometry in calendar payload",
   "adminBridgeFiles": {
-    "output-settings.js": "54010cd27cd426aaa5ff16b37089cc12b7a354a7e78b809db9c8660121a934ee"
+    "config.html": "e4da517d095b8324a3da3d2f371d606a86cb1e76f7a26db4d28811aaae0174c7",
+    "output-settings.js": "722726c4251e5940bbf79681dbd289169430afb2c10afacdc1e47aac84ccd975",
+    "output-admin.js": "bd7932c4da264a44e4f411a2016efa9dd24a39c699937604b0fc217ee50760c9",
+    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5"
   },
-  "adminBridge": "EduvizeHolidaysOutputSettings.createDraftGetter({loadSaved,context,presentation}); loadSaved is existing authenticated saved profile config reader; use Accounts managedslot lookup, no local matcher"
+  "adminBridge": "V2 only: OutputActions.mount context {schoolId,profileId,appId,presentation}, draft from fresh saved native config incl full Presentation. No custom slotId/resolve/matcher. Save native envelope independent of registry.",
+  "deleteFiles": [
+    "publication-admin.js"
+  ],
+  "sharedPins": {
+    "output-actions.js": "48bd6c1ec321c6eb37478ce6ae861999630bfa80d99477c5792cdb040c94c050",
+    "output-client.js": "ef4ce8544cf5a91aff7f3669fcd62205cd0e32d656ad3df4db7b55967c923341",
+    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5",
+    "nsp-segments.js": "93a1b15749ab341c47979ef9804c51027919458231c360efa326ad3032b48c2c"
+  },
+  "adminDirectSharedAssets": [
+    "/eduvize-styly/design-system/admin-navigation.js",
+    "/eduvize-styly/design-system/output-modes.js",
+    "/eduvize-styly/design-system/admin-account.css",
+    "/eduvize-styly/design-system/admin-auth.js",
+    "/eduvize-styly/design-system/admin-tokens.css",
+    "/eduvize-styly/design-system/admin-shell.css",
+    "/eduvize-styly/design-system/admin-components.css",
+    "/eduvize-styly/design-system/nsp-segments.css",
+    "/eduvize-styly/design-system/active-theme.js",
+    "/eduvize-styly/design-system/preview-viewport.css",
+    "/eduvize-styly/design-system/preview-viewport.js",
+    "/eduvize-styly/design-system/app-icons.css",
+    "/eduvize-styly/design-system/app-icons.js",
+    "/eduvize-styly/design-system/assets/eduvize-favicon.svg",
+    "/eduvize-styly/design-system/admin-header.js",
+    "/eduvize-styly/design-system/nsp-geometry.js",
+    "/eduvize-styly/design-system/nsp-segments.js",
+    "/eduvize-styly/design-system/configuration-profiles.js",
+    "/eduvize-styly/design-system/output-client.js",
+    "/eduvize-styly/design-system/output-actions.js"
+  ]
 }

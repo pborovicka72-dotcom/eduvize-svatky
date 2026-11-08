@@ -1,0 +1,13 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8'),html=read('config.html'),js=read('output-admin.js');
+for(const old of ['publication-output','publication-create','publication-save','publication-publish','publication-admin.js','EduvizeHolidaysPublication'])assert.ok(!html.includes(old),old);
+for(const id of ['saveSettings','generateOutput','openOutput','save'])assert.equal([...html.matchAll(new RegExp('id="'+id+'"','g'))].length,1,id);
+assert.ok(html.indexOf('id="saveSettings"')<html.indexOf('id="generateOutput"'));assert.ok(html.indexOf('id="generateOutput"')<html.indexOf('id="openOutput"'));assert.ok(html.indexOf('id="openOutput"')<html.indexOf('id="save"'));
+assert.equal([...html.matchAll(/src="[^\"]*output-actions\.js/g)].length,1);
+assert.ok(html.includes('const presentation=window.EduvizeHolidaysOutputSettings.readNativePresentation()'));
+assert.ok(html.includes('await window.EduvizeHolidaysOutputSettings.applyPresentation(config.presentation)'));
+const save=html.slice(html.indexOf('function saveSettings()'),html.indexOf('$("saveSettings").onclick'));
+assert.ok(!/generate|publish|createOutput|saveDraft/.test(save));
+for(const own of ['slotId','resolve:','matcher','listOutputs','createAssembly','publishOutput','saveDraft'])assert.ok(!js.includes(own),own);
+assert.ok(js.includes('schemaVersion!==2'));assert.ok(js.includes('reader.load(c)).config'));assert.ok(js.includes('EduvizeOutputActions.mount'));
+console.log('Atomic legacy UI removal, original action ordering, native Presentation save and sole shared V2 controller passed.');

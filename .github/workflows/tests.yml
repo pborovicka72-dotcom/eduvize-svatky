@@ -13,16 +13,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: node tests/calendar.test.mjs && node tests/reading.test.mjs && node tests/public-config.test.mjs && node tests/deployment-allowlist.test.mjs && node tests/output-settings.test.mjs
+      - run: node tests/calendar.test.mjs && node tests/reading.test.mjs && node tests/public-config.test.mjs && node tests/deployment-allowlist.test.mjs && node tests/output-settings.test.mjs && node tests/output-admin-wiring.test.mjs
       - run: pip install -e .
       - run: python -m unittest discover -s tests -p 'test_import_namedays.py'
       - run: python -m unittest discover -s tests -p 'test_settings.py'
       - name: Check application and acceptance script syntax
         run: |
-          node --check publication-admin.js
+          node --check output-admin.js
+          node --check output-settings.js
+          node --check load-saved-app.js
           node --check published.js
           node --check tests/published-browser.cjs
-          node --check tests/publication-admin-browser.cjs
+          node --check tests/output-admin-browser.cjs
           node --check tools/verify_remote_test.cjs
       - name: Verify single-day panel layout in Chromium
         run: |

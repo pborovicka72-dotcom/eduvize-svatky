@@ -1,3 +1,5 @@
+> Aktuální administrační integrace používá běžné OutputActions V2, nikoli níže historicky popsaný technický panel. Viz deployment/RENDERER-HANDOFF.md a TEST-HANDOFF.md; staré důkazy mají jen uvedený historický rozsah.
+
 # Svátky: společný kontrakt v1
 
 AppId `holidays`, licence `app.holidays`, renderer `/eduvize-svatky/published.html`. Adaptér je balíček `eduvize-svatky` v tomto repozitáři, export `eduvize_holidays.output_adapter.get_output_adapters`. Aktivovat jen koordinovaně na testu vedle galerie přes `EDUVIZE_OUTPUT_ADAPTER_MODULES`, nikoli přepsáním celé proměnné nebo změnou produkce.
