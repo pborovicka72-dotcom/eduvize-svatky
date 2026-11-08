@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "appId": "holidays",
+  "renderer": "/eduvize-svatky/published.html",
+  "scope": "Renderer and adapter only; admin integration is owned by shared output-actions",
+  "staticFiles": {
+    "published.html": "1d0339d0a789594f4b31e256a00ab83634da81ea97b26a0200595b2c83530597",
+    "published.js": "e47a7a7cabaaa418c52d25bcbb087343164d3e7509176c205f044c8087cd7ca6",
+    "published.css": "546000580a71e91bd8df6f23c8c3928d025678dd575c45aed34f5b680e639560",
+    "holiday-editorial.css": "6e220f9c68166c7f8075ca04a7786697d0ea93121d64fbeecac986b322223d25",
+    "name-profiles.css": "1e23e6b481abb9b74cb66d4dbed3dcc73a12184a26059fbebf80ed8ecff5a000",
+    "name-profiles.js": "0b10bc7467bd3d8ed8ee48352d5bef7bdaa5317386ea1d3302885eea383f4401",
+    "holiday-art.js": "7d2edcfe66ad8a50f4ffcf2328e42c9e998dd2746857005f279991289e5ff13b",
+    "calendar-copy.js": "24f67c51b1ce09fc7ec0ddc342bc0f8a5fed9f3e104a2f1a63978f13efac377a",
+    "calendar.json": "dbbcc1693869d39784e24d3e1c2307e880871d69588758e0f24a32664ec0ea4a"
+  },
+  "backendFiles": {
+    "pyproject.toml": "090e38ad49aeee4ee5b9652010c1754de47ad25f0245dfd48d1d0bd76b38d23c",
+    "eduvize_holidays/__init__.py": "d016a9ef22b69eaf2867f99d9aba7f9034c69503d25d5e39a9cf35f68806ff37",
+    "eduvize_holidays/output_adapter.py": "06efdeecb2950ae3d5fb1644f8970e84daab94c94c8253041bf950a503a0279c"
+  },
+  "sharedAssets": [
+    "/eduvize-styly/design-system/admin-tokens.css",
+    "/eduvize-styly/design-system/holidays.css",
+    "/eduvize-styly/design-system/app-icons.css",
+    "/eduvize-styly/design-system/output-header.css",
+    "/eduvize-styly/design-system/card-layout.css",
+    "/eduvize-styly/design-system/nsp-geometry.js",
+    "/eduvize-styly/design-system/segment-profile.js",
+    "/eduvize-styly/design-system/holidays-layout.js",
+    "/eduvize-styly/design-system/app-icons.js",
+    "/eduvize-styly/design-system/output-client.js",
+    "/eduvize-styly/design-system/output-runtime.js"
+  ],
+  "publicAPI": [
+    "/api/public/v1/outputs/{id}",
+    "/api/public/v1/outputs/{id}/theme"
+  ],
+  "optionalExternalFetch": [
+    "https://cs.wiktionary.org/w/api.php",
+    "https://cs.wikipedia.org/w/api.php"
+  ],
+  "externalFailure": "Base calendar remains available; medallion optional",
+  "exclude": [
+    "config.html",
+    "index.html",
+    "publication-admin.js",
+    "tests/",
+    "tools/",
+    "audit/"
+  ],
+  "registration": {
+    "package": "eduvize-svatky",
+    "module": "eduvize_holidays.output_adapter",
+    "factory": "get_output_adapters",
+    "appId": "holidays",
+    "entitlement": "app.holidays",
+    "environmentVariable": "EDUVIZE_OUTPUT_ADAPTER_MODULES",
+    "operation": "Append module once to existing configured list; preserve all other modules; package at image build time"
+  },
+  "payloadFields": [
+    "country",
+    "monthFormat",
+    "days",
+    "tomorrow",
+    "holidays",
+    "significant",
+    "nameDetails"
+  ],
+  "presentation": "Existing core Draft/Presentation; never include identity/geometry in calendar payload"
+}

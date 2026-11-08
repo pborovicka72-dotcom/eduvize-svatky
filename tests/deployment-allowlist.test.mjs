@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+const root=new URL('../',import.meta.url),read=p=>fs.readFileSync(new URL(p,root),'utf8');
+const m=JSON.parse(read('deployment/renderer-allowlist.json'));
+for(const [path,expected] of Object.entries({...m.staticFiles,...m.backendFiles}))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(new URL(path,root))).digest('hex'),expected,path);
+const html=read('published.html');
+const refs=[...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(x=>x[1].split('?')[0]);
+for(const ref of refs)assert.ok(ref.startsWith('/')?m.sharedAssets.includes(ref):Object.hasOwn(m.staticFiles,ref),'Unlisted dependency: '+ref);
+for(const forbidden of ['publication-admin','admin-auth','active-theme','output-modes','update-runtime','config.html'])assert.ok(!html.includes(forbidden),forbidden);
+assert.equal(m.staticFiles['config.html'],undefined);assert.equal(m.staticFiles['publication-admin.js'],undefined);
+assert.deepEqual(m.payloadFields,['country','monthFormat','days','tomorrow','holidays','significant','nameDetails']);
+const js=read('published.js');assert.ok(js.includes("appId:'holidays'"));assert.ok(js.includes('snapshot.payload'));assert.ok(js.includes('snapshot.presentation.mode'));assert.ok(js.includes("fetch('./calendar.json'"));
+assert.ok(!/localStorage|sessionStorage|location.search|onrender\.com/.test(js));
+console.log('Renderer allowlist hashes, asset closure, public snapshot authority and legacy admin exclusions passed.');

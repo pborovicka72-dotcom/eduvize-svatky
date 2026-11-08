@@ -1,0 +1,27 @@
+{
+  "scope": "Local synthetic HTTP integration; not remote acceptance",
+  "coreProvenance": "Existing C6308-R2 neutral source baseline, material-library/base/administration; not a complete Git commit",
+  "coreSha256": {
+    "output_registry.py": "c902a713567970a357d0562007208dc68372fa1e977f3d845256a3f756f69407",
+    "output_api.py": "bef7d8e9a43b152be85f3a5550f204751f88aa6ada8d30eeeace34cce48a33f1",
+    "output_schemas.py": "582484b88927d06783330f9c5a40393fba9211152c88b76d47841488cfe89189",
+    "output_adapters.py": "8209b5c0984e8bd2915044ee5975399dfe9fae2594a999331c7bc63c14fcfaed",
+    "profile_lifecycle.py": "ea94564664220d753120ac3ea984b5953b14f96df98f9fa79d30aac6950d11c3",
+    "license_policy.py": "896d5aeb9650da98830040bd46304e4f0e475a9fe511618e5dc832065cff78bf"
+  },
+  "sharedSourceSha256": {
+    "output-client.js": "5caeef337d0d7ff944eb721c5b91bf60fdf57e61e73fd488160d66f135328229",
+    "output-runtime.js": "9be3fb2b2af60a345dcf6b49cba3cbfd3a559fb7a1105d79f17e7145b563171c",
+    "nsp-geometry.js": "50d366ed27027fb0e4991ed6432fc750f80b22aeca803ac2b4c57b8f7bb598fd",
+    "segment-profile.js": "928a7c00270c57243a1ae816627399823ae6d2cb4b12b06623e9d56f2654dbae",
+    "holidays-layout.js": "8367f34117bf8af1030d8a1b8f6e36d6edd9cd2440390af4ec166b5277b8990b"
+  },
+  "results": {
+    "realRegistryHTTP": 4,
+    "publishedBrowserPresentations": 4,
+    "transientSameRevisionRecovery": true,
+    "renderRequests": 0,
+    "remoteTestVerified": false
+  },
+  "caution": "Use current reviewed security core including active public profile checks; no downgrade to test baseline."
+}

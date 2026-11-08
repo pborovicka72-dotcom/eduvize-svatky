@@ -17,7 +17,7 @@ class Connection:
     def __init__(self,path):
         self.conn=sqlite3.connect(path,timeout=15);self.conn.execute('BEGIN IMMEDIATE')
     def execute(self,sql,args=()):
-        if 'pg_advisory_xact_lock' in sql:return self.conn.execute('SELECT 1')
+        if 'pg_advisory_xact_lock' in sql or sql == "SET LOCAL lock_timeout = '15s'":return self.conn.execute('SELECT 1')
         return self.conn.execute(sql.replace('%s','?'),args)
     def __enter__(self):return self
     def __exit__(self,typ,value,tb):
