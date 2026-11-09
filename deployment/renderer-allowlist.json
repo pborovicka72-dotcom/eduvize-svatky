@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "appId": "holidays",
+  "renderer": "/eduvize-svatky/published.html",
+  "scope": "Native saved-copy-preview consumer WITHOUT local concepts + targeted published format fixes; backend payload and guards unchanged",
+  "staticFiles": {
+    "published.html": "33df702a58a67662c7da6364fd6078e08cd11e44a6825e49da22b0902e5f2c99",
+    "published.js": "193dfbc4d6d555888770722d7e31dfcb72dcbd48af77cad8b7b5f152fe4c8734",
+    "published.css": "2973627c84928b29f626a876a8612031fc02fe14aff7555583597afe867c2f0f",
+    "holiday-editorial.css": "6e220f9c68166c7f8075ca04a7786697d0ea93121d64fbeecac986b322223d25",
+    "name-profiles.css": "1e23e6b481abb9b74cb66d4dbed3dcc73a12184a26059fbebf80ed8ecff5a000",
+    "name-profiles.js": "0b10bc7467bd3d8ed8ee48352d5bef7bdaa5317386ea1d3302885eea383f4401",
+    "holiday-art.js": "7d2edcfe66ad8a50f4ffcf2328e42c9e998dd2746857005f279991289e5ff13b",
+    "calendar-copy.js": "24f67c51b1ce09fc7ec0ddc342bc0f8a5fed9f3e104a2f1a63978f13efac377a",
+    "calendar.json": "dbbcc1693869d39784e24d3e1c2307e880871d69588758e0f24a32664ec0ea4a"
+  },
+  "backendFiles": {
+    "pyproject.toml": "090e38ad49aeee4ee5b9652010c1754de47ad25f0245dfd48d1d0bd76b38d23c",
+    "eduvize_holidays/__init__.py": "d016a9ef22b69eaf2867f99d9aba7f9034c69503d25d5e39a9cf35f68806ff37",
+    "eduvize_holidays/output_adapter.py": "06efdeecb2950ae3d5fb1644f8970e84daab94c94c8253041bf950a503a0279c"
+  },
+  "sharedAssets": [
+    "/eduvize-styly/design-system/admin-tokens.css",
+    "/eduvize-styly/design-system/holidays.css",
+    "/eduvize-styly/design-system/app-icons.css",
+    "/eduvize-styly/design-system/output-header.css",
+    "/eduvize-styly/design-system/card-layout.css",
+    "/eduvize-styly/design-system/nsp-geometry.js",
+    "/eduvize-styly/design-system/segment-profile.js",
+    "/eduvize-styly/design-system/holidays-layout.js",
+    "/eduvize-styly/design-system/app-icons.js",
+    "/eduvize-styly/design-system/output-client.js",
+    "/eduvize-styly/design-system/output-runtime.js",
+    "/eduvize-styly/design-system/kiosk-reading.css"
+  ],
+  "publicAPI": [
+    "/api/public/v1/outputs/{id}",
+    "/api/public/v1/outputs/{id}/theme"
+  ],
+  "optionalExternalFetch": [
+    "https://cs.wiktionary.org/w/api.php",
+    "https://cs.wikipedia.org/w/api.php"
+  ],
+  "externalFailure": "Base calendar remains available; medallion optional",
+  "exclude": [
+    "index.html",
+    "publication-admin.js",
+    "tests/",
+    "tools/",
+    "audit/"
+  ],
+  "registration": {
+    "package": "eduvize-svatky",
+    "module": "eduvize_holidays.output_adapter",
+    "factory": "get_output_adapters",
+    "appId": "holidays",
+    "entitlement": "app.holidays",
+    "environmentVariable": "EDUVIZE_OUTPUT_ADAPTER_MODULES",
+    "operation": "Append module once to existing configured list; preserve all other modules; package at image build time"
+  },
+  "payloadFields": [
+    "country",
+    "monthFormat",
+    "days",
+    "tomorrow",
+    "holidays",
+    "significant",
+    "nameDetails"
+  ],
+  "presentation": "Existing core Draft/Presentation; never include identity/geometry in calendar payload",
+  "adminBridgeFiles": {
+    "config.html": "adf1b9331754c51f1a64bd20023f4e84ccc00eb3876b9b239838b20e7f9aca99",
+    "output-settings.js": "01dc8d8f68fa579fd608defdb15ff7e48b067e1cd6b4e2a2809ad8758489f919",
+    "output-admin.js": "2b67f417d5b08b34114bdc6816da6448a5efc8b6a5b81aa082d2deb906724828",
+    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5"
+  },
+  "adminBridge": "One shared saved-copy-preview controller; exact savedCommit.config on Save, fresh first Copy, current native draft preview/new tab. No adapter.recovery, capture/store/restore UI or app storage.",
+  "deleteFiles": [
+    "publication-admin.js"
+  ],
+  "sharedPins": {
+    "output-actions.js": "479e8c93e03e7724a808e071a5ec4d9454f5733d8b68de9e7b86f28e75f7bc10",
+    "output-client.js": "ef4ce8544cf5a91aff7f3669fcd62205cd0e32d656ad3df4db7b55967c923341",
+    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5",
+    "nsp-segments.js": "93a1b15749ab341c47979ef9804c51027919458231c360efa326ad3032b48c2c"
+  },
+  "adminDirectSharedAssets": [
+    "/eduvize-styly/design-system/admin-navigation.js",
+    "/eduvize-styly/design-system/output-modes.js",
+    "/eduvize-styly/design-system/admin-account.css",
+    "/eduvize-styly/design-system/admin-auth.js",
+    "/eduvize-styly/design-system/admin-tokens.css",
+    "/eduvize-styly/design-system/admin-shell.css",
+    "/eduvize-styly/design-system/admin-components.css",
+    "/eduvize-styly/design-system/nsp-segments.css",
+    "/eduvize-styly/design-system/active-theme.js",
+    "/eduvize-styly/design-system/preview-viewport.css",
+    "/eduvize-styly/design-system/preview-viewport.js",
+    "/eduvize-styly/design-system/app-icons.css",
+    "/eduvize-styly/design-system/app-icons.js",
+    "/eduvize-styly/design-system/assets/eduvize-favicon.svg",
+    "/eduvize-styly/design-system/admin-header.js",
+    "/eduvize-styly/design-system/nsp-geometry.js",
+    "/eduvize-styly/design-system/nsp-segments.js",
+    "/eduvize-styly/design-system/configuration-profiles.js",
+    "/eduvize-styly/design-system/output-client.js",
+    "/eduvize-styly/design-system/output-actions.js"
+  ],
+  "localConcepts": {
+    "enabled": false,
+    "recoveryRegistration": false,
+    "storageWrites": false,
+    "restoreUI": false,
+    "sharedRecoveryDependency": false,
+    "cleanupPerformed": false,
+    "legacyKey": "eduvize-holidays-config (former native manual settings; no longer read/written, not deleted)"
+  }
+}

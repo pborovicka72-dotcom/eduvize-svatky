@@ -46,3 +46,24 @@ html body.calendar-reading.holiday-editorial section.hero.edu-output-header.holi
 html body.calendar-reading.holiday-editorial section.hero.edu-output-header>div{grid-area:auto!important;margin:0!important;min-width:0!important}
 html body.calendar-reading.holiday-editorial section.hero.edu-output-header>.holiday-feature-art{display:none!important}
 html body.calendar-reading.holiday-editorial section.hero.edu-output-header{padding:clamp(12px,1.5vmin,28px)!important}
+
+/* Touch navigation shares the reading panel and never advances on a timer. */
+.calendar-detail-controls{display:flex;align-items:center;justify-content:center;gap:20px;grid-column:1 / -1;grid-row:4}
+.calendar-detail-controls[hidden]{display:none!important}
+.calendar-detail-controls button{font:inherit;min-height:48px;padding:8px 20px;border:1px solid var(--ev-border);border-radius:var(--ev-control-radius,8px);background:var(--ev-surface);color:var(--ev-text);cursor:pointer}
+body.calendar-reading.ev-modern .shell>#upcoming:has(.calendar-detail-controls:not([hidden])){grid-template-rows:minmax(0,1.1fr) auto minmax(0,1fr) auto}
+body.calendar-reading.ev-modern .shell>#upcoming.calendar-reading-only:has(.calendar-detail-controls:not([hidden])){grid-template-rows:minmax(0,1fr) auto}
+.calendar-reading-only .calendar-detail-controls{grid-row:2}
+@media(min-aspect-ratio:3/1){body.calendar-reading.ev-modern .shell>#upcoming:has(.calendar-detail-controls:not([hidden])){grid-template-rows:auto minmax(0,1fr) auto}.calendar-detail-controls{grid-row:3}}
+
+/* Touch users can read the complete copy in natural document flow. */
+html.kiosk-output body.calendar-reading .name-profile{height:auto!important;overflow:visible;min-height:0}
+html.kiosk-output body.calendar-reading .name-profile-text{flex:none!important;overflow:visible!important}
+html.kiosk-output body.calendar-reading .name-profile-art{max-height:240px}
+body.calendar-reading:has(.calendar-detail-controls:not([hidden])) .name-profile-count{display:none}
+
+/* With no following days, the reading panel owns the entire assigned segment. */
+body.calendar-reading.ev-modern .shell>#upcoming.calendar-reading-only{grid-template-columns:minmax(0,1fr)}
+body.calendar-reading #upcoming.calendar-reading-only>.calendar-details{grid-column:1;grid-row:1}
+body.calendar-reading.ev-modern .shell>#upcoming.calendar-reading-only:has(.calendar-detail-controls:not([hidden])){grid-template-rows:minmax(0,1fr) auto}
+body.calendar-reading #upcoming.calendar-reading-only>.calendar-detail-controls{grid-column:1;grid-row:2}

@@ -1,0 +1,15 @@
+{
+  "environment": "local-real-v2-registry-actions-synthetic-profile-auth",
+  "remoteTestVerified": false,
+  "saveDoesNotPublish": true,
+  "fullPresentationSaved": true,
+  "nativeEnvelopePreserved": true,
+  "unsavedChangesNotPublished": true,
+  "stableUpdateURL": true,
+  "freshBrowserCopyOpenGETOnly": true,
+  "technicalPanelRemoved": true,
+  "controlOrderPreserved": true,
+  "profileWrites": 3,
+  "registryWrites": 6,
+  "errors": []
+}

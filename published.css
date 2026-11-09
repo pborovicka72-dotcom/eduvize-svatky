@@ -1,0 +1,11 @@
+/* The published geometry owns the canonical canvas; URLs and browser drafts do not. */
+html,body{margin:0;width:100%;min-height:100%;background:var(--ev-bg);color:var(--ev-text)}
+body.ev-modern{overflow:auto}
+body.ev-modern>.shell{height:var(--published-height,100%);overflow:auto}
+#publication-status{padding:24px;font:20px system-ui}
+.edu-output-header{height:var(--edu-header-height);padding:var(--edu-header-padding) var(--edu-header-inset);gap:var(--edu-header-gap)}
+body.holiday-editorial .holiday-feature-title{font-size:var(--edu-header-title)}
+html[data-secondary-sources=hidden] [data-edu-source-details]{display:none!important}
+/* A kiosk keeps sparse content at natural height, without expanding empty grid rows. */
+html.kiosk-output body.calendar-reading.ev-modern .shell>#upcoming{display:flex!important;flex-direction:column!important;flex:none!important;gap:20px!important}
+html.kiosk-output body.calendar-reading #upcoming>#upcoming-grid{flex:none!important;height:auto!important;grid-template-rows:none!important;grid-auto-rows:1fr!important}
