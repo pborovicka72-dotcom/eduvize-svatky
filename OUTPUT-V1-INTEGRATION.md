@@ -1,4 +1,4 @@
-> Aktuální administrační integrace používá běžné OutputActions V2, nikoli níže historicky popsaný technický panel. Viz deployment/RENDERER-HANDOFF.md a TEST-HANDOFF.md; staré důkazy mají jen uvedený historický rozsah.
+> Historický integrační záznam v1/V2. Aktuální UI používá Save / Copy / Preview v nové záložce, bez místních konceptů. Platí deployment/RENDERER-HANDOFF.md a TEST-HANDOFF.md; staré funkční důkazy nepopisují nové vydání.
 
 # Svátky: společný kontrakt v1
 

@@ -25,7 +25,6 @@
    root.EduvizeHolidaysOutputActions=actions;
    root.EduvizeProfileAdapter.outputActions=actions;
    const settingsSave=d.querySelector('[data-edu-profile-save]');if(settingsSave)settingsSave.textContent='Uložit nastavení';
-   root.dispatchEvent(new Event('eduvize-profile-adapter-ready'));
   }catch(e){d.getElementById('openOutput').disabled=true;d.getElementById('save').disabled=true;status.textContent=e.message||'Výstup není dostupný.';}
  }
  if(root.document.readyState==='loading')root.document.addEventListener('DOMContentLoaded',start,{once:true});else start();

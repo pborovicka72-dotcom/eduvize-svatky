@@ -54,4 +54,4 @@ Nový renderer `published.html` a backend balíček `eduvize_holidays.output_ada
 
 Aktuální atomický V2 patch, instalační piny a závislosti jsou v [deployment/RENDERER-HANDOFF.md](deployment/RENDERER-HANDOFF.md) a [deployment/renderer-allowlist.json](deployment/renderer-allowlist.json). Lokální browser důkaz je v audit/output-admin-v2-results.json; vzdálené TEST nasazení a veřejná akceptace zůstávají úkolem jediného Server executora.
 
-Nová nativní schopnost read/apply/clean pro obnovu rozepsaných kalendářních polí vyžaduje společný scoped recovery helper Accounts. Bez jeho potvrzeného nasazení se automatická ochrana netvrdí. Vlastní úložiště aplikace ani automatické publikování obnova nepoužívá. Aktuální rozsah a omezení: deployment/RENDERER-HANDOFF.md.
+Místní koncepty a nabídka Obnovit/Zahodit jsou zrušené. Aplikace neaktivuje žádné capture/store/restore. Zachovává upozornění na neuložené změny a potvrzené cloudové ukládání.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "appId": "holidays",
   "renderer": "/eduvize-svatky/published.html",
-  "scope": "Native saved-copy-preview consumer + pure calendar draft recovery + targeted published format parity fixes; no backend payload or guard changes",
+  "scope": "Native saved-copy-preview consumer WITHOUT local concepts + targeted published format fixes; backend payload and guards unchanged",
   "staticFiles": {
     "published.html": "33df702a58a67662c7da6364fd6078e08cd11e44a6825e49da22b0902e5f2c99",
     "published.js": "193dfbc4d6d555888770722d7e31dfcb72dcbd48af77cad8b7b5f152fe4c8734",
@@ -69,13 +69,12 @@
   ],
   "presentation": "Existing core Draft/Presentation; never include identity/geometry in calendar payload",
   "adminBridgeFiles": {
-    "config.html": "6bba25071c6ecb77477040ada5c397c6862465263a1215995dfd21333e5fe903",
+    "config.html": "adf1b9331754c51f1a64bd20023f4e84ccc00eb3876b9b239838b20e7f9aca99",
     "output-settings.js": "01dc8d8f68fa579fd608defdb15ff7e48b067e1cd6b4e2a2809ad8758489f919",
-    "output-admin.js": "3b22ede51dac61d2a2fc70c084515bb6bfba05b1569ed05ce7222f1b437d820e",
-    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5",
-    "draft-recovery.js": "64ffcd615f4b1e82485df9644713f7568bab416bbdbf6ab57fdbb18c212860c1"
+    "output-admin.js": "2b67f417d5b08b34114bdc6816da6448a5efc8b6a5b81aa082d2deb906724828",
+    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5"
   },
-  "adminBridge": "One shared workflow saved-copy-preview; exact savedCommit.config for Save, fresh native reader for first Copy, current native preview URL/new tab; adapter.outputActions and adapter.recovery read/apply/clean",
+  "adminBridge": "One shared saved-copy-preview controller; exact savedCommit.config on Save, fresh first Copy, current native draft preview/new tab. No adapter.recovery, capture/store/restore UI or app storage.",
   "deleteFiles": [
     "publication-admin.js"
   ],
@@ -107,12 +106,13 @@
     "/eduvize-styly/design-system/output-client.js",
     "/eduvize-styly/design-system/output-actions.js"
   ],
-  "genericRecovery": {
-    "requiredForProtection": true,
-    "owner": "Accounts",
-    "knownAfterSHA256": "f928ec16e186ab8d9559abf242c69831b62ea26c08a069155568f37e91d5ada6",
-    "supersededDoNotShip": "87c88432",
-    "wholeHistoricalProfileReplacementAllowed": false,
-    "capabilityOnlyWithoutOwnerHelper": true
+  "localConcepts": {
+    "enabled": false,
+    "recoveryRegistration": false,
+    "storageWrites": false,
+    "restoreUI": false,
+    "sharedRecoveryDependency": false,
+    "cleanupPerformed": false,
+    "legacyKey": "eduvize-holidays-config (former native manual settings; no longer read/written, not deleted)"
   }
 }

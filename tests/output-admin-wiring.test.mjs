@@ -5,9 +5,9 @@ assert.match(html,/<button[^>]*hidden[^>]*aria-hidden="true"[^>]*id="saveSetting
 for(const id of ['saveSettings','openOutput','save'])assert.equal([...html.matchAll(new RegExp('id="'+id+'"','g'))].length,1,id);
 assert.ok(html.indexOf('id="openOutput"')<html.indexOf('id="save"'));assert.ok(html.includes('id="save">Otevřít náhled'));
 assert.ok(!html.includes('localStorage.getItem("eduvize-holidays-config")'));assert.ok(!html.includes('localStorage.setItem("eduvize-holidays-config"'));
-assert.ok(html.includes('recovery:window.EduvizeHolidaysRecovery.adapter'));
+assert.ok(!html.includes('recovery:'));assert.ok(!html.includes('draft-recovery.js'));
 assert.ok(html.includes('const presentation=window.EduvizeHolidaysOutputSettings.readNativePresentation()'));
 assert.ok(html.includes('await window.EduvizeHolidaysOutputSettings.applyPresentation(config.presentation)'));
 for(const own of ['slotId','resolve:','matcher','listOutputs','createAssembly','publishOutput','saveDraft','generateButton'])assert.ok(!js.includes(own),own);
 assert.ok(js.includes("workflow:'saved-copy-preview'"));assert.ok(js.includes('reader.load(c)).config'));assert.ok(js.includes('EduvizeProfileAdapter.outputActions=actions'));assert.ok(js.includes("url.searchParams.set('preview','1')"));
-console.log('Save/Copy/Preview opt-in, hidden internal local control, native recovery hook and sole shared controller passed.');
+console.log('Save/Copy/Preview opt-in, hidden internal local control, no local-concept registration and sole shared controller passed.');
