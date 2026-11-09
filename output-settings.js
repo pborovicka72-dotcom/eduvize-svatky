@@ -14,10 +14,14 @@
  }
  function createDraftGetter({loadSaved,context}){
   if(typeof loadSaved!=='function'||typeof context!=='function')throw TypeError('Authoritative saved config reader and shared presentation required');
-  return async()=>{
+  return async({savedCommit=null}={})=>{
    const before=clone(context());
    if(before.appId!=='holidays'||!before.schoolId||!before.profileId)fail('Nejprve vyberte uložený školní profil.');
-   const saved=await loadSaved(before); // Owner supplies ordinary authenticated profile read.
+   let saved;
+   if(savedCommit){
+    if(savedCommit.profileId!==before.profileId||savedCommit.appId!=='holidays'||!Number.isSafeInteger(savedCommit.revision)||savedCommit.revision<0||!savedCommit.config)fail('Nelze ověřit právě uložené nastavení.','INVALID_SAVED_COMMIT');
+    saved=clone(savedCommit.config);
+   }else saved=await loadSaved(before); // First Copy: fresh authoritative settings only.
    if(JSON.stringify(before)!==JSON.stringify(context()))fail('Školní profil nebo výstup se změnil.');
    const p=saved.presentation&&clone(saved.presentation);
    if(!p)fail('Nejprve uložte nastavení výstupu do Eduvize.');

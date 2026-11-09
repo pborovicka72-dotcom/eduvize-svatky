@@ -1,0 +1,18 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const scope={EduvizeOutputActions:{canonicalSlot:p=>JSON.stringify([p.mode,p.geometry])}};
+for(const f of ['output-settings.js','draft-recovery.js'])vm.runInNewContext(fs.readFileSync(new URL('../'+f,import.meta.url),'utf8'),scope);
+const clean=scope.EduvizeHolidaysRecovery.clean,json=v=>JSON.parse(JSON.stringify(v));
+const values={viewMode:'kiosk',country:'cz',monthFormat:'text',days:'0',tomorrow:true,holidays:false,significant:true,nameDetails:true};
+const pending={schemaVersion:1,recoveryVersion:1,values,segment:{orientation:'portrait',style:3,block:2},presentation:null,outputInteraction:'interactive',outputKioskLayout:'menu'};
+const safe=json(clean({...pending,token:'drop',profileId:'drop',values:{...values,password:'drop'},segment:{...pending.segment,secret:'drop'}}));assert.equal(safe.presentation,null);assert.equal(safe.values.days,0);assert.ok(!JSON.stringify(safe).includes('drop'));
+for(const change of [{values:{...values,country:'xx'}},{values:{...values,days:true}},{segment:{orientation:'portrait',style:99,block:2}},{outputInteraction:'bad'},{presentation:{mode:'web',geometry:null,interaction:'display'}}])assert.throws(()=>clean({...pending,...change}));
+const p={mode:'kiosk',geometry:{registryId:'kiosk-viewport',registryVersion:1,orientation:'portrait',width:1080,height:1920},interaction:'interactive',kioskLayout:'tiles'};assert.deepEqual(json(clean({...pending,presentation:p})).presentation,p);
+let applied,segmentApplied,presentationApplied;
+scope.EduvizeProfiles={fields:()=>({read:()=>values,apply:v=>{applied=v;}}),segment:()=>pending.segment,applySegment:v=>{segmentApplied=v;}};
+scope.EduvizeOutputModes={selection:()=> 'interactive',layoutSelection:()=> 'menu',setInteraction(){},setKioskLayout(){}};
+const settings=scope.EduvizeHolidaysOutputSettings;scope.EduvizeHolidaysOutputSettings={...settings,readNativePresentation:()=>null,applyPresentation:async v=>{presentationApplied=v;}};
+assert.equal(scope.EduvizeHolidaysRecovery.adapter.read().presentation,null);
+assert.equal((await scope.EduvizeHolidaysRecovery.adapter.apply(pending)).presentationPending,true);assert.deepEqual(json(applied),{...values,days:0});assert.deepEqual(json(segmentApplied),pending.segment);assert.equal(presentationApplied,undefined);
+await scope.EduvizeHolidaysRecovery.adapter.apply({...pending,presentation:p});assert.deepEqual(json(presentationApplied),p);
+const src=fs.readFileSync(new URL('../draft-recovery.js',import.meta.url),'utf8');assert.ok(!/localStorage|sessionStorage|fetch\(|getToken|saveDraft|publishOutput|createOutput/.test(src));
+console.log('Native recovery whitelist, credential stripping, pending geometry and form-only restore passed.');

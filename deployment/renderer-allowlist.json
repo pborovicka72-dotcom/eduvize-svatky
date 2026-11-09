@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "appId": "holidays",
   "renderer": "/eduvize-svatky/published.html",
-  "scope": "Renderer and adapter only; admin integration is owned by shared output-actions",
+  "scope": "Native saved-copy-preview consumer + pure calendar draft recovery + targeted published format parity fixes; no backend payload or guard changes",
   "staticFiles": {
-    "published.html": "1d0339d0a789594f4b31e256a00ab83634da81ea97b26a0200595b2c83530597",
-    "published.js": "e47a7a7cabaaa418c52d25bcbb087343164d3e7509176c205f044c8087cd7ca6",
-    "published.css": "546000580a71e91bd8df6f23c8c3928d025678dd575c45aed34f5b680e639560",
+    "published.html": "33df702a58a67662c7da6364fd6078e08cd11e44a6825e49da22b0902e5f2c99",
+    "published.js": "193dfbc4d6d555888770722d7e31dfcb72dcbd48af77cad8b7b5f152fe4c8734",
+    "published.css": "2973627c84928b29f626a876a8612031fc02fe14aff7555583597afe867c2f0f",
     "holiday-editorial.css": "6e220f9c68166c7f8075ca04a7786697d0ea93121d64fbeecac986b322223d25",
     "name-profiles.css": "1e23e6b481abb9b74cb66d4dbed3dcc73a12184a26059fbebf80ed8ecff5a000",
     "name-profiles.js": "0b10bc7467bd3d8ed8ee48352d5bef7bdaa5317386ea1d3302885eea383f4401",
@@ -30,7 +30,8 @@
     "/eduvize-styly/design-system/holidays-layout.js",
     "/eduvize-styly/design-system/app-icons.js",
     "/eduvize-styly/design-system/output-client.js",
-    "/eduvize-styly/design-system/output-runtime.js"
+    "/eduvize-styly/design-system/output-runtime.js",
+    "/eduvize-styly/design-system/kiosk-reading.css"
   ],
   "publicAPI": [
     "/api/public/v1/outputs/{id}",
@@ -68,17 +69,18 @@
   ],
   "presentation": "Existing core Draft/Presentation; never include identity/geometry in calendar payload",
   "adminBridgeFiles": {
-    "config.html": "e4da517d095b8324a3da3d2f371d606a86cb1e76f7a26db4d28811aaae0174c7",
-    "output-settings.js": "722726c4251e5940bbf79681dbd289169430afb2c10afacdc1e47aac84ccd975",
-    "output-admin.js": "bd7932c4da264a44e4f411a2016efa9dd24a39c699937604b0fc217ee50760c9",
-    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5"
+    "config.html": "6bba25071c6ecb77477040ada5c397c6862465263a1215995dfd21333e5fe903",
+    "output-settings.js": "01dc8d8f68fa579fd608defdb15ff7e48b067e1cd6b4e2a2809ad8758489f919",
+    "output-admin.js": "3b22ede51dac61d2a2fc70c084515bb6bfba05b1569ed05ce7222f1b437d820e",
+    "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5",
+    "draft-recovery.js": "64ffcd615f4b1e82485df9644713f7568bab416bbdbf6ab57fdbb18c212860c1"
   },
-  "adminBridge": "V2 only: OutputActions.mount context {schoolId,profileId,appId,presentation}, draft from fresh saved native config incl full Presentation. No custom slotId/resolve/matcher. Save native envelope independent of registry.",
+  "adminBridge": "One shared workflow saved-copy-preview; exact savedCommit.config for Save, fresh native reader for first Copy, current native preview URL/new tab; adapter.outputActions and adapter.recovery read/apply/clean",
   "deleteFiles": [
     "publication-admin.js"
   ],
   "sharedPins": {
-    "output-actions.js": "48bd6c1ec321c6eb37478ce6ae861999630bfa80d99477c5792cdb040c94c050",
+    "output-actions.js": "479e8c93e03e7724a808e071a5ec4d9454f5733d8b68de9e7b86f28e75f7bc10",
     "output-client.js": "ef4ce8544cf5a91aff7f3669fcd62205cd0e32d656ad3df4db7b55967c923341",
     "load-saved-app.js": "aaed63744c373940d4380e2941ad117af3ca69b3bae24cce9b89e067026207b5",
     "nsp-segments.js": "93a1b15749ab341c47979ef9804c51027919458231c360efa326ad3032b48c2c"
@@ -104,5 +106,13 @@
     "/eduvize-styly/design-system/configuration-profiles.js",
     "/eduvize-styly/design-system/output-client.js",
     "/eduvize-styly/design-system/output-actions.js"
-  ]
+  ],
+  "genericRecovery": {
+    "requiredForProtection": true,
+    "owner": "Accounts",
+    "knownAfterSHA256": "f928ec16e186ab8d9559abf242c69831b62ea26c08a069155568f37e91d5ada6",
+    "supersededDoNotShip": "87c88432",
+    "wholeHistoricalProfileReplacementAllowed": false,
+    "capabilityOnlyWithoutOwnerHelper": true
+  }
 }

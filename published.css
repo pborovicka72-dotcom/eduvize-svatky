@@ -1,18 +1,11 @@
 /* The published geometry owns the canonical canvas; URLs and browser drafts do not. */
 html,body{margin:0;width:100%;min-height:100%;background:var(--ev-bg);color:var(--ev-text)}
 body.ev-modern{overflow:auto}
-body>.shell{max-width:none;min-height:0}
 body.ev-modern>.shell{height:var(--published-height,100%);overflow:auto}
 #publication-status{padding:24px;font:20px system-ui}
-.edu-output-header{height:var(--edu-header-height);padding:var(--edu-header-padding);gap:var(--edu-header-gap)}
+.edu-output-header{height:var(--edu-header-height);padding:var(--edu-header-padding) var(--edu-header-inset);gap:var(--edu-header-gap)}
 body.holiday-editorial .holiday-feature-title{font-size:var(--edu-header-title)}
-html.kiosk-output .shell{gap:16px}
-html.kiosk-output .name-profile-text{font-size:var(--edu-text-body);line-height:1.5}
-html.kiosk-output .name-profile-heading{font-size:var(--edu-text-title)}
-html.kiosk-output .upcoming-name{font-size:var(--edu-text-value)!important}
-html.kiosk-output .upcoming-date,html.kiosk-output .upcoming-event{font-size:var(--edu-text-label)!important}
 html[data-secondary-sources=hidden] [data-edu-source-details]{display:none!important}
 /* A kiosk keeps sparse content at natural height, without expanding empty grid rows. */
 html.kiosk-output body.calendar-reading.ev-modern .shell>#upcoming{display:flex!important;flex-direction:column!important;flex:none!important;gap:20px!important}
 html.kiosk-output body.calendar-reading #upcoming>#upcoming-grid{flex:none!important;height:auto!important;grid-template-rows:none!important;grid-auto-rows:1fr!important}
-html.kiosk-output .upcoming-day{container-type:normal!important;min-height:110px}

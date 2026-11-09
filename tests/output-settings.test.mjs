@@ -25,3 +25,11 @@ assert.deepEqual(JSON.parse(JSON.stringify(scope.EduvizeHolidaysOutputSettings.p
 await scope.EduvizeHolidaysOutputSettings.applyPresentation(kiosk);assert.deepEqual(JSON.parse(JSON.stringify(restored)),kiosk.geometry);
 scope.EduvizeSegmentSelection.setKioskGeometry=()=>false;await assert.rejects(scope.EduvizeHolidaysOutputSettings.applyPresentation(kiosk),/nelze obnovit/);
 console.log('Actual kiosk viewport capture and shared setter restoration passed; missing setter fails closed.');
+// A successful Save must use the exact committed snapshot, even if the form or server has newer data.
+ctx={appId:'holidays',schoolId:'school-a',profileId:'profile-a',presentation:p};let reads=0;
+const commitGetter=createDraftGetter({context:()=>ctx,loadSaved:async()=>{reads++;return {values:{...values,country:'sk'},presentation:p};}});
+const commit={appId:'holidays',profileId:'profile-a',revision:9,config:{values,presentation:p}};
+assert.equal((await commitGetter({savedCommit:commit})).payload.country,'cz');assert.equal(reads,0);
+assert.equal((await commitGetter({savedCommit:null})).payload.country,'sk');assert.equal(reads,1);
+for(const delta of [{profileId:'foreign'},{appId:'news'},{revision:-1},{config:null}])await assert.rejects(commitGetter({savedCommit:{...commit,...delta}}),e=>e.code==='INVALID_SAVED_COMMIT');
+console.log('Exact committed Save DTO and fresh first-Copy read passed.');

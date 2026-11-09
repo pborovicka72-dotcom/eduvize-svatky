@@ -57,7 +57,9 @@ function size(){
  main.style.cssText='';main.style.setProperty('--published-height',h+'px');
  html.dataset.secondarySources=(mode!=='web'&&(w/h>=2.7||(w<=1200&&h<=720)))?'hidden':'visible';
  if(mode!=='web')Object.assign(main.style,{width:w+'px',height:h+'px',position:'absolute',left:'50%',top:'0',transform:'translateX(-50%) scale('+Math.min(innerWidth/w,innerHeight/h)+')',transformOrigin:'top center'});
- for(const [k,v] of Object.entries(metrics.header))main.style.setProperty('--edu-header-'+k,v+'px');
+ const inset=(metrics.header.height-metrics.header.icon)/2;
+ for(const [k,v] of Object.entries({...metrics.header,gap:inset,inset}))main.style.setProperty('--edu-header-'+k,v+'px');
+ if(mode!=='web'){main.style.setProperty('width',w+'px','important');main.style.setProperty('max-width','none','important');main.style.setProperty('height',h+'px','important');}
  for(const [k,v] of Object.entries(metrics.text))main.style.setProperty('--edu-text-'+k,v+'px');
  layout();
 }

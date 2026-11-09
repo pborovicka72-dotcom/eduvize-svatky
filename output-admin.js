@@ -1,7 +1,7 @@
-/* One ordinary V2 controller; native settings saves remain independent. */
+/* Native adapter for the sole shared Save / Copy / Preview workflow. */
 (function(root){'use strict';
  async function start(){
-  const d=root.document,status=d.getElementById('result'),generateButton=d.getElementById('generateOutput');
+  const d=root.document,status=d.getElementById('result');
   try{
    await root.EduvizeAdminAuth.ready;
    if(root.EduvizeOutputActions?.schemaVersion!==2)throw Error('Společné akce výstupů nejsou dostupné.');
@@ -17,22 +17,16 @@
     if(!token)throw Error('Přihlášení vypršelo.');return 'Bearer '+token;
    }});
    const draft=root.EduvizeHolidaysOutputSettings.createDraftGetter({context,loadSaved:async c=>(await reader.load(c)).config});
-   const actions=root.EduvizeOutputActions.mount({client,context,draft,elements:{generateButton,copyButton:d.getElementById('openOutput'),openButton:d.getElementById('save'),status}});
+   const previewDraftUrl=()=>{
+    const url=new URL(outputUrl(),root.location.href);url.searchParams.set('preview','1');return url;
+   };
+   const actions=root.EduvizeOutputActions.mount({workflow:'saved-copy-preview',client,context,draft,previewDraftUrl,elements:{copyButton:d.getElementById('openOutput'),openButton:d.getElementById('save'),status}});
+   if(actions.workflow!=='saved-copy-preview'||typeof actions.withSavedCommit!=='function')throw Error('Společný postup ukládání není dostupný.');
    root.EduvizeHolidaysOutputActions=actions;
-   let seq=0;
-   async function refresh(){const ticket=++seq;try{await actions.refresh();}catch{if(ticket===seq)generateButton.textContent='Vygenerovat odkaz';}}
-   let pending;
-   const schedule=()=>{clearTimeout(pending);pending=setTimeout(refresh,100);};
-   for(const event of ['eduvize-profile-selected','eduvize-admin-auth-change'])root.addEventListener(event,schedule);
-   d.getElementById('viewMode').addEventListener('change',schedule);
-   // Existing picker changes canonical geometry through ordinary buttons.
-   d.addEventListener('click',e=>{if(e.target.closest('#ev-segments button,.edu-web-preview-controls button'))schedule();});
-   // Shared profile controls may mount after this script. Only place the NEW button;
-   // never move or rebind any of the existing save/copy/open controls.
-   const place=()=>{const copy=d.getElementById('openOutput');if(copy.previousElementSibling!==generateButton)copy.before(generateButton);};
-   const observer=new MutationObserver(place);observer.observe(generateButton.parentElement,{childList:true});place();
-   await refresh();
-  }catch(e){generateButton.disabled=true;status.textContent=e.message||'Výstup není dostupný.';}
+   root.EduvizeProfileAdapter.outputActions=actions;
+   const settingsSave=d.querySelector('[data-edu-profile-save]');if(settingsSave)settingsSave.textContent='Uložit nastavení';
+   root.dispatchEvent(new Event('eduvize-profile-adapter-ready'));
+  }catch(e){d.getElementById('openOutput').disabled=true;d.getElementById('save').disabled=true;status.textContent=e.message||'Výstup není dostupný.';}
  }
  if(root.document.readyState==='loading')root.document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })(window);
