@@ -47,3 +47,4 @@ body.holiday-editorial section.hero.edu-output-header>div:first-child{border:0;p
 
 /* Compact strips retain the same headline hierarchy as larger segments. */
 body.holiday-editorial .holiday-compact .holiday-feature-label{font-size:var(--edu-header-meta,22px);line-height:1.2;flex:0 0 auto}
+\n.holiday-compact .holiday-feature-note[data-namedays]{display:block}\n
