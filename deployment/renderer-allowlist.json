@@ -20,6 +20,7 @@
     "eduvize_holidays/output_adapter.py": "06efdeecb2950ae3d5fb1644f8970e84daab94c94c8253041bf950a503a0279c"
   },
   "sharedAssets": [
+    "/_environment.js",
     "/eduvize-styly/design-system/admin-tokens.css",
     "/eduvize-styly/design-system/holidays.css",
     "/eduvize-styly/design-system/app-icons.css",
