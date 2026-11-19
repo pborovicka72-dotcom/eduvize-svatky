@@ -21,8 +21,9 @@
    if(!context||!/^[a-z][a-z0-9-]{0,47}$/.test(context.appId||''))
     error('CONTEXT_REQUIRED','Chybí platná aplikace.');
    const before=identity();unchanged(before,context);
-   if(typeof profiles?.request!=='function')error('DEPENDENCY_UNAVAILABLE','Uložené nastavení nyní není dostupné.');
-   const profile=await profiles.request('/'+before.profileId,{fresh:true});
+   const reader=typeof profiles?.request==='function'?profiles:root.EduvizeProfiles;
+   if(typeof reader?.request!=='function')error('DEPENDENCY_UNAVAILABLE','Uložené nastavení nyní není dostupné.');
+   const profile=await reader.request('/'+before.profileId,{fresh:true});
    unchanged(before,context);
    if(profile?.id!==before.profileId)error('INVALID_RECORD','Server vrátil jiný profil.');
    const config=profile.apps?.[context.appId]?.config;
