@@ -63,6 +63,7 @@ function size(){
  for(const [k,v] of Object.entries(metrics.text))main.style.setProperty('--edu-text-'+k,v+'px');
  layout();
 }
+root.EduvizeHolidaysLayout.observe(document.body,()=>displayPolicy?.minFont||12);
 root.addEventListener('resize',()=>{if(active){size();update();}});
 try{root.EduvizeOutputRuntime.start({appId:'holidays',
  async render(snapshot,m,{signal}){
@@ -71,7 +72,8 @@ try{root.EduvizeOutputRuntime.start({appId:'holidays',
   main.hidden=false;status.hidden=true;size();await update();
   if(active)timer=setInterval(()=>{calendarPromise=null;update();},60000);
  },
- clear(){stop();main.hidden=true;status.hidden=false;status.textContent='Výstup není dostupný.';},
- onError(){if(!active){status.hidden=false;status.textContent='Výstup se nepodařilo ověřit. Zkusíme to znovu.';}}
-});}catch{stop();main.hidden=true;status.hidden=false;status.textContent='Výstup není dostupný.';}
+ onReady(){document.documentElement.removeAttribute('data-edu-output-loading');},
+ clear(){stop();main.hidden=true;status.hidden=false;status.textContent='Výstup není dostupný.';document.documentElement.removeAttribute('data-edu-output-loading');},
+ onError(){if(!active){status.hidden=false;status.textContent='Výstup se nepodařilo ověřit. Zkusíme to znovu.';document.documentElement.removeAttribute('data-edu-output-loading');}}
+});}catch{stop();main.hidden=true;status.hidden=false;status.textContent='Výstup není dostupný.';document.documentElement.removeAttribute('data-edu-output-loading');}
 })(window);
