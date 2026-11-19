@@ -18,9 +18,11 @@
    }});
    const draft=root.EduvizeHolidaysOutputSettings.createDraftGetter({context,loadSaved:async c=>(await reader.load(c)).config});
    const previewDraftUrl=()=>{
-    const url=new URL(outputUrl(),root.location.href);url.searchParams.set('preview','1');return url;
+    const url=new URL(outputUrl(),root.location.href);url.searchParams.set('preview','1');
+    if(context().presentation.mode!=='web')url.searchParams.set('ev_inner','1');
+    return url;
    };
-   const actions=root.EduvizeOutputActions.mount({workflow:'saved-copy-preview',client,context,draft,previewDraftUrl,elements:{copyButton:d.getElementById('openOutput'),openButton:d.getElementById('save'),status}});
+   const actions=root.EduvizeOutputActions.mount({workflow:'saved-copy-preview',previewHost:'holidays-protected-physical-v1',client,context,draft,previewDraftUrl,elements:{copyButton:d.getElementById('openOutput'),openButton:d.getElementById('save'),status}});
    if(actions.workflow!=='saved-copy-preview'||typeof actions.withSavedCommit!=='function')throw Error('Společný postup ukládání není dostupný.');
    root.EduvizeHolidaysOutputActions=actions;
    root.EduvizeProfileAdapter.outputActions=actions;
