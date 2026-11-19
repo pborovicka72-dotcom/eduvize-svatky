@@ -6,6 +6,6 @@ assert.ok(css.includes('padding:var(--edu-header-padding) var(--edu-header-inset
 const source=js.slice(js.indexOf('function size(){'),js.indexOf("root.addEventListener('resize'"));
 const styles=new Map(),main={style:{set cssText(v){styles.clear();},setProperty:(k,v,p)=>styles.set(k,{value:v,priority:p})}};
 const root={documentElement:{classList:{toggle(){}},dataset:{}}};let layouts=0;
-const scope={metrics:{geometry:{width:2304,height:384},header:{height:120,icon:72,padding:12,gap:18},text:{body:24}},cfg:{viewMode:'nsp'},document:root,main,innerWidth:1152,innerHeight:192,layout:()=>{layouts++;}};
+const scope={metrics:{geometry:{width:2304,height:384},header:{height:120,icon:72,padding:12,gap:18},text:{body:24}},cfg:{viewMode:'nsp'},document:root,root:{EduvizeHolidaysLayout:{observe(){}}},main,innerWidth:1152,innerHeight:192,layout:()=>{layouts++;}};
 vm.runInNewContext(source,scope);scope.size();assert.equal(styles.get('--edu-header-inset').value,'24px');assert.equal(styles.get('--edu-header-gap').value,'24px');assert.deepEqual(styles.get('width'),{value:'2304px',priority:'important'});assert.deepEqual(styles.get('height'),{value:'384px',priority:'important'});assert.equal(layouts,1);
 console.log('Targeted format checks: central icon/font identity, web width, header inset/gap, and canonical scaling passed.');
