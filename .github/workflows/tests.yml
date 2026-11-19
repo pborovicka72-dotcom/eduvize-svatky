@@ -1,0 +1,31 @@
+name: Calendar regression tests
+on: [pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  calendar:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: node tests/calendar.test.mjs && node tests/reading.test.mjs && node tests/public-config.test.mjs && node tests/deployment-allowlist.test.mjs && node tests/output-settings.test.mjs && node tests/output-admin-wiring.test.mjs && node tests/presentation-parity.test.mjs
+      - run: pip install -e .
+      - run: python -m unittest discover -s tests -p 'test_import_namedays.py'
+      - run: python -m unittest discover -s tests -p 'test_settings.py'
+      - name: Check application and acceptance script syntax
+        run: |
+          node --check output-admin.js
+          node --check output-settings.js
+          node --check load-saved-app.js
+          node --check published.js
+          node --check tests/published-browser.cjs
+      - name: Verify single-day panel layout in Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node tests/single-day-layout.cjs

@@ -1,0 +1,30 @@
+{
+  "web": {
+    "mode": "web",
+    "geometry": null,
+    "interaction": "display"
+  },
+  "nsp": {
+    "mode": "nsp",
+    "interaction": "display",
+    "geometry": {
+      "registryId": "nsp-4k",
+      "registryVersion": 1,
+      "orientation": "landscape",
+      "layoutId": 2,
+      "segmentId": 3
+    }
+  },
+  "kiosk": {
+    "mode": "kiosk",
+    "interaction": "interactive",
+    "geometry": {
+      "registryId": "kiosk-viewport",
+      "registryVersion": 1,
+      "orientation": "portrait",
+      "width": 1080,
+      "height": 1920
+    },
+    "kioskLayout": "menu"
+  }
+}

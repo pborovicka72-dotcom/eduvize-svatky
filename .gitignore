@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+audit/published-*.png
+audit/publication-admin.png

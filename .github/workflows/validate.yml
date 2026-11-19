@@ -19,5 +19,7 @@ jobs:
       - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5
         with:
           python-version: '3.12'
+      - run: python -m pip install -e .
       - run: node --test tests/*.test.mjs
-      - run: python -m unittest discover -s tests -v
+      - run: python -m unittest discover -s tests -p test_import_namedays.py -v
+      - run: python -m unittest discover -s tests -p test_settings.py -v

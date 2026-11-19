@@ -1,0 +1,26 @@
+{
+  "environment": "local-shared-api-synthetic-session",
+  "remoteTestVerified": false,
+  "copyDraftDoesNotPublish": true,
+  "copyDoesNotMutate": true,
+  "explicitSaveAndPublish": true,
+  "writes": [
+    {
+      "method": "POST",
+      "path": "/api/v1/output-assemblies"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/outputs"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/outputs/fda59897515a42a184125057119d16b4/publish"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/outputs/fda59897515a42a184125057119d16b4/draft"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,142 @@
+[
+  {
+    "baseline": true,
+    "license": "unavailable",
+    "blocked": [
+      "https://eduvize-admin.onrender.com/api/public/broadcast-status",
+      "https://eduvize-dokumenty-api.onrender.com/api/update-plans/holidays?profile=c0e094dbb91b4139a150a86efc87001b",
+      "https://eduvize-design-system-api.onrender.com/api/design-system/branding",
+      "https://eduvize-admin.onrender.com/api/public/broadcast-status"
+    ]
+  },
+  {
+    "mode": "web",
+    "w": 1280,
+    "h": 900,
+    "before": {
+      "title": "Štědrý den",
+      "controls": false,
+      "country": "cz",
+      "days": 0,
+      "profiles": 3,
+      "bodyWidth": 1280,
+      "viewWidth": 1280,
+      "text": "24\nPROSINEC\nDnešní svátek\nSvátky a jmeniny\nŠtědrý den\n\nŠtědrý den je v českém prostředí spojený se slavnostní večeří, vánočním stromkem a nadělováním dárků. V křesťanské tradici předchází oslavě narození Ježíše Krista.\n\nZpracováno podle Wikipedie – Vánoce · upraveno · CC BY-SA 4.0\nAdam · Původ a význam jména\n\nZ hebrejského אָדָם (člověk, muž).\n\nZpracováno podle Wikislovník – Adam · upraveno · CC BY-SA 4.0\nEva · Původ a význam jména\n\nAdam, který dříve pojmenoval všechna zvířata, ji dal jméno žena. V hebrejštině je toto slovo odvozené od „muž“ (íš > íššá) a Adam ho měl zvolit proto, že žena byla stvořena z mužovy kosti. Český ekumenický překlad se tento vztah snaží vystihnout slovy, že ji pojmenoval „mužena“.\n\nZpracováno podle Wikipedie – Eva · upraveno · CC BY-SA 4.0"
+    },
+    "after": null,
+    "blocked": [],
+    "errors": []
+  },
+  {
+    "mode": "nsp",
+    "w": 1920,
+    "h": 1080,
+    "before": {
+      "title": "Štědrý den",
+      "controls": false,
+      "country": "cz",
+      "days": 0,
+      "profiles": 3,
+      "bodyWidth": 1920,
+      "viewWidth": 1920,
+      "text": "24\nPROSINEC\nDnešní připomínka\nŠtědrý den\nŠtědrý den\n\nŠtědrý den je v českém prostředí spojený se slavnostní večeří, vánočním stromkem a nadělováním dárků. V křesťanské tradici předchází oslavě narození Ježíše Krista.\n\nZpracováno podle Wikipedie – Vánoce · upraveno · CC BY-SA 4.0\n1 / 3"
+    },
+    "after": null,
+    "blocked": [],
+    "errors": []
+  },
+  {
+    "mode": "kiosk",
+    "w": 1920,
+    "h": 1080,
+    "before": {
+      "title": "Štědrý den",
+      "controls": true,
+      "country": "cz",
+      "days": 0,
+      "profiles": 3,
+      "bodyWidth": 1920,
+      "viewWidth": 1920,
+      "text": "24\nPROSINEC\nDnešní připomínka\nŠtědrý den\nŠtědrý den\n\nŠtědrý den je v českém prostředí spojený se slavnostní večeří, vánočním stromkem a nadělováním dárků. V křesťanské tradici předchází oslavě narození Ježíše Krista.\n\nZpracováno podle Wikipedie – Vánoce · upraveno · CC BY-SA 4.0\nPředchozí\n1 / 3\nDalší"
+    },
+    "after": {
+      "title": "Adam · Původ a význam jména",
+      "controls": true,
+      "country": "cz",
+      "days": 0,
+      "profiles": 3,
+      "bodyWidth": 1920,
+      "viewWidth": 1920,
+      "text": "24\nPROSINEC\nDnes slaví\nAdam\nAdam · Původ a význam jména\n\nZ hebrejského אָדָם (člověk, muž).\n\nZpracováno podle Wikislovník – Adam · upraveno · CC BY-SA 4.0\nPředchozí\n2 / 3\nDalší"
+    },
+    "blocked": [],
+    "errors": []
+  },
+  {
+    "mode": "kiosk",
+    "w": 1080,
+    "h": 1920,
+    "before": {
+      "title": "Štědrý den",
+      "controls": true,
+      "country": "cz",
+      "days": 0,
+      "profiles": 3,
+      "bodyWidth": 1080,
+      "viewWidth": 1080,
+      "text": "24\nPROSINEC\nDnešní připomínka\nŠtědrý den\nŠtědrý den\n\nŠtědrý den je v českém prostředí spojený se slavnostní večeří, vánočním stromkem a nadělováním dárků. V křesťanské tradici předchází oslavě narození Ježíše Krista.\n\nZpracováno podle Wikipedie – Vánoce · upraveno · CC BY-SA 4.0\nPředchozí\n1 / 3\nDalší"
+    },
+    "after": {
+      "title": "Adam · Původ a význam jména",
+      "controls": true,
+      "country": "cz",
+      "days": 0,
+      "profiles": 3,
+      "bodyWidth": 1080,
+      "viewWidth": 1080,
+      "text": "24\nPROSINEC\nDnes slaví\nAdam\nAdam · Původ a význam jména\n\nZ hebrejského אָדָם (člověk, muž).\n\nZpracováno podle Wikislovník – Adam · upraveno · CC BY-SA 4.0\nPředchozí\n2 / 3\nDalší"
+    },
+    "blocked": [],
+    "errors": []
+  },
+  {
+    "mode": "nsp",
+    "w": 960,
+    "h": 360,
+    "before": {
+      "title": "Štědrý den",
+      "controls": false,
+      "country": "cz",
+      "days": 0,
+      "profiles": 3,
+      "bodyWidth": 960,
+      "viewWidth": 960,
+      "text": "24\nPROSINEC\nDnešní připomínka\nŠtědrý den\nŠtědrý den\n\nŠtědrý den je v českém prostředí spojený se slavnostní večeří…\n\n1 / 3"
+    },
+    "after": null,
+    "blocked": [],
+    "errors": []
+  },
+  {
+    "admin": true,
+    "frames": [
+      "http://127.0.0.1:8793/eduvize-svatky/config.html",
+      "http://127.0.0.1:8793/eduvize-svatky/index.html?v=20261102-unified-58&viewMode=nsp&country=cz&monthFormat=text&days=0&tomorrow=1&holidays=1&significant=1&nameDetails=1&interaction=display&paging=auto&segment_orientation=landscape&segment_style=1&segment_block=1&preview=1&ev_inner=1"
+    ],
+    "blocked": [],
+    "errors": [],
+    "text": "EDUVIZE · KALENDÁŘ\nAdministrace svátků\n\nVyberte kalendář, zobrazované údaje a podobu výstupu pro digitální nástěnku.\n\nSpráva\naplikací\nPřihlášení a připojení OneDrive se spravuje na stránce Účet a konfigurace.\nPřejít na přihlášení\nNastavení aplikace\n\nRozložení se odvozuje z rozměrů segmentu. Dnešní údaje mají přednost; přehled dalších dnů zobrazí běžný segment až v počtu 6, široký pruh nejvýše 3 a nejmenší segment jej vynechá. Vaše volby určují maximální rozsah.\n\nKalendář\nČeská republika\nSlovensko\nZobrazení měsíce\nSlovně (25. října)\nČíslem (25. 10.)\nPočet následujících dnů\n0 – pouze dnešní den\n1 den\n2 dny\n3 dny\n4 dny\n5 dnů\n6 dnů\nZobrazovat také zítřejší jmeniny\nZobrazovat státní svátky a dny pracovního klidu\nZobrazovat významné a památné dny\nZobrazovat podrobnosti o dnešním jménu a svátcích\n\nPodrobnosti o jménu nebo dnešním svátku jsou součástí společné karty s přehledem následujících dnů. Zobrazí se i bez přehledu následujících dnů, pokud je dostatek místa. V kiosku mezi podrobnostmi přecházíte tlačítky; informační výstup je střídá po 20 sekundách. V malých segmentech se zkrátí nebo vynechají. Rozšiřující texty se načítají z Wikislovníku a Wikipedie a ukládají do mezipaměti prohlížeče; při nedostupnosti zdroje zůstanou jmeniny zobrazené.\n\nVýstup aplikace\nTyp výstupu\nNewline Signage Pro\nBěžná stránka\nKiosek\nOvládání obrazovky\nInteraktivní ovládání\nVypnuto: obsah se pouze zobrazuje a automaticky střídá.\nŠablona Newline Signage Pro\n\nVyberte orientaci a klikněte přímo na požadovaný segment ve vizuálu šablony, případně jej zvolte pod náhledy. Výsledný odkaz bude jednoznačný.\n\nNa"
+  },
+  {
+    "preview": true,
+    "mode": "web",
+    "actual": "web",
+    "content": "6\nLISTOPAD\nDnes slaví\nLiběna, Leonard\nLiběna · Původ a význam jména\n\nLiběna je české ženské křestní jméno slovanského původu, jehož význam je „libá, milá, přívětivá a příjemná“. Stejně jako němčině Li"
+  },
+  {
+    "preview": true,
+    "mode": "kiosk",
+    "actual": "kiosk",
+    "content": "6\nLISTOPAD\nDnes slaví\nLiběna\nLiběna · Původ a význam jména\n\nLiběna je české ženské křestní jméno slovanského původu, jehož význam je „libá, milá, přívětivá a příjemná“. Stejně jako němčině Liebe (v 11"
+  }
+]
